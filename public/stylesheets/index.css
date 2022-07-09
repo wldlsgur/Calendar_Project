@@ -1,0 +1,19 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+html{
+    font-size: 100%;
+}
+.container-fluid{
+    width:600px;
+}
+.text, .textbox, .form_btn{
+    margin: 1.5em;
+}
+.logo{
+    margin-left: 3rem;
+}
+.row{
+    text-align: center;
+}

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="/stylesheets/signup.css">
+    <title>Signup</title>
+</head>
+<body>
+    <header></header>
+    <nav></nav>
+    <main>
+        <section>
+            <article id="wrap">
+                <div class="container-fluid">
+                    <div id="image_wrap">
+                        <input type="file" id="image" accept="image/*"/>
+                        <div id="image_container">
+                            <img src="/images/user_example.png" alt="" id="user_image">
+                        </div>
+                    </div>
+                    <form class="row g-3">
+                        <div class="col-md-12">
+                            <label for="input_id" class="form-label">ID</label>
+                            <input type="text" class="form-control" id="input_id">
+                        </div>
+                         <div class="col-12">
+                            <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="gridCheck">
+                            <label class="form-check-label" for="gridCheck">
+                                Same ID Check!!
+                            </label>
+                            </div>
+                        </div>
+                        <br><br>
+                        <div class="col-md-12">
+                            <label for="inputPassword4" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="inputPassword4" placeholder="*********">
+                        </div>
+                        <br><br><br><br>
+                        <div class="col-12">
+                            <label for="inputName" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="inputName" placeholder="">
+                        </div>
+                        <br><br><br><br>
+                        <div class="col-md-9">
+                            <label for="inputPhone_number" class="form-label">Phone_Number</label>
+                            <input type="text" class="form-control" id="inputPhone_number" placeholder="000-0000-0000" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}">
+                        </div>
+                        <div class="col-md-3">
+                            <label for="inputAge" class="form-label">Age</label>
+                            <input type="text" class="form-control" id="inputAge">
+                        </div>
+                        <br><br><br><br>
+                        <div class="col-10">
+                            <button type="submit" class="btn btn-primary" id="submit">Sign up</button>
+                        </div>
+                        <div class="col-2">
+                            <button type="reset" class="btn btn-primary" id="reset">Reset</button>
+                        </div>
+                    </form>
+                </div>
+            </article>
+        </section>
+    </main>
+    <footer></footer>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
+
+</body>
+<script>
+    $('#reset').click(reset_checkbox)//새로고침하면 체크박스 초기화
+    $("#input_id").change(reset_checkbox)
+
+    $("#gridCheck").click(function(){//id 중복확인
+        let check_id = $("#input_id").val()
+        if(check_id === ''){
+            $('#gridCheck').prop('checked', false)
+            return alert("ID를 입력해주세요!!")
+        }
+        axios.get(`/check/sameid/${check_id}`).then(response=>{
+            if(response.data.res === false){
+                alert("이미 존재하는 아이디입니다!")
+                $('#gridCheck').prop('checked', false);
+                return;
+            }
+            else{
+                alert("사용할 수 있는 아이디입니다!")
+                $('#gridCheck').prop('checked', true).prop('disabled', true)
+                return;
+            }
+        })
+        .catch(error=>{
+            console.log(error);
+        })
+    })
+    $("#submit").click(function(e){//회원가입 클릭 시
+        e.preventDefault();
+        let input_id = $("#input_id").val()
+        let input_pw = $("#inputPassword4").val()
+        let input_name = $("#inputName").val()
+        let input_number = $("#inputPhone_number").val()
+        let input_age = $("#inputAge").val()
+
+        if(!input_id || !input_pw || !input_name || !input_number || !input_age){
+            return alert("요구사항을 모두 입력해주세요!!")
+        }
+        if($("#gridCheck").is(':checked') === false){
+            return alert("아이디 중복확인을 해주세요!!");
+        }
+       
+        let json_data = {
+            id : input_id,
+            pw : input_pw,
+            name : input_name,
+            number : input_number,
+            age : input_age
+        }
+        axios.post(`/user/insert`, json_data)
+        .then(response=>{
+            if(response.data.res === true){
+                if($('#image').val()){//이미지 선택됬으면 이미지 통신 실행
+                    const formData = new FormData();
+                    const imagefile = document.querySelector('#image');
+                    formData.append("image", imagefile.files[0]);
+                    axios.post(`/uploadimage/${input_id}`,  formData, {
+                        headers: {'Content-Type': 'multipart/form-data'}
+                    })
+                    .then(response=>{
+                        if(response.data.res === true){
+                            alert('회원가입 성공');
+                            location.href = '/'
+                        }
+                    })
+                    .catch(err=>{
+                            alert('사진 업로드 실패');
+                            console.log(err);
+                    })
+                }
+            }
+        })
+        .catch(error=>{
+            alert('회원가입 실패');
+            console.log(error);
+        })
+    })
+    function reset_checkbox(){
+        $('#gridCheck').prop('checked', false).prop('disabled', false)
+    }
+    $('#image').change(function(event){//이미지 미리보기
+        var file = event.target.files[0];
+        var reader = new FileReader(); 
+        reader.onload = function(e) {
+
+            $("#user_image").attr("src", e.target.result);
+        }
+        reader.readAsDataURL(file);
+    })
+</script>
+</html>
