@@ -14,116 +14,42 @@
     <title>login</title>
   </head>
   <body>
-    <header></header>
-    <nav></nav>
-    <main>
-      <section>
-        <article id="wrap">
-          <div id="main" class="container-fluid">
-            <figure>
-              <img
-                src="/images/bory.jpg"
-                class="img-thumbnail logo"
-                alt="..."
-              />
-            </figure>
-            <div class="mb-3">
-              <input
-                id="text_id"
-                class="form-control textbox"
-                type="text"
-                placeholder="User ID"
-                aria-label="default input example"
-              />
-              <div id="idHelp" class="form-text text">
-                We'll never share your ID with anyone else.
-              </div>
-            </div>
-            <input
-              type="password"
-              id="inputPassword5"
-              class="form-control textbox"
-              aria-describedby="passwordHelpBlock"
-              placeholder="User PW"
-            />
-            <div id="passwordHelpBlock" class="form-text text">
-              Your password must be 8-20 characters long, contain letters and
-              numbers, and must not contain spaces, special characters, or
-              emoji.
-            </div>
-            <div class="row">
-              <div class="span6 col-6">
-                <button
-                  id="Sign_up"
-                  type="button"
-                  class="btn btn-primary form_btn"
-                >
-                  Sign up
-                </button>
-              </div>
-              <div class="span6 col-6">
-                <button
-                  id="Submit"
-                  type="submit"
-                  class="btn btn-primary form_btn"
-                >
-                  Login
-                </button>
-              </div>
-            </div>
-          </div>
-        </article>
-      </section>
-    </main>
-    <footer></footer>
-    <script
-      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
-      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
-      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-      crossorigin="anonymous"
-    ></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
+    <header class="header">
+      <div class="content">
+        <h1 class="content__title">Calander</h1>
+        <h3 class="content__adminName">지인혁</h3>
+      </div>
+    </header>
+    <section class="login">
+      <h3 class="login__title">Login</h3>
+      <form class="login-form">
+        <div class="auto-login">
+          <label for="login-form__autologin" class="login-form__checkAutoLogin"
+            >Auto Login</label
+          >
+          <input type="checkbox" id="login-form__autologin" />
+        </div>
+        <input type="text" placeholder="아이디" class="login-form__id" />
+        <input type="text" placeholder="비밀번호" class="login-form__pw" />
+        <input type="submit" value="로그인" class="login-form__login" />
+        <input type="button" value="회원가입" class="login-form__singUp" />
+      </form>
+    </section>
   </body>
-  <script>
-    $("#Submit").click(function () {
-      let input_id = $("#text_id").val();
-      let input_pw = $("#inputPassword5").val();
-
-      if (input_id === "" || input_pw === "") {
-        alert("정보를 모두 입력 해주세요");
-      }
-      let json_data = {
-        id: input_id,
-        pw: input_pw,
-      };
-      axios
-        .post(`/check/login`, json_data)
-        .then((response) => {
-          if (response.data.msg === "not found") {
-            alert("존재하지 않는 계정입니다");
-          } else if (response.data.msg === "success") {
-            alert("로그인 성공");
-          } else {
-            alert("비밀번호가 일치하지 않습니다");
-          }
-        })
-        .catch((err) => {
-          alert("로그인 실패");
-          console.log(err);
-        });
-    });
-    $("#Sign_up").click(function () {
-      //회원가입 화면으로 전환
-      location.href = "page/signup";
-    });
-  </script>
+  <script
+    src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"
+  ></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
 </html>

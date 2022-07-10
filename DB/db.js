@@ -1,4 +1,4 @@
-const mysql = require("mysql");
+/*const mysql = require("mysql");
 var db = mysql.createConnection({
   host: "localhost",
   user: "root",
@@ -8,3 +8,4 @@ var db = mysql.createConnection({
 db.connect();
 
 module.exports = db;
+*/
