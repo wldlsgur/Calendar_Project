@@ -10,7 +10,7 @@ const upload_function = require("./function/upload");
 
 //Router
 var indexRouter = require("./routes/index");
-// var pageRouter = require('./routes/page');
+var pageRouter = require("./routes/page");
 // var checkRouter = require('./routes/check');
 // var userRouter = require('./routes/user');
 // let uploadimage = require('./routes/uploadimage');
@@ -47,7 +47,7 @@ app.use(cookieParser());
 app.use(express.static("public"));
 
 app.use("/", indexRouter);
-// app.use('/page', pageRouter);
+app.use("/page", pageRouter);
 // app.use('/user',userRouter);
 // app.use('/check', checkRouter);
 // app.post('/uploadimage/:id', upload.single('image'), uploadimage);//사진 한장
