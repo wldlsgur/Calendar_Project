@@ -11,9 +11,9 @@ const upload_function = require("./function/upload");
 //Router
 var indexRouter = require("./routes/index");
 var pageRouter = require("./routes/page");
-// var checkRouter = require('./routes/check');
-// var userRouter = require('./routes/user');
-// let uploadimage = require('./routes/uploadimage');
+var checkRouter = require("./routes/check");
+var userRouter = require("./routes/user");
+let uploadimage = require("./routes/uploadimage");
 var app = express();
 
 const storage = multer.diskStorage({
@@ -48,9 +48,9 @@ app.use(express.static("public"));
 
 app.use("/", indexRouter);
 app.use("/page", pageRouter);
-// app.use('/user',userRouter);
-// app.use('/check', checkRouter);
-// app.post('/uploadimage/:id', upload.single('image'), uploadimage);//사진 한장
+app.use("/user", userRouter);
+app.use("/check", checkRouter);
+app.post("/uploadimage/:id", upload.single("image"), uploadimage); //사진 한장
 
 // catch 404 and forward to error handler
 app.get("/favicon.ico", function (req, res) {
