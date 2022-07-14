@@ -8,28 +8,46 @@ function ShowImage(event) {
 }
 
 function SignUp(event) {
-  //   event.preventDefault(); 새로고침 이벤트 제거
+  event.preventDefault();
   if ($("#sameId__sameIdCb").is(":checked") === false) {
     return alert("중복확인을 해주세요");
   }
-
   let info = {
     id: $(".form-input__id").val(),
     pw: $(".form-input__pw").val(),
-    name: $(".form-inpu__name").val(),
+    name: $(".form-input__name").val(),
   };
-
   if (!info.id || !info.pw || !info.name) {
     return alert("요구사항을 모두 입력해주세요");
   }
-
-  const file = document.getElementById("files");
-  if (!file.value) {
-  }
-
-  const file2 = file.files[0].name;
-  const idx = file2.indexOf(".");
-  const fileFormatWithDot = file2.substring(idx); // 사진의 포맷임 이걸 DB에 저장해야한다
+  axios
+    .post(`/user/insert`, info)
+    .then((response) => {
+      if (response.data.res === true) {
+        if ($("#image").val()) {
+          //이미지 선택됬으면 이미지 통신 실행
+          const formData = new FormData();
+          const imagefile = document.querySelector("#image");
+          formData.append("image", imagefile.files[0]);
+          axios
+            .post(`/uploadimage/${info.id}}`, formData, {
+              headers: { "Content-Type": "multipart/form-data" },
+            })
+            .then((response) => {
+              if (response.data.res === true) {
+                alert("회원가입 성공");
+              }
+            })
+            .catch((err) => {
+              alert("사진 업로드 실패");
+            });
+        }
+      }
+    })
+    .catch((error) => {
+      alert("회원가입 실패");
+      console.log(error);
+    });
 }
 
 function SameIdCheck() {
@@ -38,18 +56,20 @@ function SameIdCheck() {
     $(this).prop("checked", false);
     return alert("아이디를 입력해주세요");
   }
-  $(this).prop("disabled", true);
 
-  //   axios
-  //     .get("/check/sameid", inputId)
-  //     .then((response) => {
-  //       if (response.res === false) {
-  //         return alert("중복된 아이디 입니다");
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       alert("에러 발생");
-  //     });
+  axios
+    .get(`/check/sameid/${inputId}`)
+    .then((response) => {
+      if (response.data.res === false) {
+        $(this).prop("checked", false);
+        return alert("중복된 아이디 입니다");
+      }
+      $(this).prop("disabled", true);
+      return alert("사용 가능한 아이디 입니다");
+    })
+    .catch((err) => {
+      return alert("에러 발생");
+    });
 }
 
 function InitCheckBox() {

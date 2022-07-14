@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 const db = require("../DB/db");
 
 router.post("/insert", function (req, res, next) {
+  console.log(req.body);
   let { id, pw, name } = req.body;
 
   if (!id || !pw || !name) {
