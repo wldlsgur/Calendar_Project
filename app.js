@@ -23,11 +23,9 @@ const storage = multer.diskStorage({
   filename: function (req, file, cb) {
     let userID = req.params.id;
     let timestamp = new Date().getTime().valueOf(); // 현재 시간
-    let file_url = timestamp + userID + path.basename(file.originalname);
+    let file_url = timestamp + path.basename(file.originalname);
 
-    if (upload_function.insert_image_url(userID, file_url) === false) {
-      return;
-    }
+    upload_function.insert_image_url(userID, file_url);
     cb(null, file_url);
   },
   limits: { fileSize: 1 * 256 * 256 },

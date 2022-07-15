@@ -30,17 +30,21 @@ function SignUp(event) {
           const imagefile = document.querySelector("#image");
           formData.append("image", imagefile.files[0]);
           axios
-            .post(`/uploadimage/${info.id}}`, formData, {
+            .post(`/uploadimage/${info.id}`, formData, {
               headers: { "Content-Type": "multipart/form-data" },
             })
             .then((response) => {
               if (response.data.res === true) {
-                alert("회원가입 성공");
+                alert("사진 회원가입 성공");
+                return (location.href = "/");
               }
             })
             .catch((err) => {
               alert("사진 업로드 실패");
             });
+        } else {
+          alert("회원가입 성공");
+          return (location.href = "/");
         }
       }
     })

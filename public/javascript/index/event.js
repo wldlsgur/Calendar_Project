@@ -12,8 +12,8 @@ function Login() {
     return alert("정보를 모두 입력해주세요");
   }
 
-  // axios
-  //   .post("/check/login", info)
-  //   .then((response) => {})
-  //   .catch((err) => {});
+  axios
+    .post("/check/login", info)
+    .then((response) => {})
+    .catch((err) => {});
 }
