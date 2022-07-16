@@ -36,9 +36,12 @@ router.post("/login", function (req, res) {
     bcrypt.compare(user_pw, result[0].pw, (err, same) => {
       console.log(same); //=> true
       if (same) {
-        res.send({ res: true, msg: "success" });
+        res.cookie("id", result[0].id);
+        res.cookie("name", result[0].name);
+        res.cookie("photo_path", result[0].photo_path);
+        res.status(200).send({ res: true, msg: "success" });
       } else {
-        res.send({ res: false, msg: "failed" });
+        res.status(200).send({ res: false, msg: "failed" });
       }
     });
   });
