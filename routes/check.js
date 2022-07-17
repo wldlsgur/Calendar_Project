@@ -37,8 +37,6 @@ router.post("/login", function (req, res) {
       console.log(same); //=> true
       if (same) {
         res.cookie("id", result[0].id);
-        res.cookie("name", result[0].name);
-        res.cookie("photo_path", result[0].photo_path);
         res.status(200).send({ res: true, msg: "success" });
       } else {
         res.status(200).send({ res: false, msg: "failed" });

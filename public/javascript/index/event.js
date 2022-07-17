@@ -24,6 +24,7 @@ function Login(event) {
           break;
         case "success":
           alert("로그인 성공!");
+          location.href = "/page/room";
           break;
         case "failed":
           alert("로그인 실패");
