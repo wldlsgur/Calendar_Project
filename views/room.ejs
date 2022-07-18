@@ -41,24 +41,31 @@
         <!-- 동적 방 리스트 -->
         <div class="room">
           <p class="room__name">그냥</p>
-          <button class="room__join">O</button>
+          <div class="room__btn">
+            <button class="room__join">O</button>
+          </div>
         </div>
         <div class="room">
           <p class="room__name">그냥</p>
-          <button class="room__join">O</button>
+          <div class="room__btn">
+            <button class="room__join">O</button>
+          </div>
         </div>
       </section>
       <section class="my-room-list">
+        <h3 class="my-room-list__title">My Room List</h3>
         <!-- 동적 사용자 방 목록 -->
-        <form class="myroom-serach">
-          <input type="myroom-search" placeholder="..." />
-          <input type="myroom-button" value="검색" />
+        <form class="my-room-serach">
+          <input class="my-room-serach__text" placeholder="..." type="text" />
+          <input class="my-room-serach__button" value="검색" type="submit" />
         </form>
         <!-- 동적 방 리스트 -->
         <div class="my-room">
           <p class="my-room__name">월서중</p>
-          <button class="my-room__join">O</button>
-          <button class="my-room__delete">X</button>
+          <div class="room-btn">
+            <button class="room-btn__join">O</button>
+            <button class="room-btn__delete">X</button>
+          </div>
         </div>
       </section>
     </div>

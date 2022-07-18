@@ -1,3 +1,4 @@
+@charset "UTF-8";
 * {
   padding: 0px;
   margin: 0px;
@@ -53,9 +54,12 @@ body {
   width: 100%;
   height: 100%;
   display: flex;
+  flex-direction: row;
   background-color: black;
 }
 .content > .room-list {
+  margin: 0px 10px 0px 10px;
+  overflow: auto;
   border: 1px solid white;
   border-radius: 5%;
   flex: 1 1 50%;
@@ -93,8 +97,13 @@ body {
 }
 .content > .room-list > .room > .room__name {
   color: white;
+  display: -webkit-box;
+  /* 글씨 줄이 2줄이 최대로 고정 시키는 것 */
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
 }
-.content > .room-list > .room > .room__join {
+.content > .room-list > .room > .room__btn > .room__join {
   background-color: black;
   color: white;
 }
@@ -102,4 +111,61 @@ body {
   flex: 1 1 50%;
   border: 1px solid white;
   border-radius: 5%;
+}
+.content .my-room-list {
+  margin: 0px 10px 0px 10px;
+}
+.content .my-room-list > .my-room-list__title {
+  color: white;
+  text-align: center;
+  padding-top: 10px;
+}
+.content .my-room-list > .my-room-serach {
+  display: flex;
+  padding: 20px 20px 0px 20px;
+  width: 100%;
+}
+.content .my-room-list > .my-room-serach > .my-room-serach__text {
+  flex: 1;
+  color: white;
+  height: 30px;
+  border-radius: 50px;
+  padding: 0px 20px 0px 20px;
+  background-color: #222225;
+}
+.content .my-room-list > .my-room-serach > .my-room-serach__button {
+  background-color: black;
+  color: white;
+}
+.content .my-room-list > .my-room {
+  display: flex;
+  padding: 0px 20px 0px 20px;
+  margin: 20px 20px 0px 20px;
+  border-bottom: 1px solid white;
+  justify-content: space-between;
+  overflow: auto;
+}
+.content .my-room-list > .my-room > .my-room__name {
+  color: white;
+  display: -webkit-box;
+  /* 글씨 줄이 2줄이 최대로 고정 시키는 것 */
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+}
+.content .my-room-list > .my-room > .room-btn {
+  padding-right: 20px;
+}
+.content .my-room-list > .my-room > .room-btn > .room-btn__join {
+  margin-right: 20px;
+}
+.content .my-room-list > .my-room > .room-btn > button {
+  background-color: black;
+  color: white;
+}
+
+@media screen and (max-width: 768px) {
+  .content {
+    flex-direction: column;
+  }
 }/*# sourceMappingURL=room.css.map */
