@@ -7,6 +7,13 @@
   border: none;
 }
 
+button,
+button:focus {
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+
 ul,
 ol,
 li {
@@ -34,6 +41,15 @@ body {
   background-color: black;
 }
 .header > .header__menu > i {
+  font-size: 3em;
+  color: white;
+}
+.header > .header__add {
+  background-color: black;
+}
+.header > .header__add > i {
+  font-size: 3em;
+  margin-left: 85px;
   color: white;
 }
 .header > .user-info {
@@ -107,12 +123,10 @@ body {
   background-color: black;
   color: white;
 }
-.content > .my-room-list {
+.content .my-room-list {
   flex: 1 1 50%;
   border: 1px solid white;
   border-radius: 5%;
-}
-.content .my-room-list {
   margin: 0px 10px 0px 10px;
 }
 .content .my-room-list > .my-room-list__title {
@@ -162,6 +176,38 @@ body {
 .content .my-room-list > .my-room > .room-btn > button {
   background-color: black;
   color: white;
+}
+
+.create-room {
+  display: none;
+  border-radius: 20px;
+  width: 500px;
+  height: 500px;
+  background-color: white;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -250px;
+  margin-top: -250px;
+}
+.create-room > h3 {
+  margin-top: 50px;
+  text-align: center;
+  color: black;
+}
+.create-room > .create-form {
+  display: flex;
+  flex-direction: column;
+  padding: 0px 20px 0px 20px;
+  margin: 50px 0px 0px 0px;
+}
+.create-room > .create-form > input {
+  background-color: #222225;
+  color: white;
+  height: 50px;
+  margin-bottom: 10px;
+  border-radius: 20px;
+  padding: 0px 20px 0px 20px;
 }
 
 @media screen and (max-width: 768px) {

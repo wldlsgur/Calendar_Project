@@ -22,6 +22,7 @@
     <input type="hidden" value="<%= photo_path %>" placeholder="이름" />
     <header class="header">
       <button class="header__menu"><i class="bi bi-list"></i></button>
+      <button class="header__add"><i class="bi bi-file-plus"></i></button>
       <div class="user-info">
         <img
           src="/image/user/<%= photo_path %>"
@@ -69,6 +70,17 @@
         </div>
       </section>
     </div>
+    <!-- 방 생성 모달 -->
+    <div class="create-room">
+      <h3>방 생성</h3>
+      <form class="create-form">
+        <input type="text" placeholder="방 제목" class="create-form__title" />
+        <input type="text" placeholder="비밀번호" class="create-form__pw" />
+        <input type="text" placeholder="최대인원" class="create-form__max" />
+        <input type="submit" value="만들기" class="create-form__create" />
+        <input type="button" value="취소" class="create-form__exit" />
+      </form>
+    </div>
   </body>
   <script
     src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -86,4 +98,6 @@
     crossorigin="anonymous"
   ></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
+  <script src="/javascript/room/event.js"></script>
+  <script src="/javascript/room/main.js"></script>
 </html>
