@@ -1,9 +1,11 @@
+let modal_create_room = $(".create-room");
+
 var CreateRoom = {
   Show: function () {
-    $(".create-room").css("display", "block");
+    modal_create_room.css("display", "block");
   },
   Hidden: function () {
-    $(".create-room").css("display", "none");
+    modal_create_room.css("display", "none");
   },
   Create: function () {
     let info = {
