@@ -18,8 +18,10 @@
     <title>Room</title>
   </head>
   <body>
+    <input type="hidden" value="<%= user_id %>" placeholder="AI" id="user_id" />
+    <input type="hidden" value="<%= id %>" placeholder="아이디" />
     <input type="hidden" value="<%= name %>" placeholder="이름" />
-    <input type="hidden" value="<%= photo_path %>" placeholder="이름" />
+    <input type="hidden" value="<%= photo_path %>" placeholder="사진링크" />
     <header class="header">
       <button class="header__menu"><i class="bi bi-list"></i></button>
       <button class="header__add"><i class="bi bi-file-plus"></i></button>

@@ -4,6 +4,7 @@ var db = mysql.createConnection({
   user: "root",
   password: "0000",
   database: "alone_project",
+  multipleStatements: true, // 다중쿼리용 설정
 });
 db.connect();
 

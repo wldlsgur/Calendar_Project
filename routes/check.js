@@ -20,8 +20,7 @@ router.get("/sameid/:id", function (req, res, next) {
 });
 
 router.post("/login", function (req, res) {
-  let user_id = req.body.id;
-  let user_pw = req.body.pw;
+  let { user_id, user_pw } = req.body;
 
   let query = `SELECT * FROM user WHERE id='${user_id}'`;
   db.query(query, function (err, result) {
@@ -36,7 +35,7 @@ router.post("/login", function (req, res) {
     bcrypt.compare(user_pw, result[0].pw, (err, same) => {
       console.log(same); //=> true
       if (same) {
-        res.cookie("id", result[0].id);
+        res.cookie("id", result[0].user_id);
         res.status(200).send({ res: true, msg: "success" });
       } else {
         res.status(200).send({ res: false, msg: "failed" });
