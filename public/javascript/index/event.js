@@ -5,19 +5,17 @@ function MovePageSignup() {
 function Login(event) {
   event.preventDefault();
   let info = {
-    id: $(".login-form__id").val(),
-    pw: $(".login-form__pw").val(),
+    user_id: $(".login-form__id").val(),
+    user_pw: $(".login-form__pw").val(),
   };
 
-  if (!info.id || !info.pw) {
+  if (!info.user_id || !info.user_pw) {
     return alert("정보를 모두 입력해주세요");
   }
 
   axios
     .post("/check/login", info)
     .then((response) => {
-      console.log(response.data.msg);
-
       switch (response.data.msg) {
         case "not found":
           alert("등록된 사용가 없습니다");

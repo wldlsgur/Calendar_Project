@@ -11,15 +11,18 @@ router.post("/make", function (req, res) {
     if (err) {
       return res.status(400).send(err);
     }
-    if (result.insert !== 0) {
-      let query2 = `insert into intoroom(room_id, user_id) value('${result[0].insertId}', '${user_id}')`;
-      db.query(query2, function (err, result) {
-        if (err) {
-          return res.status(400).send(400);
-        }
-        res.status(200).send({ res: true, msg: "success" });
-      });
-    }
+    let room_ai = String(result.insertId);
+    let query2 = `insert into intoroom(room_id, user_id, chief) value('${room_ai}', '${user_id}', true)`;
+    db.query(query2, function (err, result) {
+      if (err) {
+        return res.status(400).send(400);
+      }
+      res.status(200).send({ res: true, msg: "success" });
+    });
   });
 });
 module.exports = router;
+
+// router.post() //방 join 참여
+// 전체 방 목록 보여주기
+// 내 방 목록 보여주기

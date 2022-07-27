@@ -21,7 +21,6 @@ router.get("/sameid/:id", function (req, res, next) {
 
 router.post("/login", function (req, res) {
   let { user_id, user_pw } = req.body;
-
   let query = `SELECT * FROM user WHERE id='${user_id}'`;
   db.query(query, function (err, result) {
     if (err) {
