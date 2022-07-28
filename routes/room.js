@@ -23,6 +23,37 @@ router.post("/make", function (req, res) {
 });
 module.exports = router;
 
+router.get("/show/all", function (req, res) {
+  let query = `select room_id, title, people from room`;
+
+  db.query(query, function (err, result) {
+    if (err) {
+      return res.status(400).send(err);
+    }
+    for (let i = 0; i < result.length; i++) {
+      let query2 = `select count(*) from intoroom where room_id=${result[i].room_id}`;
+      db.query(query2, function (err, result2) {
+        if (err) {
+          return res.status(400).send(err);
+        }
+        result.nowpeople = String(result2.length);
+      });
+    }
+
+    res.status(200).send(result);
+  });
+});
+
+router.get("/show/my", function (req, res) {
+  let query = `select room_id, title, people from room where `;
+
+  db.query(query, function (err, result) {
+    if (err) {
+      return res.status(400).send(err);
+    }
+    res.status(200).send(result);
+  });
+});
 // router.post() //방 join 참여
 // 전체 방 목록 보여주기
 // 내 방 목록 보여주기
