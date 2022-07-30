@@ -26,34 +26,59 @@ module.exports = router;
 router.get("/show/all", function (req, res) {
   let query = `select room_id, title, people from room`;
 
-  db.query(query, function (err, result) {
+  db.query(query, async function (err, result) {
     if (err) {
       return res.status(400).send(err);
     }
     for (let i = 0; i < result.length; i++) {
-      let query2 = `select count(*) from intoroom where room_id=${result[i].room_id}`;
-      db.query(query2, function (err, result2) {
-        if (err) {
-          return res.status(400).send(err);
-        }
-        result.nowpeople = String(result2.length);
-      });
+      let query2 = `select count(*) as nowpeople from intoroom where room_id=${result[i].room_id}`;
+      await new Promise((resolve, reject) => {
+        db.query(query2, function (err, result2) {
+          if (err) {
+            reject(err);
+          }
+          resolve(result2);
+        });
+      })
+        .then((result2) => {
+          result[i].nowpeople = String(result2[0].nowpeople);
+        })
+        .catch((err) => {
+          console.log(err);
+          res.status(400).send(err);
+        });
     }
-
     res.status(200).send(result);
   });
 });
 
 router.get("/show/my", function (req, res) {
-  let query = `select room_id, title, people from room where `;
-
-  db.query(query, function (err, result) {
+  let user_id = req.cookies.id;
+  let query = `select i.room_id, i.chief, r.title, r.people from intoroom as i inner join room as r on i.room_id = r.room_id where i.user_id = '${user_id}'`;
+  db.query(query, async function (err, result) {
     if (err) {
       return res.status(400).send(err);
     }
+    for (let i = 0; i < result.length; i++) {
+      let query2 = `select count(*) as nowpeople from intoroom where room_id=${result[i].room_id}`;
+      await new Promise((resolve, reject) => {
+        db.query(query2, function (err, result2) {
+          if (err) {
+            reject(err);
+          }
+          resolve(result2);
+        });
+      })
+        .then((result2) => {
+          result[i].nowpeople = String(result2[0].nowpeople);
+        })
+        .catch((err) => {
+          console.log(err);
+          res.status(400).send(err);
+        });
+    }
+    console.log(result);
     res.status(200).send(result);
   });
 });
 // router.post() //방 join 참여
-// 전체 방 목록 보여주기
-// 내 방 목록 보여주기

@@ -1,4 +1,5 @@
-let modal_create_room = $(".create-room");
+const modal_create_room = $(".create-room");
+const user_id = document.querySelector("#user_id").value;
 
 var CreateRoom = {
   Show: function () {
@@ -19,20 +20,21 @@ var CreateRoom = {
       .post("/room/make", info)
       .then((response) => {
         if (response.data.res === true) {
-          return alert("방 생성 완료!");
+          CreateRoom.Hidden();
+          alert("방 생성 완료!");
+          return location.reload();
         }
       })
       .catch((err) => {
         console.log(err);
         return alert("방 생성 실패!");
       });
-    CreateRoom.Hidden();
-    // 통신해서 만들고 방 리스트들 새로고침 하고 모달창 숨기기
   },
 };
 
 var room = {
-  root_room: document.querySelector(".room-list"),
+  root_all_room: document.querySelector(".room-list"),
+  root_myall_room: document.querySelector(".my-room-list"),
   all_room: () => {
     axios
       .get("/room/show/all")
@@ -41,13 +43,30 @@ var room = {
           let make_room = document.createElement("div");
           make_room.setAttribute("class", "room");
           make_room.innerHTML = `
-          <input type="hidden" value="${response.data[i].room_id}" placeholder="room_id" />
+          <input type="hidden" value="${response.data[i].room_id}" class="room_key" />
           <p class="room__name">${response.data[i].title}</p>
-          <div class="room__btn">
-            <button class="room__join">정원 : ${response.data[i].people}</button>
-          </div>
+          <p class="room__now">${response.data[i].nowpeople} / ${response.data[i].people}</p>
           `;
-          room.root_room.appendChild(make_room);
+          room.root_all_room.appendChild(make_room);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },
+  all_my_room: () => {
+    axios
+      .get("/room/show/my")
+      .then((response) => {
+        for (let i = 0; i < response.data.length; i++) {
+          let make_room = document.createElement("div");
+          make_room.setAttribute("class", "my-room");
+          make_room.innerHTML = `
+          <input type="hidden" value="${response.data[i].room_id}" class="room_key" />
+          <p class="my-room__name">${response.data[i].title}</p>
+          <p class="my-room__now">${response.data[i].nowpeople} / ${response.data[i].people}</p>
+          `;
+          room.root_myall_room.appendChild(make_room);
         }
       })
       .catch((err) => {
@@ -58,10 +77,7 @@ var room = {
 $(".header__add").click(CreateRoom.Show);
 $(".create-form__exit").click(CreateRoom.Hidden);
 $(".create-form__create").click(CreateRoom.Create);
-$(document).ready(room.all_room);
-/* <div class="room">
-  <p class="room__name">그냥</p>
-  <div class="room__btn">
-    <button class="room__join">O</button>
-  </div>
-</div>; */
+$(document).ready(function () {
+  room.all_room();
+  room.all_my_room();
+});

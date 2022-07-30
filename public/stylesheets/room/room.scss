@@ -106,16 +106,13 @@ body {
       > .room__name {
         color: white;
         display: -webkit-box;
-        /* 글씨 줄이 2줄이 최대로 고정 시키는 것 */
+        /* 글씨 줄이 1줄이 최대로 고정 시키는 것 */
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 1;
         overflow: hidden;
       }
-      > .room__btn {
-        > .room__join {
-          background-color: black;
-          color: white;
-        }
+      > .room__now {
+        color: white;
       }
     }
   }
@@ -161,15 +158,8 @@ body {
         -webkit-line-clamp: 1;
         overflow: hidden;
       }
-      > .room-btn {
-        padding-right: 20px;
-        > .room-btn__join {
-          margin-right: 20px;
-        }
-        > button {
-          background-color: black;
-          color: white;
-        }
+      > p {
+        color: white;
       }
     }
   }
