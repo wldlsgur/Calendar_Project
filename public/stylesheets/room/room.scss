@@ -164,8 +164,9 @@ body {
     }
   }
 }
-
-.create-room {
+.create-room,
+.modal-myroom,
+.modal-room {
   display: none;
   border-radius: 20px;
   width: 500px;
@@ -181,6 +182,8 @@ body {
     text-align: center;
     color: black;
   }
+}
+.create-room {
   > .create-form {
     display: flex;
     flex-direction: column;
@@ -193,6 +196,37 @@ body {
       margin-bottom: 10px;
       border-radius: 20px;
       padding: 0px 20px 0px 20px;
+    }
+  }
+}
+
+.modal-myroom {
+  .myroom-form {
+    display: flex;
+    flex-direction: column;
+    padding: 0px 20px 0px 20px;
+    margin: 100px 0px 0px 0px;
+    > .room-btn {
+      display: flex;
+      justify-content: space-around;
+      > button {
+        background-color: #222225;
+        color: white;
+        height: 50px;
+        margin-bottom: 10px;
+        border-radius: 20px;
+        padding: 0px 20px 0px 20px;
+      }
+    }
+    .title,
+    .personnel,
+    .room-pw {
+      background-color: #222225;
+      color: white;
+      height: 50px;
+      margin-bottom: 10px;
+      border-radius: 20px;
+      padding: 10px 20px 10px 20px;
     }
   }
 }

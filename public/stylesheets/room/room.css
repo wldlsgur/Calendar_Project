@@ -170,7 +170,9 @@ body {
   color: white;
 }
 
-.create-room {
+.create-room,
+.modal-myroom,
+.modal-room {
   display: none;
   border-radius: 20px;
   width: 500px;
@@ -182,11 +184,14 @@ body {
   margin-left: -250px;
   margin-top: -250px;
 }
-.create-room > h3 {
+.create-room > h3,
+.modal-myroom > h3,
+.modal-room > h3 {
   margin-top: 50px;
   text-align: center;
   color: black;
 }
+
 .create-room > .create-form {
   display: flex;
   flex-direction: column;
@@ -200,6 +205,35 @@ body {
   margin-bottom: 10px;
   border-radius: 20px;
   padding: 0px 20px 0px 20px;
+}
+
+.modal-myroom .myroom-form {
+  display: flex;
+  flex-direction: column;
+  padding: 0px 20px 0px 20px;
+  margin: 100px 0px 0px 0px;
+}
+.modal-myroom .myroom-form > .room-btn {
+  display: flex;
+  justify-content: space-around;
+}
+.modal-myroom .myroom-form > .room-btn > button {
+  background-color: #222225;
+  color: white;
+  height: 50px;
+  margin-bottom: 10px;
+  border-radius: 20px;
+  padding: 0px 20px 0px 20px;
+}
+.modal-myroom .myroom-form .title,
+.modal-myroom .myroom-form .personnel,
+.modal-myroom .myroom-form .room-pw {
+  background-color: #222225;
+  color: white;
+  height: 50px;
+  margin-bottom: 10px;
+  border-radius: 20px;
+  padding: 10px 20px 10px 20px;
 }
 
 @media screen and (max-width: 768px) {

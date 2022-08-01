@@ -1,6 +1,3 @@
-const modal_create_room = $(".create-room");
-const user_id = document.querySelector("#user_id").value;
-
 var CreateRoom = {
   Show: function () {
     modal_create_room.css("display", "block");
@@ -60,12 +57,22 @@ var room = {
       .then((response) => {
         for (let i = 0; i < response.data.length; i++) {
           let make_room = document.createElement("div");
-          make_room.setAttribute("class", "my-room");
+          make_room.classList.add("my-room");
+          let mm = new modal_myroom(
+            response.data[i].room_id,
+            response.data[i].title,
+            response.data[i].nowpeople,
+            response.data[i].people
+          );
           make_room.innerHTML = `
           <input type="hidden" value="${response.data[i].room_id}" class="room_key" />
           <p class="my-room__name">${response.data[i].title}</p>
           <p class="my-room__now">${response.data[i].nowpeople} / ${response.data[i].people}</p>
           `;
+          make_room
+            .querySelector(".my-room__name")
+            .addEventListener("click", mm.Show);
+          console.log(mm);
           room.root_myall_room.appendChild(make_room);
         }
       })
@@ -74,10 +81,42 @@ var room = {
       });
   },
 };
-$(".header__add").click(CreateRoom.Show);
-$(".create-form__exit").click(CreateRoom.Hidden);
-$(".create-form__create").click(CreateRoom.Create);
+class modal_myroom {
+  constructor(id, title, nowpeople, people) {
+    this.id = id;
+    this.title = title;
+    this.nowpeople = nowpeople;
+    this.people = people;
+  }
+  Show(e) {
+    console.log(this.title);
+    e.target.innerText = this.title;
+    e.target.querySelector(".nowpeople").innerText = this.nowpeople;
+    e.target.querySelector(".people").innerText`` = this.people;
+    document.querySelector(".modal-myroom").style.display = "block";
+  }
+  Hidden() {
+    document.querySelector(".modal-myroom").style.display = "none";
+  }
+}
+const modal_create_room = $(".create-room");
+const user_id = document.querySelector("#user_id").value;
+const modalMyroom = new modal_myroom();
 $(document).ready(function () {
   room.all_room();
   room.all_my_room();
 });
+$(".header__add").click(CreateRoom.Show);
+$(".create-form__exit").click(CreateRoom.Hidden);
+$(".create-form__create").click(CreateRoom.Create);
+document
+  .querySelector(".room-btn__exit")
+  .addEventListener("click", modalMyroom.Hidden);
+
+// class Axios {
+//   constructor() {}
+//   Post() {}
+//   GEt() {}
+//   Put() {}
+//   Delete() {}
+// }
