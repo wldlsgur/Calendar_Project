@@ -77,8 +77,19 @@ router.get("/show/my", function (req, res) {
           res.status(400).send(err);
         });
     }
-    console.log(result);
     res.status(200).send(result);
+  });
+});
+
+router.delete("/myroom", function (req, res) {
+  const key = req.query.key;
+  console.log(key);
+  const query = `delete from room where room_id = ${key}`;
+  db.query(query, function (err, result) {
+    if (err) {
+      return res.status(400).send(err);
+    }
+    res.status(200).send({ res: true, msg: "success" });
   });
 });
 // router.post() //방 join 참여

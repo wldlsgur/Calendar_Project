@@ -59,9 +59,7 @@ var room = {
           let make_room = document.createElement("div");
           make_room.classList.add("my-room");
           make_room.innerHTML = `
-          <input type="hidden" value="${response.data[i].room_id}" class="room_key" />
-          <p class="my-room__name">${response.data[i].title}</p><p class="my-room__now">${response.data[i].nowpeople} / ${response.data[i].people}</p>
-          `;
+          <input type="hidden" value="${response.data[i].room_id}" class="room_key" /><p class="my-room__name">${response.data[i].title}</p><p class="my-room__now">${response.data[i].nowpeople} / ${response.data[i].people}</p>`;
           make_room
             .querySelector(".my-room__name")
             .addEventListener("click", modalMyroom.Show);
@@ -78,12 +76,29 @@ class modal_myroom {
   Show(e) {
     let modal = document.querySelector(".modal-myroom");
     let target = e.target;
+    modal.querySelector(".room_id").value = target.previousSibling.value;
     modal.querySelector(".title").innerHTML = target.innerHTML;
     modal.querySelector(".personnel").innerHTML = target.nextSibling.innerHTML;
     modal.style.display = "block";
   }
   Hidden() {
     document.querySelector(".modal-myroom").style.display = "none";
+  }
+  Delete(e) {
+    let target = e.target;
+    let room_key = target.parentNode.parentNode.querySelector(".room_id").value;
+    axios
+      .delete("/room/myroom", { params: { key: room_key } })
+      .then((response) => {
+        if (response.data.res) {
+          alert("방 삭제 성공");
+          $(".my-room-list").load(location.href + ".my-room-list");
+          modalMyroom.Hidden();
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 }
 const modal_create_room = $(".create-room");
@@ -99,7 +114,9 @@ $(".create-form__create").click(CreateRoom.Create);
 document
   .querySelector(".room-btn__exit")
   .addEventListener("click", modalMyroom.Hidden);
-
+document
+  .querySelector(".room-btn__delete")
+  .addEventListener("click", modalMyroom.Delete);
 // class Axios {
 //   constructor() {}
 //   Post() {}
