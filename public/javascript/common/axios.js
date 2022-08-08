@@ -1,4 +1,4 @@
-export class Axios {
+class Axios {
   constructor() {}
   body(req_url, req_method, req_data) {
     return axios({
@@ -15,3 +15,5 @@ export class Axios {
     });
   }
 }
+
+export default Axios;

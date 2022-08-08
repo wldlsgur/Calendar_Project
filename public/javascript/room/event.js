@@ -1,13 +1,13 @@
-import Server from "../common/axios";
-
-var CreateRoom = {
-  Show: function () {
-    modal_create_room.css("display", "block");
-  },
-  Hidden: function () {
-    modal_create_room.css("display", "none");
-  },
-  Create: function (event) {
+import Axios from "/javascript/common/axios.js";
+class CreateRoom {
+  constructor() {}
+  Show() {
+    document.querySelector(".create-room").style.display = "block";
+  }
+  Hidden() {
+    document.querySelector(".create-room").style.display = "none";
+  }
+  Create(event) {
     event.preventDefault();
     let info = {
       user_id: $("#user_id").val(),
@@ -15,11 +15,11 @@ var CreateRoom = {
       pw: $(".create-form__pw").val(),
       people: $(".create-form__max").val(),
     };
-    axios
-      .post("/room/make", info)
+    axiosModule
+      .body("/room/make", "post", info)
       .then((response) => {
         if (response.data.res === true) {
-          CreateRoom.Hidden();
+          creatRoom.Hidden();
           alert("방 생성 완료!");
           return location.reload();
         }
@@ -28,15 +28,18 @@ var CreateRoom = {
         console.log(err);
         return alert("방 생성 실패!");
       });
-  },
-};
+  }
+}
 
-var room = {
-  root_all_room: document.querySelector(".room-list"),
-  root_myall_room: document.querySelector(".my-room-list"),
-  all_room: () => {
-    axios
-      .get("/room/show/all")
+class Room {
+  constructor(rootRoom, rootMyRoom) {
+    this.room = rootRoom;
+    this.myRoom = rootMyRoom;
+  }
+
+  all_room() {
+    axiosModule
+      .params("/room/show/all", "get", null)
       .then((response) => {
         for (let i = 0; i < response.data.length; i++) {
           let make_room = document.createElement("div");
@@ -46,16 +49,16 @@ var room = {
           <p class="room__name">${response.data[i].title}</p>
           <p class="room__now">${response.data[i].nowpeople} / ${response.data[i].people}</p>
           `;
-          room.root_all_room.appendChild(make_room);
+          this.room.appendChild(make_room);
         }
       })
       .catch((err) => {
         console.log(err);
       });
-  },
-  all_my_room: () => {
-    axios
-      .get("/room/show/my")
+  }
+  all_my_room() {
+    axiosModule
+      .params("/room/show/my", "get", null)
       .then((response) => {
         for (let i = 0; i < response.data.length; i++) {
           let make_room = document.createElement("div");
@@ -65,22 +68,22 @@ var room = {
           make_room
             .querySelector(".my-room__name")
             .addEventListener("click", modalMyroom.Show);
-          room.root_myall_room.appendChild(make_room);
+          this.myRoom.appendChild(make_room);
         }
       })
       .catch((err) => {
         console.log(err);
       });
-  },
-};
+  }
+}
 class modal_myroom {
   constructor() {}
   Show(e) {
     let modal = document.querySelector(".modal-myroom");
-    let target = e.target;
-    modal.querySelector(".room_id").value = target.previousSibling.value;
-    modal.querySelector(".title").innerHTML = target.innerHTML;
-    modal.querySelector(".personnel").innerHTML = target.nextSibling.innerHTML;
+    modal.querySelector(".room_id").value = e.target.previousSibling.value;
+    modal.querySelector(".title").innerHTML = e.target.innerHTML;
+    modal.querySelector(".personnel").innerHTML =
+      e.target.nextSibling.innerHTML;
     modal.style.display = "block";
   }
   Hidden() {
@@ -90,8 +93,8 @@ class modal_myroom {
     let target = e.target;
     let room_key = target.parentNode.parentNode.querySelector(".room_id").value;
 
-    server
-      .params("/room/myroom", "delete", { params: { key: room_key } })
+    axiosModule
+      .params("/room/myroom", "delete", { key: room_key })
       .then((res) => {
         alert("방 삭제 성공");
         // $(".my-room-list").load(location.href + ".my-room-list");
@@ -102,18 +105,24 @@ class modal_myroom {
       });
   }
 }
-const modal_create_room = $(".create-room");
-const user_id = document.querySelector("#user_id").value;
-const modalMyroom = new modal_myroom();
-const server = new Server();
 
+// 클래스 생성
+const modalMyroom = new modal_myroom();
+const axiosModule = new Axios(); //ajax 모듈화 클래스
+const creatRoom = new CreateRoom(document.querySelector(".create-room"));
+const room = new Room(
+  document.querySelector(".room-list"),
+  document.querySelector(".my-room-list")
+);
+
+// 이벤트 등록
 $(document).ready(function () {
   room.all_room();
   room.all_my_room();
 });
-$(".header__add").click(CreateRoom.Show);
-$(".create-form__exit").click(CreateRoom.Hidden);
-$(".create-form__create").click(CreateRoom.Create);
+$(".header__add").click(creatRoom.Show);
+$(".create-form__exit").click(creatRoom.Hidden);
+$(".create-form__create").click(creatRoom.Create);
 document
   .querySelector(".room-btn__exit")
   .addEventListener("click", modalMyroom.Hidden);
