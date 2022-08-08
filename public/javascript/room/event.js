@@ -15,6 +15,12 @@ class CreateRoom {
       pw: $(".create-form__pw").val(),
       people: $(".create-form__max").val(),
     };
+    if (!info.title || !info.pw || !info.people) {
+      return alert("모두 정보를 입력하세요");
+    }
+    if (!parseInt(info.people)) {
+      return alert("인원은 숫자로 입력해주세요");
+    }
     axiosModule
       .body("/room/make", "post", info)
       .then((response) => {
@@ -45,10 +51,11 @@ class Room {
           let make_room = document.createElement("div");
           make_room.setAttribute("class", "room");
           make_room.innerHTML = `
-          <input type="hidden" value="${response.data[i].room_id}" class="room_key" />
-          <p class="room__name">${response.data[i].title}</p>
-          <p class="room__now">${response.data[i].nowpeople} / ${response.data[i].people}</p>
+          <input type="hidden" value="${response.data[i].room_id}" class="room_key" /><p class="room__name">${response.data[i].title}</p><p class="room__now">${response.data[i].nowpeople} / ${response.data[i].people}</p>
           `;
+          make_room
+            .querySelector(".room__name")
+            .addEventListener("click", modalRoom.Show);
           this.room.appendChild(make_room);
         }
       })
@@ -76,18 +83,56 @@ class Room {
       });
   }
 }
+class modal_room {
+  constructor() {}
+  Show(e) {
+    let modal = document.querySelector(".modal-room");
+    modal.querySelector(".room_id").value = e.target.previousSibling.value;
+    modal.querySelector(".title").innerHTML = e.target.innerHTML;
+    modal.querySelector(".room-pw").value = "";
+    modal.querySelector(".personnel").innerHTML =
+      e.target.nextSibling.innerHTML;
+    modal.style.display = "block";
+  }
+  Hidden() {
+    document.querySelector(".modal-room").style.display = "none";
+  }
+  Join() {
+    // 인원 비밀번호 체크
+  }
+}
 class modal_myroom {
   constructor() {}
   Show(e) {
     let modal = document.querySelector(".modal-myroom");
     modal.querySelector(".room_id").value = e.target.previousSibling.value;
     modal.querySelector(".title").innerHTML = e.target.innerHTML;
+    modal.querySelector(".room-pw").value = "";
     modal.querySelector(".personnel").innerHTML =
       e.target.nextSibling.innerHTML;
     modal.style.display = "block";
   }
   Hidden() {
     document.querySelector(".modal-myroom").style.display = "none";
+  }
+  Join(e) {
+    let roomInfo = {
+      room_id: e.target.parentNode.parentNode.querySelector(".room_id").value,
+      pw: e.target.parentNode.parentNode.querySelector(".room-pw").value,
+    };
+    axiosModule
+      .body("/room/check", "post", roomInfo)
+      .then((res) => {
+        if (res.data.res) {
+          alert("방 참여 성공");
+          return;
+          // location.href = ""
+        }
+        alert("비밀번호를 잘못 입력하셧습니다");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
   Delete(e) {
     let target = e.target;
@@ -97,8 +142,8 @@ class modal_myroom {
       .params("/room/myroom", "delete", { key: room_key })
       .then((res) => {
         alert("방 삭제 성공");
-        // $(".my-room-list").load(location.href + ".my-room-list");
         modalMyroom.Hidden();
+        return location.reload();
       })
       .catch((err) => {
         console.log(err);
@@ -108,6 +153,7 @@ class modal_myroom {
 
 // 클래스 생성
 const modalMyroom = new modal_myroom();
+const modalRoom = new modal_room();
 const axiosModule = new Axios(); //ajax 모듈화 클래스
 const creatRoom = new CreateRoom(document.querySelector(".create-room"));
 const room = new Room(
@@ -124,8 +170,18 @@ $(".header__add").click(creatRoom.Show);
 $(".create-form__exit").click(creatRoom.Hidden);
 $(".create-form__create").click(creatRoom.Create);
 document
-  .querySelector(".room-btn__exit")
+  .querySelector(".modal-myroom .room-btn__exit")
   .addEventListener("click", modalMyroom.Hidden);
 document
-  .querySelector(".room-btn__delete")
+  .querySelector(".modal-myroom .room-btn__delete")
   .addEventListener("click", modalMyroom.Delete);
+document
+  .querySelector(".modal-myroom .room-btn__join")
+  .addEventListener("click", modalMyroom.Join);
+
+document
+  .querySelector(".modal-room .room-btn__exit")
+  .addEventListener("click", modalRoom.Hidden);
+document
+  .querySelector(".modal-room .room-btn__join")
+  .addEventListener("click", modalRoom.Join);

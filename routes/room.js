@@ -83,11 +83,26 @@ router.get("/show/my", function (req, res) {
 
 router.delete("/myroom", function (req, res) {
   const key = req.query.key;
-  console.log(key);
   const query = `delete from room where room_id = ${key}`;
   db.query(query, function (err, result) {
     if (err) {
       return res.status(400).send(err);
+    }
+    res.status(200).send({ res: true, msg: "success" });
+  });
+});
+
+router.post("/check", function (req, res) {
+  const { room_id, pw } = req.body;
+  const query = `select * from room where room_id='${room_id}' AND pw='${pw}'`;
+  console.log(query);
+
+  db.query(query, function (err, result) {
+    if (err) {
+      return res.status(400).send(err);
+    }
+    if (!result[0]) {
+      return res.status(200).send({ res: false, msg: "failed" });
     }
     res.status(200).send({ res: true, msg: "success" });
   });

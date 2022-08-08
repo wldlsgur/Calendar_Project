@@ -207,17 +207,20 @@ body {
   padding: 0px 20px 0px 20px;
 }
 
-.modal-myroom .myroom-form {
+.modal-myroom .myroom-form,
+.modal-room .myroom-form {
   display: flex;
   flex-direction: column;
   padding: 0px 20px 0px 20px;
   margin: 100px 0px 0px 0px;
 }
-.modal-myroom .myroom-form > .room-btn {
+.modal-myroom .myroom-form > .room-btn,
+.modal-room .myroom-form > .room-btn {
   display: flex;
   justify-content: space-around;
 }
-.modal-myroom .myroom-form > .room-btn > button {
+.modal-myroom .myroom-form > .room-btn > button,
+.modal-room .myroom-form > .room-btn > button {
   background-color: #222225;
   color: white;
   height: 50px;
@@ -227,7 +230,10 @@ body {
 }
 .modal-myroom .myroom-form .title,
 .modal-myroom .myroom-form .personnel,
-.modal-myroom .myroom-form .room-pw {
+.modal-myroom .myroom-form .room-pw,
+.modal-room .myroom-form .title,
+.modal-room .myroom-form .personnel,
+.modal-room .myroom-form .room-pw {
   background-color: #222225;
   color: white;
   height: 50px;
