@@ -1,3 +1,5 @@
+import Server from "../common/axios";
+
 var CreateRoom = {
   Show: function () {
     modal_create_room.css("display", "block");
@@ -87,38 +89,24 @@ class modal_myroom {
   Delete(e) {
     let target = e.target;
     let room_key = target.parentNode.parentNode.querySelector(".room_id").value;
-    try {
-      let result = Common_Axios("/room/myroom", "delete", {
-        params: { key: room_key },
-      });
-      if (result) {
-        alert("방 삭제 성공");
-        modalMyroom.Hidden();
-      } else {
-        alert("방 삭제 실패");
-        console.log(result);
-      }
-    } catch (err) {
-      console.log(err);
-    }
 
-    // axios
-    //   .delete("/room/myroom", { params: { key: room_key } })
-    //   .then((response) => {
-    //     if (response.data.res) {
-    //       alert("방 삭제 성공");
-    //       // $(".my-room-list").load(location.href + ".my-room-list");
-    //       modalMyroom.Hidden();
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+    server
+      .params("/room/myroom", "delete", { params: { key: room_key } })
+      .then((res) => {
+        alert("방 삭제 성공");
+        // $(".my-room-list").load(location.href + ".my-room-list");
+        modalMyroom.Hidden();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 }
 const modal_create_room = $(".create-room");
 const user_id = document.querySelector("#user_id").value;
 const modalMyroom = new modal_myroom();
+const server = new Server();
+
 $(document).ready(function () {
   room.all_room();
   room.all_my_room();
@@ -132,10 +120,3 @@ document
 document
   .querySelector(".room-btn__delete")
   .addEventListener("click", modalMyroom.Delete);
-// class Axios {
-//   constructor() {}
-//   Post() {}
-//   GEt() {}
-//   Put() {}
-//   Delete() {}
-// }
