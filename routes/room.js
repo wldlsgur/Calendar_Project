@@ -21,6 +21,16 @@ router.post("/make", function (req, res) {
     });
   });
 });
+router.post("/join", function (req, res) {
+  let { room_id, user_id } = req.body;
+  let query2 = `insert into intoroom(room_id, user_id, chief) value('${room_id}', '${user_id}', false)`;
+  db.query(query2, function (err, result) {
+    if (err) {
+      return res.status(400).send(400);
+    }
+    res.status(200).send({ res: true, msg: "success" });
+  });
+});
 module.exports = router;
 
 router.get("/show/all", function (req, res) {

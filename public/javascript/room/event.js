@@ -51,7 +51,7 @@ class Room {
           let make_room = document.createElement("div");
           make_room.setAttribute("class", "room");
           make_room.innerHTML = `
-          <input type="hidden" value="${response.data[i].room_id}" class="room_key" /><p class="room__name">${response.data[i].title}</p><p class="room__now">${response.data[i].nowpeople} / ${response.data[i].people}</p>
+          <input type="hidden" value="${response.data[i].room_id}" class="room_key" /><p class="room__name">${response.data[i].title}</p><p class="room__now">${response.data[i].nowpeople}/${response.data[i].people}</p>
           `;
           make_room
             .querySelector(".room__name")
@@ -71,7 +71,7 @@ class Room {
           let make_room = document.createElement("div");
           make_room.classList.add("my-room");
           make_room.innerHTML = `
-          <input type="hidden" value="${response.data[i].room_id}" class="room_key" /><p class="my-room__name">${response.data[i].title}</p><p class="my-room__now">${response.data[i].nowpeople} / ${response.data[i].people}</p>`;
+          <input type="hidden" value="${response.data[i].room_id}" class="room_key" /><p class="my-room__name">${response.data[i].title}</p><p class="my-room__now">${response.data[i].nowpeople}/${response.data[i].people}</p>`;
           make_room
             .querySelector(".my-room__name")
             .addEventListener("click", modalMyroom.Show);
@@ -97,8 +97,49 @@ class modal_room {
   Hidden() {
     document.querySelector(".modal-room").style.display = "none";
   }
-  Join() {
-    // 인원 비밀번호 체크
+  Join(e) {
+    let personnel = document.querySelector(".modal-room .personnel").innerHTML;
+    let splitPersonnel = personnel.split("/");
+    let allRoomId = document.querySelectorAll(".my-room .room_key");
+
+    if (parseInt(splitPersonnel[0]) < parseInt(splitPersonnel[1])) {
+      let roomInfo = {
+        room_id: e.target.parentNode.parentNode.querySelector(".room_id").value,
+        pw: e.target.parentNode.parentNode.querySelector(".room-pw").value,
+      };
+      //이미 참여상태인지도
+      axiosModule
+        .body("/room/check", "post", roomInfo)
+        .then((res) => {
+          if (res.data.res === true) {
+            for (let id of allRoomId) {
+              if (id.value === roomInfo.room_id) {
+                return (location.href = "/");
+              }
+            }
+            axiosModule
+              .body("/room/join", "post", {
+                room_id: roomInfo.room_id,
+                user_id: document.querySelector("#user_id").value,
+              })
+              .then((res) => {
+                if (res.data.res === true) {
+                  return (location.href = "/");
+                }
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          } else {
+            return alert("비밀번호가 틀립니다.");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      alert("정원초과");
+    }
   }
 }
 class modal_myroom {
@@ -125,8 +166,7 @@ class modal_myroom {
       .then((res) => {
         if (res.data.res) {
           alert("방 참여 성공");
-          return;
-          // location.href = ""
+          return (location.href = "/");
         }
         alert("비밀번호를 잘못 입력하셧습니다");
       })
