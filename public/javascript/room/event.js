@@ -225,3 +225,16 @@ document
 document
   .querySelector(".modal-room .room-btn__join")
   .addEventListener("click", modalRoom.Join);
+document.querySelector(".header__menu").addEventListener("click", function () {
+  let menu = document.querySelector(".menubar");
+  if (menu.style.display === "block") {
+    menu.style.display = "none";
+  } else {
+    menu.style.display = "block";
+  }
+});
+document
+  .querySelector(".menulist__logout")
+  .addEventListener("click", function () {
+    location.href = "/";
+  });

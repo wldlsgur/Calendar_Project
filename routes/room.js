@@ -31,7 +31,6 @@ router.post("/join", function (req, res) {
     res.status(200).send({ res: true, msg: "success" });
   });
 });
-module.exports = router;
 
 router.get("/show/all", function (req, res) {
   let query = `select room_id, title, people from room`;
@@ -117,4 +116,5 @@ router.post("/check", function (req, res) {
     res.status(200).send({ res: true, msg: "success" });
   });
 });
-// router.post() //방 join 참여
+
+module.exports = router;
