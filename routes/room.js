@@ -113,6 +113,7 @@ router.post("/check", function (req, res) {
     if (!result[0]) {
       return res.status(200).send({ res: false, msg: "failed" });
     }
+    res.cookie("room_id", room_id);
     res.status(200).send({ res: true, msg: "success" });
   });
 });

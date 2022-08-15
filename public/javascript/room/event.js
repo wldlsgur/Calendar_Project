@@ -114,7 +114,7 @@ class modal_room {
           if (res.data.res === true) {
             for (let id of allRoomId) {
               if (id.value === roomInfo.room_id) {
-                return (location.href = "/");
+                return (location.href = "/page/calander");
               }
             }
             axiosModule
@@ -124,7 +124,7 @@ class modal_room {
               })
               .then((res) => {
                 if (res.data.res === true) {
-                  return (location.href = "/");
+                  return (location.href = "/page/calander");
                 }
               })
               .catch((err) => {
@@ -166,7 +166,7 @@ class modal_myroom {
       .then((res) => {
         if (res.data.res) {
           alert("방 참여 성공");
-          return (location.href = "/");
+          return (location.href = "/page/calander");
         }
         alert("비밀번호를 잘못 입력하셧습니다");
       })

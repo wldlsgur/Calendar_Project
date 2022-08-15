@@ -17,12 +17,26 @@
     <title>Calander</title>
   </head>
   <body>
+    <input type="hidden" id="user_id" />
+    <input type="hidden" id="room_id" />
     <header>
-      <nav></nav>
+      <nav>
+        <button class="header__menu"><i class="bi bi-list"></i></button>
+      </nav>
+      <button class="header__add"><i class="bi bi-file-plus"></i></button>
+      <div class="user-info">
+        <img
+          src="/image/user/<%= photo_path %>"
+          alt=""
+          class="user-info__image"
+        />
+        <p class="user-info__name"><%= name %>님.</p>
+      </div>
     </header>
+    <!-- Header -->
     <main>
       <section class="calander"></section>
-      <section class=""></section>
+      <section class="plan-list"></section>
       <section class="chat"></section>
     </main>
     <footer></footer>
