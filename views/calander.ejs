@@ -14,16 +14,14 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css"
     />
+    <link rel="stylesheet" href="/stylesheets/calander/calander.css" />
     <title>Calander</title>
   </head>
   <body>
     <input type="hidden" id="user_id" />
     <input type="hidden" id="room_id" />
     <header>
-      <nav>
-        <button class="header__menu"><i class="bi bi-list"></i></button>
-      </nav>
-      <button class="header__add"><i class="bi bi-file-plus"></i></button>
+      <button class="header__menu"><i class="bi bi-list"></i></button>
       <div class="user-info">
         <img
           src="/image/user/<%= photo_path %>"
@@ -35,9 +33,16 @@
     </header>
     <!-- Header -->
     <main>
-      <section class="calander"></section>
-      <section class="plan-list"></section>
-      <section class="chat"></section>
+      <section class="calander">
+        <button class="header__add"><i class="bi bi-file-plus"></i></button>
+        <h3 class="calander__title">오늘 날짜</h3>
+      </section>
+      <section class="plan-list">
+        <h3 class="plan-list__title">작성 목록</h3>
+      </section>
+      <section class="chat">
+        <h3 class="chat__title">채팅방</h3>
+      </section>
     </main>
     <footer></footer>
   </body>
