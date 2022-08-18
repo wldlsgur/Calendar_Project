@@ -74,13 +74,17 @@ main > section:not(:last-child) {
 main > .calander {
   flex: 1 1 50%;
 }
+main > .calander > .header {
+  display: flex;
+  align-items: center;
+}
 main > .plan-list {
   flex: 1 1 25%;
 }
 main > .chat {
   flex: 1 1 25%;
 }
-main .calandherHeader,
+main .header__title,
 main .plan-list__title,
 main .chat__title {
   color: white;
