@@ -1,6 +1,6 @@
 import test from "/javascript/calander/onload.js";
 const today: Date = new Date();
-let week = new Array(
+const week = new Array(
   "일요일",
   "월요일",
   "화요일",
