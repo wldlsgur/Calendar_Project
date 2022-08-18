@@ -34,8 +34,21 @@
     <!-- Header -->
     <main>
       <section class="calander">
-        <button class="header__add"><i class="bi bi-file-plus"></i></button>
-        <h3 class="calander__title">오늘 날짜</h3>
+        <div class="header">
+          <button class="header__add"><i class="bi bi-file-plus"></i></button>
+          <h3 class="header__title">오늘 날짜</h3>
+        </div>
+        <table border="1" class="table-calander">
+          <thead>
+            <th>일</th>
+            <th>월</th>
+            <th>화</th>
+            <th>수</th>
+            <th>목</th>
+            <th>금</th>
+            <th>토</th>
+          </thead>
+        </table>
       </section>
       <section class="plan-list">
         <h3 class="plan-list__title">작성 목록</h3>
@@ -62,4 +75,5 @@
     crossorigin="anonymous"
   ></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
+  <script src="/javascript/calander/main.js" type="module"></script>
 </html>
