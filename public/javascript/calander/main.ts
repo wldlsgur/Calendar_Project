@@ -1,4 +1,4 @@
-// import onload from "./onload.js";
+import test from "/javascript/calander/onload.js";
 const today: Date = new Date();
 let week = new Array(
   "일요일",
