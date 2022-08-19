@@ -77,6 +77,36 @@ main > .calander {
 main > .calander > .header {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+}
+main > .calander > .table-calander {
+  margin-top: 20px;
+  width: 100%;
+}
+main > .calander > .table-calander > thead th {
+  height: 50px;
+  text-align: center;
+}
+main > .calander > .table-calander > tbody .day {
+  margin-top: -70px;
+}
+main > .calander > .table-calander > tbody td {
+  height: 150px;
+  padding: 0px 10px 0px 10px;
+}
+main > .calander > .table-calander th,
+main > .calander > .table-calander td {
+  width: 150px;
+  border: 1px solid white;
+  color: white;
+}
+main > .calander > .table-calander td:nth-child(1),
+main > .calander > .table-calander th:nth-child(1) {
+  color: red;
+}
+main > .calander > .table-calander td:nth-child(7),
+main > .calander > .table-calander th:nth-child(7) {
+  color: blue;
 }
 main > .plan-list {
   flex: 1 1 25%;
@@ -89,4 +119,10 @@ main .plan-list__title,
 main .chat__title {
   color: white;
   text-align: center;
+}
+
+@media screen and (max-width: 900px) {
+  main {
+    flex-direction: column;
+  }
 }/*# sourceMappingURL=calander.css.map */

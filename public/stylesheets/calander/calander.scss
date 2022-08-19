@@ -68,6 +68,40 @@ main {
     > .header {
       display: flex;
       align-items: center;
+      justify-content: space-between;
+    }
+    > .table-calander {
+      margin-top: 20px;
+      width: 100%;
+      > thead {
+        th {
+          height: 50px;
+          text-align: center;
+        }
+      }
+      > tbody {
+        .day {
+          margin-top: -70px;
+        }
+        td {
+          height: 150px;
+          padding: 0px 10px 0px 10px;
+        }
+      }
+      th,
+      td {
+        width: 150px;
+        border: 1px solid white;
+        color: white;
+      }
+      td:nth-child(1),
+      th:nth-child(1) {
+        color: red;
+      }
+      td:nth-child(7),
+      th:nth-child(7) {
+        color: blue;
+      }
     }
   }
   > .plan-list {
@@ -81,5 +115,11 @@ main {
   .chat__title {
     color: white;
     text-align: center;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  main {
+    flex-direction: column;
   }
 }

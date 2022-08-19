@@ -1,4 +1,4 @@
-import test from "/javascript/calander/onload.js";
+import { text } from "/javascript/calander/onload.js";
 const today: Date = new Date();
 const week = new Array(
   "일요일",
@@ -20,16 +20,19 @@ window.onload = (): void => {
     nowDate.innerHTML = `${year}년 ${month}월 ${date}일`;
   }
 
-  let calander = document.querySelector(".table-calander");
+  let title = document.querySelector(".table-calander__title");
+  if (title instanceof Element) {
+    title.innerHTML = `${year}년 ${month}월`;
+  }
 
+  let calander = document.querySelector(".table-calander__tbody");
   let firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
-  console.log(firstDay.getDay()); //1일 기준 요일 결과 값은 int형
 
-  let tag = "<tr>";
+  let tag = document.createElement("tr");
   let cnt = 0;
   for (let i = 0; i < firstDay.getDay(); i++) {
     //요일 int만큼 빈 값 넣어준다.
-    tag += `<th></th>`;
+    tag.innerHTML += `<td></td>`;
     cnt++;
   }
 
@@ -38,12 +41,18 @@ window.onload = (): void => {
     today.getMonth(),
     0
   ).getDate();
-  console.log(allDay);
   for (let i = 1; i <= allDay; i++) {
     if (cnt % 7 == 0) {
-      tag += "<tr>";
+      calander?.appendChild(tag);
+      tag = document.createElement("tr");
     }
-    tag += `<td>${i}</td>`;
+    let td = document.createElement("td");
+    let div = document.createElement("div");
+    div.setAttribute("class", "day");
+    div.innerHTML = String(i);
+    td.appendChild(div);
+    tag.appendChild(td);
     cnt++;
   }
+  calander?.appendChild(tag);
 };
