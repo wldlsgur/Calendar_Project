@@ -65,6 +65,7 @@ main {
   }
   > .calander {
     flex: 1 1 50%;
+    overflow: auto;
     > .header {
       display: flex;
       align-items: center;
@@ -84,6 +85,7 @@ main {
           margin-top: -70px;
         }
         td {
+          overflow: auto;
           height: 150px;
           padding: 0px 10px 0px 10px;
         }

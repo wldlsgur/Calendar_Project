@@ -73,6 +73,7 @@ main > section:not(:last-child) {
 }
 main > .calander {
   flex: 1 1 50%;
+  overflow: auto;
 }
 main > .calander > .header {
   display: flex;
@@ -91,6 +92,7 @@ main > .calander > .table-calander > tbody .day {
   margin-top: -70px;
 }
 main > .calander > .table-calander > tbody td {
+  overflow: auto;
   height: 150px;
   padding: 0px 10px 0px 10px;
 }
