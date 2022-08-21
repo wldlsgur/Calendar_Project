@@ -16,6 +16,7 @@ router.get("/room", function (req, res, next) {
     if (err) {
       res.status(400).send(err);
     }
+    res.clearCookie("room_id");
     res.render("room.ejs", {
       user_id: result[0].user_id,
       id: result[0].id,

@@ -18,8 +18,8 @@
     <title>Calander</title>
   </head>
   <body>
-    <input type="hidden" id="user_id" />
-    <input type="hidden" id="room_id" />
+    <input type="hidden" id="user_id" value="<%= id %>" />
+    <input type="hidden" id="room_id" value="<%= room_id %>" />
     <header>
       <button class="header__menu"><i class="bi bi-list"></i></button>
       <div class="user-info">
@@ -63,6 +63,29 @@
       </section>
     </main>
     <footer></footer>
+    <div class="menubar">
+      <ul class="menulist">
+        <li class="menulist__logout">로그아웃</li>
+        <li class="menulist__room">방 선택</li>
+        <li class="menulist__changeinfo">회원 정보 수정</li>
+      </ul>
+    </div>
+
+    <div class="modalComment">
+      <div class="commentForm">
+        <input type="date" class="commentForm__date" />
+        <textarea
+          class="commentForm__content"
+          cols="40"
+          rows="10"
+          placeholder="일정 입력.."
+        ></textarea>
+        <div class="commentForm__btn">
+          <input type="submit" value="작성" class="commentForm__btn--submit" />
+          <input type="button" value="취소" class="commentForm__btn--exit" />
+        </div>
+      </div>
+    </div>
   </body>
   <script
     src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

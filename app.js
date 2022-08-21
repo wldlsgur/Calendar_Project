@@ -15,6 +15,7 @@ var checkRouter = require("./routes/check");
 var userRouter = require("./routes/user");
 let uploadimage = require("./routes/uploadimage");
 let roomRouter = require("./routes/room");
+let calanderRouter = require("./routes/calander");
 var app = express();
 
 const storage = multer.diskStorage({
@@ -51,6 +52,7 @@ app.use("/page", pageRouter);
 app.use("/user", userRouter);
 app.use("/check", checkRouter);
 app.use("/room", roomRouter);
+app.use("/calander", calanderRouter);
 app.post("/uploadimage/:id", upload.single("image"), uploadimage); //사진 한장
 
 // catch 404 and forward to error handler

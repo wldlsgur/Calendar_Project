@@ -1,4 +1,4 @@
-import { text } from "/javascript/calander/onload.js";
+import { Nav, Modal } from "/javascript/calander/nav.js";
 const week = new Array(
   "일요일",
   "월요일",
@@ -8,7 +8,31 @@ const week = new Array(
   "금요일",
   "토요일"
 );
+const nav = new Nav();
+const modal = new Modal();
 let today: Date = new Date();
+
+document
+  .querySelector(".header__menu")
+  ?.addEventListener("click", nav.ShowHidden);
+document
+  .querySelector(".menulist__logout")
+  ?.addEventListener("click", nav.HrefHome);
+document
+  .querySelector(".menulist__room")
+  ?.addEventListener("click", nav.HrefPageRoom);
+// navEvent
+
+document
+  .querySelector(".header__add")
+  ?.addEventListener("click", modal.ShowComment);
+document
+  .querySelector(".commentForm__btn--exit")
+  ?.addEventListener("click", modal.HiddenComment);
+document
+  .querySelector(".commentForm__btn--submit")
+  ?.addEventListener("click", modal.SubmitCommnet);
+// modalEvent
 
 document.querySelector(".bi-caret-left")?.addEventListener("click", () => {
   today = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
@@ -18,10 +42,10 @@ document.querySelector(".bi-caret-right")?.addEventListener("click", () => {
   today = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate());
   initCalander();
 });
-
 window.onload = () => {
   initCalander();
 };
+// calanderEvent
 
 function initCalander(): void {
   if (document.querySelector(".table-calander__tbody")) {
