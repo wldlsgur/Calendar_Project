@@ -1,4 +1,6 @@
-import { Nav, Modal } from "/javascript/calander/nav.js";
+import { Nav, Modal } from "/javascript/calander/nav_modal.js";
+import calanderController from "./content.js";
+
 const week = new Array(
   "일요일",
   "월요일",
@@ -43,7 +45,9 @@ document.querySelector(".bi-caret-right")?.addEventListener("click", () => {
   initCalander();
 });
 window.onload = () => {
-  initCalander();
+  initCalander(); //초기 캘린더 화면
+  let calandercontroller = new calanderController(today);
+  calandercontroller.getContent();
 };
 // calanderEvent
 

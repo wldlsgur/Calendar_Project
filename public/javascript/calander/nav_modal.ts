@@ -35,7 +35,7 @@ class Modal {
       commentModal.style.display = "none";
     }
   }
-  SubmitCommnet() {
+  async SubmitCommnet(): Promise<void> {
     const date = document.querySelector(".commentForm__date");
     const content = document.querySelector(".commentForm__content");
     let submitInfo = {};
@@ -46,18 +46,13 @@ class Modal {
       } else {
         submitInfo.date = date.value;
         submitInfo.content = content.value;
-        axiosModule
-          .body("/calander", "post", submitInfo)
-          .then((res: { date: { res: Boolean } }) => {
-            if (res.date.res) {
-              alert("작성 성공!");
-              return modal.HiddenComment;
-            }
-          })
-          .catch((err: any) => {
-            console.log(err);
-            return alert("작성 에러");
-          });
+        let response = await axiosModule.body("/calander", "post", submitInfo);
+        if (response.data.res) {
+          alert("작성 성공");
+        } else {
+          alert("작성 실패");
+        }
+        return modal.HiddenComment();
       }
     }
   }
