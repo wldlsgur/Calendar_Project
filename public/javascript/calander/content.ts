@@ -21,12 +21,49 @@ class calanderController {
       return;
     }
     for (let i in response.data) {
-      let day = response.data[i].date.split("-");
+      let responseDay = response.data[i].date.split("-");
       for (let j in arrayDay) {
-        // if (day[2] === arrayDay[j].innerHTML) {
-        //   console.log(day[2]);
-        // }
-        //03이랑 3 이랑 같지가 않아서 매칭이 안된다 해결해야한다
+        let htmlDay: String = String(arrayDay[j].innerHTML);
+        if (htmlDay.length < 2) {
+          htmlDay = "0" + arrayDay[j].innerHTML;
+        }
+        if (responseDay[2] === htmlDay) {
+          let div: Element = document.createElement("div");
+          let img: Element = document.createElement("img");
+          let name: Element = document.createElement("p");
+          let contentId: Element = document.createElement("input");
+          let userId: Element = document.createElement("input");
+          let content: Element = document.createElement("input");
+
+          div.setAttribute("class", "contentInfo");
+
+          img.setAttribute("class", "contentInfo__img");
+          img.setAttribute("src", "/image/user/" + response.data[i].photo_path);
+
+          name.setAttribute("class", "contentInfo__name");
+          name.innerHTML = response.data[i].name;
+
+          contentId.setAttribute("class", "contentInfo__contentId");
+          contentId.setAttribute("value", response.data[i].content_id);
+          contentId.setAttribute("type", "hidden");
+
+          userId.setAttribute("class", "contentInfo__userId");
+          userId.setAttribute("value", response.data[i].user_id);
+          userId.setAttribute("type", "hidden");
+
+          content.setAttribute("class", "contentInfo__content");
+          content.setAttribute("value", response.data[i].content);
+          content.setAttribute("type", "hidden");
+
+          div.appendChild(img);
+          div.appendChild(name);
+          div.appendChild(contentId);
+          div.appendChild(userId);
+          div.appendChild(content);
+          arrayDay[j].parentNode?.appendChild(div);
+
+          // 이벤트 달고
+        }
       }
     }
   }
