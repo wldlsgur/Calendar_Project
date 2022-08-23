@@ -36,6 +36,7 @@ class calanderController {
           let content: Element = document.createElement("input");
 
           div.setAttribute("class", "contentInfo");
+          div.addEventListener("click", viewContent);
 
           img.setAttribute("class", "contentInfo__img");
           img.setAttribute("src", "/image/user/" + response.data[i].photo_path);
@@ -68,5 +69,48 @@ class calanderController {
     }
   }
 }
+class ContentInfo {
+  img: string;
+  name: string;
+  content_id: string;
+  user_id: string;
+  content: string;
+  constructor(
+    img: string,
+    name: string,
+    content_id: string,
+    user_id: string,
+    text: string
+  ) {
+    this.img = img;
+    this.name = name;
+    this.content_id = content_id;
+    this.user_id = user_id;
+    this.content = text;
+  }
 
+  SetModalData() {
+    document
+      .querySelector(".contentId")
+      ?.setAttribute("value", this.content_id);
+    document.querySelector(".userInfo__img")?.setAttribute("src", this.img);
+    document.querySelector(".commentInfo__date");
+    document.querySelector(".commentInfo__content");
+    document.querySelector(".userInfo__name")?.innerHTML = this.name;
+  }
+}
+function viewContent(this: any) {
+  let modal = document.querySelector(".modalCommentInfo");
+  if (modal instanceof Element) {
+    let img = this.querySelector(".contentInfo__img").src;
+    let name = this.querySelector(".contentInfo__name").innerHTML;
+    let content_id = this.querySelector(".contentInfo__contentId").value;
+    let user_id = this.querySelector(".contentInfo__userId").value;
+    let text = this.querySelector(".contentInfo__content").value;
+
+    modal.style.display = "block";
+    let content = new ContentInfo(img, name, content_id, user_id, text);
+    content.SetModalData();
+  }
+}
 export default calanderController;

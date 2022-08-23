@@ -42,21 +42,7 @@
             <button><i class="bi bi-caret-right"></i></button>
           </div>
         </div>
-        <table border="1" class="table-calander">
-          <thead>
-            <th>일</th>
-            <th>월</th>
-            <th>화</th>
-            <th>수</th>
-            <th>목</th>
-            <th>금</th>
-            <th>토</th>
-          </thead>
-          <!-- <tbody class="table-calander__tbody"></tbody> -->
-        </table>
-      </section>
-      <section class="plan-list">
-        <h3 class="plan-list__title">작성 목록</h3>
+        <table border="1" class="table-calander"></table>
       </section>
       <section class="chat">
         <h3 class="chat__title">채팅방</h3>
@@ -86,6 +72,23 @@
         </div>
       </div>
     </div>
+    <!-- 위에는 콘텐츠 생성 모달 -->
+    <div class="modalCommentInfo">
+      <div class="commentInfo">
+        <input type="hidden" placeholder="contentId" class="contentId" />
+        <div class="userInfo">
+          <img src="" alt="" class="userInfo__img" />
+          <p class="userInfo__name"></p>
+        </div>
+        <p class="commentInfo__date"></p>
+        <p class="commentInfo__content"></p>
+        <div class="commentForm__btn">
+          <input type="submit" value="삭제" class="commentForm__btn--submit" />
+          <input type="button" value="취소" class="commentForm__btn--exit" />
+        </div>
+      </div>
+    </div>
+    <!-- 콘텐츠 정보 모달 -->
   </body>
   <script
     src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

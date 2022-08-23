@@ -9,14 +9,20 @@ router.get("/signup", function (req, res, next) {
 });
 
 router.get("/room", function (req, res, next) {
-  let userId = req.cookies.id;
+  if (!req.session.login) {
+    alert("로그인 후 이용해주세요");
+    return res.status(200).redirect("/");
+  }
+  let userId = req.session.user_id;
   let query = `select * from user where user_id='${userId}'`;
 
   db.query(query, function (err, result) {
     if (err) {
       res.status(400).send(err);
     }
-    res.clearCookie("room_id");
+    if (req.session.room_id) {
+      req.session.room_id = null;
+    }
     res.render("room.ejs", {
       user_id: result[0].user_id,
       id: result[0].id,
@@ -27,7 +33,11 @@ router.get("/room", function (req, res, next) {
 });
 
 router.get("/calander", function (req, res) {
-  let userId = req.cookies.id;
+  if (!req.session.login) {
+    alert("로그인 후 이용해주세요");
+    return res.status(200).redirect("/");
+  }
+  let userId = req.session.user_id;
   let roomId = req.cookies.room_id;
   let query = `select * from user where user_id='${userId}'`;
 

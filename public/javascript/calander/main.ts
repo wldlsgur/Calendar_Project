@@ -35,19 +35,21 @@ document
   .querySelector(".commentForm__btn--submit")
   ?.addEventListener("click", modal.SubmitCommnet);
 // modalEvent
-
+function SetCalander() {
+  initCalander();
+  let calandercontroller = new calanderController(today);
+  calandercontroller.getContent();
+}
 document.querySelector(".bi-caret-left")?.addEventListener("click", () => {
   today = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
-  initCalander();
+  SetCalander();
 });
 document.querySelector(".bi-caret-right")?.addEventListener("click", () => {
   today = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate());
-  initCalander();
+  SetCalander();
 });
 window.onload = () => {
-  initCalander(); //초기 캘린더 화면
-  let calandercontroller = new calanderController(today);
-  calandercontroller.getContent();
+  SetCalander();
 };
 // calanderEvent
 
@@ -66,8 +68,20 @@ function initCalander(): void {
   let calander = document.createElement("tbody");
   calander.setAttribute("class", "table-calander__tbody");
   let firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
+  let trCnt = 0; //행 몇 줄인지 카운트
+
+  let dayTr = document.createElement("tr");
+  for (let i in week) {
+    let dayTd = document.createElement("td");
+    dayTd.setAttribute("class", "dayOfWeek");
+    dayTd.innerHTML = week[i];
+    dayTr.appendChild(dayTd);
+  }
+  calander.appendChild(dayTr); //월화수목금 입력
 
   let tag = document.createElement("tr");
+  trCnt++;
+
   let cnt = 0;
   for (let i = 0; i < firstDay.getDay(); i++) {
     //요일 int만큼 빈 값 넣어준다.
@@ -80,10 +94,12 @@ function initCalander(): void {
     today.getMonth(),
     0
   ).getDate();
+
   for (let i = 1; i <= allDay; i++) {
-    if (cnt % 7 == 0) {
+    if (cnt % 7 === 0) {
       calander?.appendChild(tag);
       tag = document.createElement("tr");
+      trCnt++;
     }
     let td = document.createElement("td");
     let div = document.createElement("div");
@@ -92,6 +108,17 @@ function initCalander(): void {
     td.appendChild(div);
     tag.appendChild(td);
     cnt++;
+    if (i === allDay) {
+      //마지막 빈칸
+      while (true) {
+        if (cnt % 7 === 0) {
+          break;
+        }
+        let td = document.createElement("td");
+        tag.appendChild(td);
+        cnt++;
+      }
+    }
   }
   calander?.appendChild(tag);
   table?.appendChild(calander);

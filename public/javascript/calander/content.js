@@ -43,6 +43,7 @@ class calanderController {
                         let userId = document.createElement("input");
                         let content = document.createElement("input");
                         div.setAttribute("class", "contentInfo");
+                        div.addEventListener("click", viewContent);
                         img.setAttribute("class", "contentInfo__img");
                         img.setAttribute("src", "/image/user/" + response.data[i].photo_path);
                         name.setAttribute("class", "contentInfo__name");
@@ -67,6 +68,37 @@ class calanderController {
                 }
             }
         });
+    }
+}
+class ContentInfo {
+    constructor(img, name, content_id, user_id, text) {
+        this.img = img;
+        this.name = name;
+        this.content_id = content_id;
+        this.user_id = user_id;
+        this.content = text;
+    }
+    SetModalData() {
+        var _a, _b, _c;
+        (_a = document
+            .querySelector(".contentId")) === null || _a === void 0 ? void 0 : _a.setAttribute("value", this.content_id);
+        (_b = document.querySelector(".userInfo__img")) === null || _b === void 0 ? void 0 : _b.setAttribute("src", this.img);
+        document.querySelector(".commentInfo__date");
+        document.querySelector(".commentInfo__content");
+        (_c = document.querySelector(".userInfo__name")) === null || _c === void 0 ? void 0 : _c.innerHTML = this.name;
+    }
+}
+function viewContent() {
+    let modal = document.querySelector(".modalCommentInfo");
+    if (modal instanceof Element) {
+        let img = this.querySelector(".contentInfo__img").src;
+        let name = this.querySelector(".contentInfo__name").innerHTML;
+        let content_id = this.querySelector(".contentInfo__contentId").value;
+        let user_id = this.querySelector(".contentInfo__userId").value;
+        let text = this.querySelector(".contentInfo__content").value;
+        modal.style.display = "block";
+        let content = new ContentInfo(img, name, content_id, user_id, text);
+        content.SetModalData();
     }
 }
 export default calanderController;

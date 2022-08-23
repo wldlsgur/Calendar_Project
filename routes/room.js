@@ -62,7 +62,7 @@ router.get("/show/all", function (req, res) {
 });
 
 router.get("/show/my", function (req, res) {
-  let user_id = req.cookies.id;
+  let user_id = req.session.user_id;
   let query = `select i.room_id, i.chief, r.title, r.people from intoroom as i inner join room as r on i.room_id = r.room_id where i.user_id = '${user_id}'`;
   db.query(query, async function (err, result) {
     if (err) {
@@ -113,7 +113,7 @@ router.post("/check", function (req, res) {
     if (!result[0]) {
       return res.status(200).send({ res: false, msg: "failed" });
     }
-    res.cookie("room_id", room_id);
+    req.session.room_id = room_id;
     res.status(200).send({ res: true, msg: "success" });
   });
 });

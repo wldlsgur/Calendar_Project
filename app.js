@@ -4,6 +4,8 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const multer = require("multer");
+const session = require("express-session");
+const FileStore = require("session-file-store")(session);
 
 //Function
 const upload_function = require("./function/upload");
@@ -46,6 +48,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static("public"));
 app.use("/image", express.static("upload"));
+app.use(
+  session({
+    secret: "keyboard cat",
+    resave: false,
+    saveUninitialized: true,
+    store: new FileStore(),
+  })
+);
 
 app.use("/", indexRouter);
 app.use("/page", pageRouter);
