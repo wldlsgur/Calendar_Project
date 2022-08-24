@@ -13,6 +13,7 @@ const week = new Array(
 const nav = new Nav();
 const modal = new Modal();
 let today: Date = new Date();
+const staticCC = new calanderController(today);
 
 document
   .querySelector(".header__menu")
@@ -34,6 +35,12 @@ document
 document
   .querySelector(".commentForm__btn--submit")
   ?.addEventListener("click", modal.SubmitCommnet);
+document
+  .querySelector(".modalCommentInfo .commentForm__btn--exit")
+  ?.addEventListener("click", modal.HiddenCommentDetail);
+document
+  .querySelector(".modalCommentInfo .commentForm__btn--submit")
+  ?.addEventListener("click", staticCC.DeleteContent);
 // modalEvent
 function SetCalander() {
   initCalander();

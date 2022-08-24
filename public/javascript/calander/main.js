@@ -1,10 +1,11 @@
-var _a, _b, _c, _d, _e, _f, _g, _h;
+var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
 import { Nav, Modal } from "/javascript/calander/nav_modal.js";
 import calanderController from "./content.js";
 const week = new Array("일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일");
 const nav = new Nav();
 const modal = new Modal();
 let today = new Date();
+const staticCC = new calanderController(today);
 (_a = document
     .querySelector(".header__menu")) === null || _a === void 0 ? void 0 : _a.addEventListener("click", nav.ShowHidden);
 (_b = document
@@ -18,17 +19,21 @@ let today = new Date();
     .querySelector(".commentForm__btn--exit")) === null || _e === void 0 ? void 0 : _e.addEventListener("click", modal.HiddenComment);
 (_f = document
     .querySelector(".commentForm__btn--submit")) === null || _f === void 0 ? void 0 : _f.addEventListener("click", modal.SubmitCommnet);
+(_g = document
+    .querySelector(".modalCommentInfo .commentForm__btn--exit")) === null || _g === void 0 ? void 0 : _g.addEventListener("click", modal.HiddenCommentDetail);
+(_h = document
+    .querySelector(".modalCommentInfo .commentForm__btn--submit")) === null || _h === void 0 ? void 0 : _h.addEventListener("click", staticCC.DeleteContent);
 // modalEvent
 function SetCalander() {
     initCalander();
     let calandercontroller = new calanderController(today);
     calandercontroller.getContent();
 }
-(_g = document.querySelector(".bi-caret-left")) === null || _g === void 0 ? void 0 : _g.addEventListener("click", () => {
+(_j = document.querySelector(".bi-caret-left")) === null || _j === void 0 ? void 0 : _j.addEventListener("click", () => {
     today = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
     SetCalander();
 });
-(_h = document.querySelector(".bi-caret-right")) === null || _h === void 0 ? void 0 : _h.addEventListener("click", () => {
+(_k = document.querySelector(".bi-caret-right")) === null || _k === void 0 ? void 0 : _k.addEventListener("click", () => {
     today = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate());
     SetCalander();
 });

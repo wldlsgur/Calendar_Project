@@ -18,6 +18,18 @@ router.post("/", function (req, res, next) {
   });
 });
 
+router.delete("/", function (req, res) {
+  const { contentId } = req.body;
+  let query = `delete from content where content_id = '${contentId}'`;
+
+  db.query(query, function (err, result) {
+    if (err) {
+      return res.status(400).send(err);
+    }
+    res.status(200).send({ res: true, msg: "success" });
+  });
+});
+
 router.get("/content", function (req, res) {
   const date = req.query.date;
   const room_id = req.session.room_id;

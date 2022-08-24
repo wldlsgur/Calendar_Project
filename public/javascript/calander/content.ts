@@ -1,5 +1,8 @@
 import Axios from "/javascript/common/axios.js";
+import { Modal } from "/javascript/calander/nav_modal.js";
+
 const axiosModule = new Axios();
+const modal = new Modal();
 
 class calanderController {
   today: Date;
@@ -68,6 +71,20 @@ class calanderController {
       }
     }
   }
+
+  async DeleteContent(event: { preventDefault: () => void }): Promise<void> {
+    let contentId = {
+      contentId: this.parentNode.parentNode.querySelector(".contentId").value,
+    };
+    let response = await axiosModule.body("/calander", "delete", contentId);
+    if (response.data.res) {
+      alert("삭제 성공");
+      modal.HiddenCommentDetail();
+      location.reload();
+      return;
+    }
+    return alert("삭제 실패");
+  }
 }
 class ContentInfo {
   img: string;
@@ -75,18 +92,21 @@ class ContentInfo {
   content_id: string;
   user_id: string;
   content: string;
+  date: string;
   constructor(
     img: string,
     name: string,
     content_id: string,
     user_id: string,
-    text: string
+    text: string,
+    date: string
   ) {
     this.img = img;
     this.name = name;
     this.content_id = content_id;
     this.user_id = user_id;
     this.content = text;
+    this.date = date;
   }
 
   SetModalData() {
@@ -94,8 +114,8 @@ class ContentInfo {
       .querySelector(".contentId")
       ?.setAttribute("value", this.content_id);
     document.querySelector(".userInfo__img")?.setAttribute("src", this.img);
-    document.querySelector(".commentInfo__date");
-    document.querySelector(".commentInfo__content");
+    document.querySelector(".commentInfo__date")?.innerHTML = this.date;
+    document.querySelector(".commentInfo__content")?.innerHTML = this.content;
     document.querySelector(".userInfo__name")?.innerHTML = this.name;
   }
 }
@@ -107,9 +127,24 @@ function viewContent(this: any) {
     let content_id = this.querySelector(".contentInfo__contentId").value;
     let user_id = this.querySelector(".contentInfo__userId").value;
     let text = this.querySelector(".contentInfo__content").value;
-
+    let date =
+      document.querySelector(".header__title")?.innerHTML +
+      this?.parentNode.querySelector(".day").innerHTML +
+      "일";
+    let joiningUserId = document.querySelector("#user_id");
+    if (joiningUserId instanceof Element) {
+      joiningUserId = joiningUserId.value;
+      if (joiningUserId === user_id) {
+        let delSubmitBtn = document.querySelector(
+          ".modalCommentInfo .commentForm__btn--submit"
+        );
+        if (delSubmitBtn instanceof Element) {
+          delSubmitBtn.style.display = "block";
+        }
+      }
+    }
     modal.style.display = "block";
-    let content = new ContentInfo(img, name, content_id, user_id, text);
+    let content = new ContentInfo(img, name, content_id, user_id, text, date);
     content.SetModalData();
   }
 }

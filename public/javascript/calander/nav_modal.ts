@@ -29,10 +29,22 @@ class Modal {
       commentModal.style.display = "block";
     }
   }
-  HiddenComment() {
-    let commentModal = document.querySelector(".modalComment");
+  HiddenCommentDetail() {
+    let delSubmitBtn = document.querySelector(
+      ".modalCommentInfo .commentForm__btn--submit"
+    );
+    if (delSubmitBtn instanceof Element) {
+      delSubmitBtn.style.display = "none";
+    }
+    let commentModal = document.querySelector(".modalCommentInfo");
     if (commentModal instanceof Element) {
       commentModal.style.display = "none";
+    }
+  }
+  HiddenComment() {
+    let modalInfo = document.querySelector(".modalComment");
+    if (modalInfo instanceof Element) {
+      modalInfo.style.display = "none";
     }
   }
   async SubmitCommnet(): Promise<void> {
