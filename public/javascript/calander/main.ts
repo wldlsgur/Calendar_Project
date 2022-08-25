@@ -13,10 +13,13 @@ const week = new Array(
 );
 let today: Date = new Date();
 
+const socket = io();
 const nav = new Nav();
 const modal = new Modal();
 const personnelcontroller = new personnelController();
 const staticCC = new calanderController(today);
+const roomId = document.querySelector("#room_id")?.value;
+const userName = document.querySelector("#userName")?.value;
 
 document
   .querySelector(".header__menu")
@@ -61,6 +64,7 @@ document.querySelector(".bi-caret-right")?.addEventListener("click", () => {
 window.onload = () => {
   SetCalander();
   personnelcontroller.getDataOfServer();
+  SocketJoin();
 };
 // calanderEvent
 
@@ -134,3 +138,15 @@ function initCalander(): void {
   calander?.appendChild(tag);
   table?.appendChild(calander);
 }
+
+function SocketJoin(): void {
+  socket.emit("joinRoom", roomId, userName);
+}
+
+socket.on("joinRoom", (userName: any) => {
+  console.log("소켓 on 실행");
+  let root = document.querySelector(".chatList__msg");
+  let joinmsg = document.createElement("div");
+  joinmsg.innerHTML = `${userName}님 입장`;
+  root?.appendChild(joinmsg);
+});

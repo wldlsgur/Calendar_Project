@@ -19,6 +19,7 @@ let uploadimage = require("./routes/uploadimage");
 let roomRouter = require("./routes/room");
 let calanderRouter = require("./routes/calander");
 var app = express();
+app.io = require("socket.io")();
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -48,7 +49,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static("public"));
 app.use("/image", express.static("upload"));
-app.io = require("socket.io")();
 app.use(
   session({
     secret: "keyboard cat",
@@ -84,6 +84,44 @@ app.use(function (err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render("error");
+});
+
+let roomList = new Set();
+let roomIndex;
+app.io.on("connection", (socket) => {
+  console.log("유저가 들어왔다.");
+  // 요거 추가
+  socket.on("joinRoom", (roomId, name) => {
+    console.log("방 참여.");
+    roomList.add(roomId);
+    console.log(roomList);
+
+    for (let i; roomList.length; i++) {
+      if (roomId === roomList[i]) {
+        roomIndex = i;
+        console.log(roomIndex);
+        socket.join(roomList[roomIndex], () => {
+          app.io.to(roomList[roomIndex]).emit("joinRoom", name);
+        });
+        break;
+      }
+    }
+  });
+
+  // 요거 추가
+  socket.on("leaveRoom", (roomId, name) => {
+    socket.leave(roomId, () => {
+      app.io.to(roomId).emit("leaveRoom", name);
+    });
+  });
+
+  socket.on("disconnect", () => {
+    console.log("유저가 나갔다.");
+  });
+
+  socket.on("chat-msg", (roomId, name, msg) => {
+    app.io.to(roomId).emit("chat-msg", name, msg); // to(room[a])를 통해 그룹에게만 메세지를 날린다.
+  });
 });
 
 module.exports = app;

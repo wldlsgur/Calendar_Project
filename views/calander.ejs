@@ -20,6 +20,7 @@
   <body>
     <input type="hidden" id="user_id" value="<%= id %>" />
     <input type="hidden" id="room_id" value="<%= room_id %>" />
+    <input type="hidden" id="userName" value="<%= name %>" />
     <header>
       <button class="header__menu"><i class="bi bi-list"></i></button>
       <div class="user-info">
@@ -122,6 +123,7 @@
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"
   ></script>
+  <script defer src="/socket.io/socket.io.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
   <script src="/javascript/calander/main.js" type="module"></script>
 </html>
