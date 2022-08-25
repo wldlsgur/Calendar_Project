@@ -3,13 +3,12 @@ var router = express.Router();
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
-  if (req.session) {
-    req.session.destroy(function (err) {});
-  }
+  req.session.destroy(function (err) {
+    res.render("index.ejs");
+  });
   // delete req.session.user_id;
   // delete req.session.login;
   // delete req.session.room_id;
-  res.render("index.ejs");
 });
 
 module.exports = router;

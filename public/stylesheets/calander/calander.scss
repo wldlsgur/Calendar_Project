@@ -106,9 +106,87 @@ main {
       }
     }
   }
-  > .chat {
+  > .personnelAndChat {
     flex: 1 1 25%;
     margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+
+    > .personnel {
+      flex: 1 1 30%;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      > .header {
+        flex: 1 1 5%;
+        border-bottom: solid 1px white;
+      }
+      > .personnelList {
+        flex: 1 1 95%;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        padding: 10px 10px 10px 10px;
+        //참여 인원
+        > .personnel {
+          padding: 10px 10px 10px 10px;
+          margin-bottom: 10px;
+          border: 1px solid white;
+          border-radius: 20px;
+          display: flex;
+          justify-content: space-between;
+          > .personnelUser {
+            display: flex;
+            align-items: center;
+            > .personnelUser__name {
+              margin-left: 10px;
+            }
+            > .personnelUser__img {
+              width: 50px;
+              height: 50px;
+              border-radius: 50%;
+            }
+          }
+        }
+        p {
+          margin-top: 10px;
+          color: white;
+        }
+      }
+    }
+    > .chat {
+      flex: 1 1 70%;
+      display: flex;
+      flex-direction: column;
+      > .header {
+        flex: 1 1 5%;
+        border-bottom: solid 1px white;
+      }
+      > .chatList {
+        flex: 1 1 95%;
+        display: flex;
+        flex-direction: column;
+        > .chatList__msg {
+          flex: 1 1 85%;
+          overflow-y: auto;
+          display: flex;
+          flex-direction: column;
+          //채팅
+        }
+        > .chatWrite {
+          flex: 1 1 15%;
+          display: flex;
+          > .chatWrite__input {
+            flex: 1 1 90%;
+          }
+          > .chatWrite__submit {
+            flex: 1 1 10%;
+            background-color: darkgray;
+            color: white;
+          }
+        }
+      }
+    }
   }
   .header__title,
   .plan-list__title,
@@ -259,7 +337,7 @@ main {
   section.calander {
     flex: 1 1 50%;
   }
-  section.chat {
+  section.personnelAndChat {
     flex: 1 1 50%;
     margin: 20px 0px 0px 0px;
   }

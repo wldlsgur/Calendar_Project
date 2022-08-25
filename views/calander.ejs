@@ -44,8 +44,25 @@
         </div>
         <table border="1" class="table-calander"></table>
       </section>
-      <section class="chat">
-        <h3 class="chat__title">채팅방</h3>
+      <section class="personnelAndChat">
+        <div class="personnel">
+          <div class="header">
+            <h3 class="header__title">참여 인원</h3>
+          </div>
+          <div class="personnelList"></div>
+        </div>
+        <div class="chat">
+          <div class="header">
+            <h3 class="header__title">채팅방</h3>
+          </div>
+          <div class="chatList">
+            <div class="chatList__msg"></div>
+            <form class="chatWrite">
+              <textarea class="chatWrite__input"></textarea>
+              <input type="submit" class="chatWrite__submit" value="전송" />
+            </form>
+          </div>
+        </div>
       </section>
     </main>
     <footer></footer>

@@ -113,9 +113,84 @@ main > .calander > .table-calander td:nth-child(7),
 main > .calander > .table-calander th:nth-child(7) {
   color: blue;
 }
-main > .chat {
+main > .personnelAndChat {
   flex: 1 1 25%;
   margin-left: 20px;
+  display: flex;
+  flex-direction: column;
+}
+main > .personnelAndChat > .personnel {
+  flex: 1 1 30%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+main > .personnelAndChat > .personnel > .header {
+  flex: 1 1 5%;
+  border-bottom: solid 1px white;
+}
+main > .personnelAndChat > .personnel > .personnelList {
+  flex: 1 1 95%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 10px 10px 10px;
+}
+main > .personnelAndChat > .personnel > .personnelList > .personnel {
+  padding: 10px 10px 10px 10px;
+  margin-bottom: 10px;
+  border: 1px solid white;
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+main > .personnelAndChat > .personnel > .personnelList > .personnel > .personnelUser {
+  display: flex;
+  align-items: center;
+}
+main > .personnelAndChat > .personnel > .personnelList > .personnel > .personnelUser > .personnelUser__name {
+  margin-left: 10px;
+}
+main > .personnelAndChat > .personnel > .personnelList > .personnel > .personnelUser > .personnelUser__img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+main > .personnelAndChat > .personnel > .personnelList p {
+  margin-top: 10px;
+  color: white;
+}
+main > .personnelAndChat > .chat {
+  flex: 1 1 70%;
+  display: flex;
+  flex-direction: column;
+}
+main > .personnelAndChat > .chat > .header {
+  flex: 1 1 5%;
+  border-bottom: solid 1px white;
+}
+main > .personnelAndChat > .chat > .chatList {
+  flex: 1 1 95%;
+  display: flex;
+  flex-direction: column;
+}
+main > .personnelAndChat > .chat > .chatList > .chatList__msg {
+  flex: 1 1 85%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+main > .personnelAndChat > .chat > .chatList > .chatWrite {
+  flex: 1 1 15%;
+  display: flex;
+}
+main > .personnelAndChat > .chat > .chatList > .chatWrite > .chatWrite__input {
+  flex: 1 1 90%;
+}
+main > .personnelAndChat > .chat > .chatList > .chatWrite > .chatWrite__submit {
+  flex: 1 1 10%;
+  background-color: darkgray;
+  color: white;
 }
 main .header__title,
 main .plan-list__title,
@@ -275,7 +350,7 @@ main .chat__title {
   section.calander {
     flex: 1 1 50%;
   }
-  section.chat {
+  section.personnelAndChat {
     flex: 1 1 50%;
     margin: 20px 0px 0px 0px;
   }

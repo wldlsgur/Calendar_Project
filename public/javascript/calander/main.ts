@@ -1,5 +1,6 @@
 import { Nav, Modal } from "/javascript/calander/nav_modal.js";
 import calanderController from "./content.js";
+import personnelController from "./personnel.js";
 
 const week = new Array(
   "일요일",
@@ -10,9 +11,11 @@ const week = new Array(
   "금요일",
   "토요일"
 );
+let today: Date = new Date();
+
 const nav = new Nav();
 const modal = new Modal();
-let today: Date = new Date();
+const personnelcontroller = new personnelController();
 const staticCC = new calanderController(today);
 
 document
@@ -57,6 +60,7 @@ document.querySelector(".bi-caret-right")?.addEventListener("click", () => {
 });
 window.onload = () => {
   SetCalander();
+  personnelcontroller.getDataOfServer();
 };
 // calanderEvent
 

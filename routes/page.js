@@ -9,10 +9,6 @@ router.get("/signup", function (req, res, next) {
 });
 
 router.get("/room", function (req, res, next) {
-  if (!req.session.login) {
-    alert("로그인 후 이용해주세요");
-    return res.status(200).redirect("/");
-  }
   let userId = req.session.user_id;
   let query = `select * from user where user_id='${userId}'`;
 
@@ -33,12 +29,8 @@ router.get("/room", function (req, res, next) {
 });
 
 router.get("/calander", function (req, res) {
-  if (!req.session.login) {
-    alert("로그인 후 이용해주세요");
-    return res.status(200).redirect("/");
-  }
   let userId = req.session.user_id;
-  let roomId = req.cookies.room_id;
+  let roomId = req.session.room_id;
   let query = `select * from user where user_id='${userId}'`;
 
   db.query(query, function (err, result) {

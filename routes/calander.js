@@ -9,7 +9,6 @@ router.post("/", function (req, res, next) {
   const user_id = req.session.user_id;
   const room_id = req.session.room_id;
   let query = `insert into content(room_id,user_id,date,content) value('${room_id}', '${user_id}', '${date}', '${content}')`;
-  console.log(query);
   db.query(query, function (err, result) {
     if (err) {
       return res.status(400).send(err);
@@ -38,6 +37,21 @@ router.get("/content", function (req, res) {
   inner join user as u on c.user_id = u.id
   where c.room_id = ${room_id} AND c.date like '%${date}%'
   `;
+  db.query(query, function (err, result) {
+    if (err) {
+      return res.status(400).send(err);
+    }
+    res.status(200).send(result);
+  });
+});
+
+router.get("/personnel", function (req, res) {
+  const { roomId } = req.query;
+  let query = `SELECT i.user_id, i.chief, u.name, u.photo_path
+  FROM intoroom as i
+  inner join user as u on i.user_id = u.user_id
+  where i.room_id = '${roomId}'`;
+
   db.query(query, function (err, result) {
     if (err) {
       return res.status(400).send(err);

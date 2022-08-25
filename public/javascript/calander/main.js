@@ -1,10 +1,12 @@
 var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
 import { Nav, Modal } from "/javascript/calander/nav_modal.js";
 import calanderController from "./content.js";
+import personnelController from "./personnel.js";
 const week = new Array("일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일");
+let today = new Date();
 const nav = new Nav();
 const modal = new Modal();
-let today = new Date();
+const personnelcontroller = new personnelController();
 const staticCC = new calanderController(today);
 (_a = document
     .querySelector(".header__menu")) === null || _a === void 0 ? void 0 : _a.addEventListener("click", nav.ShowHidden);
@@ -39,6 +41,7 @@ function SetCalander() {
 });
 window.onload = () => {
     SetCalander();
+    personnelcontroller.getDataOfServer();
 };
 // calanderEvent
 function initCalander() {
