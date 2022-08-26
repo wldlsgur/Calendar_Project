@@ -111,7 +111,6 @@ main {
     margin-left: 20px;
     display: flex;
     flex-direction: column;
-
     > .personnel {
       flex: 1 1 30%;
       overflow-y: auto;
@@ -149,6 +148,7 @@ main {
           }
         }
         p {
+          white-space: normal;
           margin-top: 10px;
           color: white;
         }
@@ -158,7 +158,9 @@ main {
       flex: 1 1 70%;
       display: flex;
       flex-direction: column;
+      overflow: auto;
       > .header {
+        top: 0;
         flex: 1 1 5%;
         border-bottom: solid 1px white;
       }
@@ -167,14 +169,50 @@ main {
         display: flex;
         flex-direction: column;
         > .chatList__msg {
+          height: 100%;
+          overflow: auto;
           flex: 1 1 85%;
-          overflow-y: auto;
           display: flex;
           flex-direction: column;
           //채팅
+          > .mymsg,
+          .msg {
+            margin-bottom: 10px;
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            p {
+              color: white;
+              margin: 0;
+            }
+            img {
+              width: 40px;
+              height: 40px;
+              border-radius: 50%;
+            }
+          }
+          > .mymsg {
+            align-items: flex-end;
+            > .mymsg__content {
+              white-space: normal;
+            }
+          }
+          > .msg {
+            align-items: flex-start;
+            > .msg__content {
+              white-space: normal;
+            }
+            > .msg__NameAndContent {
+              display: flex;
+              align-items: center;
+              > .msg__name {
+                margin-left: 10px;
+              }
+            }
+          }
         }
         > .chatWrite {
-          flex: 1 1 15%;
+          height: 100px;
           display: flex;
           > .chatWrite__input {
             flex: 1 1 90%;
@@ -341,4 +379,9 @@ main {
     flex: 1 1 50%;
     margin: 20px 0px 0px 0px;
   }
+}
+
+// msg
+.joinAndLeave {
+  color: blue;
 }

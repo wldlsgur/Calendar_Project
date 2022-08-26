@@ -41,7 +41,7 @@ const upload = multer({
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
-app.engine("html", require("ejs").renderFile);
+app.engine("ejs", require("ejs").renderFile);
 
 app.use(logger("dev"));
 app.use(express.json());
@@ -86,41 +86,25 @@ app.use(function (err, req, res, next) {
   res.render("error");
 });
 
-let roomList = new Set();
-let roomIndex;
 app.io.on("connection", (socket) => {
-  console.log("유저가 들어왔다.");
-  // 요거 추가
-  socket.on("joinRoom", (roomId, name) => {
-    console.log("방 참여.");
-    roomList.add(roomId);
-    console.log(roomList);
-
-    for (let i; roomList.length; i++) {
-      if (roomId === roomList[i]) {
-        roomIndex = i;
-        console.log(roomIndex);
-        socket.join(roomList[roomIndex], () => {
-          app.io.to(roomList[roomIndex]).emit("joinRoom", name);
-        });
-        break;
-      }
-    }
+  socket.on("joinRoom", async (data) => {
+    await socket.join(data.roomId);
+    app.io.to(data.roomId).emit("joinRoom", { userName: data.userName });
   });
 
-  // 요거 추가
-  socket.on("leaveRoom", (roomId, name) => {
-    socket.leave(roomId, () => {
-      app.io.to(roomId).emit("leaveRoom", name);
-    });
+  // // 요거 추가
+  socket.on("leaveRoom", async (data) => {
+    await socket.leave(data.roomId);
+    app.io.to(data.roomId).emit("leaveRoom", { userName: data.userName });
   });
 
   socket.on("disconnect", () => {
     console.log("유저가 나갔다.");
   });
 
-  socket.on("chat-msg", (roomId, name, msg) => {
-    app.io.to(roomId).emit("chat-msg", name, msg); // to(room[a])를 통해 그룹에게만 메세지를 날린다.
+  socket.on("chat-msg", (data) => {
+    console.log(data);
+    app.io.to(data.roomId).emit("chat-msg", data); // to(room[a])를 통해 그룹에게만 메세지를 날린다.
   });
 });
 

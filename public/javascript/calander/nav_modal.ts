@@ -1,4 +1,6 @@
 import Axios from "/javascript/common/axios.js";
+import Socket from "./main.js";
+
 const axiosModule = new Axios();
 class Nav {
   constructor() {}
@@ -14,9 +16,11 @@ class Nav {
     }
   }
   HrefHome(): void {
+    Socket();
     location.href = "/";
   }
   HrefPageRoom(): void {
+    Socket();
     location.href = "/page/room";
   }
 }

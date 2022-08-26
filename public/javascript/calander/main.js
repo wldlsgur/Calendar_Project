@@ -1,4 +1,4 @@
-var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
+var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q;
 import { Nav, Modal } from "/javascript/calander/nav_modal.js";
 import calanderController from "./content.js";
 import personnelController from "./personnel.js";
@@ -9,38 +9,45 @@ const nav = new Nav();
 const modal = new Modal();
 const personnelcontroller = new personnelController();
 const staticCC = new calanderController(today);
-const roomId = (_a = document.querySelector("#room_id")) === null || _a === void 0 ? void 0 : _a.value;
-const userName = (_b = document.querySelector("#userName")) === null || _b === void 0 ? void 0 : _b.value;
-(_c = document
-    .querySelector(".header__menu")) === null || _c === void 0 ? void 0 : _c.addEventListener("click", nav.ShowHidden);
+const userId = (_a = document.querySelector("#user_id")) === null || _a === void 0 ? void 0 : _a.value;
+const roomId = (_b = document.querySelector("#room_id")) === null || _b === void 0 ? void 0 : _b.value;
+const userName = (_c = document.querySelector("#userName")) === null || _c === void 0 ? void 0 : _c.value;
 (_d = document
-    .querySelector(".menulist__logout")) === null || _d === void 0 ? void 0 : _d.addEventListener("click", nav.HrefHome);
+    .querySelector(".header__menu")) === null || _d === void 0 ? void 0 : _d.addEventListener("click", nav.ShowHidden);
 (_e = document
-    .querySelector(".menulist__room")) === null || _e === void 0 ? void 0 : _e.addEventListener("click", nav.HrefPageRoom);
-// navEvent
+    .querySelector(".menulist__logout")) === null || _e === void 0 ? void 0 : _e.addEventListener("click", nav.HrefHome);
 (_f = document
-    .querySelector(".header__add")) === null || _f === void 0 ? void 0 : _f.addEventListener("click", modal.ShowComment);
+    .querySelector(".menulist__room")) === null || _f === void 0 ? void 0 : _f.addEventListener("click", nav.HrefPageRoom);
+// navEvent
 (_g = document
-    .querySelector(".commentForm__btn--exit")) === null || _g === void 0 ? void 0 : _g.addEventListener("click", modal.HiddenComment);
+    .querySelector(".header__add")) === null || _g === void 0 ? void 0 : _g.addEventListener("click", modal.ShowComment);
 (_h = document
-    .querySelector(".commentForm__btn--submit")) === null || _h === void 0 ? void 0 : _h.addEventListener("click", modal.SubmitCommnet);
+    .querySelector(".commentForm__btn--exit")) === null || _h === void 0 ? void 0 : _h.addEventListener("click", modal.HiddenComment);
 (_j = document
-    .querySelector(".modalCommentInfo .commentForm__btn--exit")) === null || _j === void 0 ? void 0 : _j.addEventListener("click", modal.HiddenCommentDetail);
+    .querySelector(".commentForm__btn--submit")) === null || _j === void 0 ? void 0 : _j.addEventListener("click", modal.SubmitCommnet);
 (_k = document
-    .querySelector(".modalCommentInfo .commentForm__btn--submit")) === null || _k === void 0 ? void 0 : _k.addEventListener("click", staticCC.DeleteContent);
+    .querySelector(".modalCommentInfo .commentForm__btn--exit")) === null || _k === void 0 ? void 0 : _k.addEventListener("click", modal.HiddenCommentDetail);
+(_l = document
+    .querySelector(".modalCommentInfo .commentForm__btn--submit")) === null || _l === void 0 ? void 0 : _l.addEventListener("click", staticCC.DeleteContent);
 // modalEvent
 function SetCalander() {
     initCalander();
     let calandercontroller = new calanderController(today);
     calandercontroller.getContent();
 }
-(_l = document.querySelector(".bi-caret-left")) === null || _l === void 0 ? void 0 : _l.addEventListener("click", () => {
+(_m = document.querySelector(".bi-caret-left")) === null || _m === void 0 ? void 0 : _m.addEventListener("click", () => {
     today = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
     SetCalander();
 });
-(_m = document.querySelector(".bi-caret-right")) === null || _m === void 0 ? void 0 : _m.addEventListener("click", () => {
+(_o = document.querySelector(".bi-caret-right")) === null || _o === void 0 ? void 0 : _o.addEventListener("click", () => {
     today = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate());
     SetCalander();
+});
+(_p = document.querySelector(".chatWrite")) === null || _p === void 0 ? void 0 : _p.addEventListener("submit", SendMsg);
+(_q = document.querySelector(".chatWrite__input")) === null || _q === void 0 ? void 0 : _q.addEventListener("keyup", (e) => {
+    if (e.keyCode == 13) {
+        SendMsg(e);
+    }
 });
 window.onload = () => {
     SetCalander();
@@ -109,13 +116,75 @@ function initCalander() {
     calander === null || calander === void 0 ? void 0 : calander.appendChild(tag);
     table === null || table === void 0 ? void 0 : table.appendChild(calander);
 }
-function SocketJoin() {
-    socket.emit("joinRoom", roomId, userName);
+function SendMsg(e) {
+    var _a;
+    e.preventDefault();
+    let msg = document.querySelector(".chatWrite__input");
+    if (!(msg === null || msg === void 0 ? void 0 : msg.value)) {
+        return alert("메세지를 입력해주세요");
+    }
+    let imgSrc = (_a = document.querySelector(".user-info > img")) === null || _a === void 0 ? void 0 : _a.src;
+    socket.emit("chat-msg", {
+        roomId: roomId,
+        userName: userName,
+        msg: msg === null || msg === void 0 ? void 0 : msg.value,
+        imgSrc: imgSrc,
+        userId: userId,
+    });
+    msg.value = "";
+    let chatscroll = document.querySelector(".chatList__msg");
+    if (chatscroll instanceof Element) {
+        chatscroll.scrollTop = chatscroll === null || chatscroll === void 0 ? void 0 : chatscroll.scrollHeight;
+    }
 }
-socket.on("joinRoom", (userName) => {
-    console.log("소켓 on 실행");
+function SocketJoin() {
+    socket.emit("joinRoom", { roomId: roomId, userName: userName });
+}
+function SocketLeave() {
+    socket.emit("leaveRoom", { roomId: roomId, userName: userName });
+}
+socket.on("joinRoom", (data) => {
     let root = document.querySelector(".chatList__msg");
     let joinmsg = document.createElement("div");
-    joinmsg.innerHTML = `${userName}님 입장`;
+    joinmsg.setAttribute("class", "joinAndLeave");
+    joinmsg.innerHTML = `${data.userName}님 입장`;
     root === null || root === void 0 ? void 0 : root.appendChild(joinmsg);
 });
+socket.on("leaveRoom", (data) => {
+    let root = document.querySelector(".chatList__msg");
+    let joinmsg = document.createElement("div");
+    joinmsg.setAttribute("class", "joinAndLeave");
+    joinmsg.innerHTML = `${data.userName}님 퇴장`;
+    root === null || root === void 0 ? void 0 : root.appendChild(joinmsg);
+});
+socket.on("chat-msg", (data) => {
+    let root = document.querySelector(".chatList__msg");
+    let msg = document.createElement("div");
+    if (data.userId === userId) {
+        msg.setAttribute("class", "mymsg");
+        let content = document.createElement("p");
+        content.setAttribute("class", "mymsg__content");
+        content.innerHTML = data.msg;
+        msg.appendChild(content);
+    }
+    else {
+        msg.setAttribute("class", "msg");
+        let div2 = document.createElement("div");
+        div2.setAttribute("class", "msg__NameAndContent");
+        let img = document.createElement("img");
+        img.setAttribute("class", "msg__img");
+        img.setAttribute("src", data.imgSrc);
+        let name = document.createElement("p");
+        name.setAttribute("class", "msg__name");
+        name.innerHTML = data.userName;
+        let content = document.createElement("p");
+        content.setAttribute("class", "msg__content");
+        content.innerHTML = data.msg;
+        div2.appendChild(img);
+        div2.appendChild(name);
+        msg.appendChild(div2);
+        msg.appendChild(content);
+    }
+    root === null || root === void 0 ? void 0 : root.appendChild(msg);
+});
+export default SocketLeave;

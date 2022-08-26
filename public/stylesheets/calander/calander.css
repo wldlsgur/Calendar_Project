@@ -157,6 +157,7 @@ main > .personnelAndChat > .personnel > .personnelList > .personnel > .personnel
   border-radius: 50%;
 }
 main > .personnelAndChat > .personnel > .personnelList p {
+  white-space: normal;
   margin-top: 10px;
   color: white;
 }
@@ -164,8 +165,10 @@ main > .personnelAndChat > .chat {
   flex: 1 1 70%;
   display: flex;
   flex-direction: column;
+  overflow: auto;
 }
 main > .personnelAndChat > .chat > .header {
+  top: 0;
   flex: 1 1 5%;
   border-bottom: solid 1px white;
 }
@@ -175,13 +178,51 @@ main > .personnelAndChat > .chat > .chatList {
   flex-direction: column;
 }
 main > .personnelAndChat > .chat > .chatList > .chatList__msg {
+  height: 100%;
+  overflow: auto;
   flex: 1 1 85%;
-  overflow-y: auto;
   display: flex;
   flex-direction: column;
 }
+main > .personnelAndChat > .chat > .chatList > .chatList__msg > .mymsg,
+main > .personnelAndChat > .chat > .chatList > .chatList__msg .msg {
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+main > .personnelAndChat > .chat > .chatList > .chatList__msg > .mymsg p,
+main > .personnelAndChat > .chat > .chatList > .chatList__msg .msg p {
+  color: white;
+  margin: 0;
+}
+main > .personnelAndChat > .chat > .chatList > .chatList__msg > .mymsg img,
+main > .personnelAndChat > .chat > .chatList > .chatList__msg .msg img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+main > .personnelAndChat > .chat > .chatList > .chatList__msg > .mymsg {
+  align-items: flex-end;
+}
+main > .personnelAndChat > .chat > .chatList > .chatList__msg > .mymsg > .mymsg__content {
+  white-space: normal;
+}
+main > .personnelAndChat > .chat > .chatList > .chatList__msg > .msg {
+  align-items: flex-start;
+}
+main > .personnelAndChat > .chat > .chatList > .chatList__msg > .msg > .msg__content {
+  white-space: normal;
+}
+main > .personnelAndChat > .chat > .chatList > .chatList__msg > .msg > .msg__NameAndContent {
+  display: flex;
+  align-items: center;
+}
+main > .personnelAndChat > .chat > .chatList > .chatList__msg > .msg > .msg__NameAndContent > .msg__name {
+  margin-left: 10px;
+}
 main > .personnelAndChat > .chat > .chatList > .chatWrite {
-  flex: 1 1 15%;
+  height: 100px;
   display: flex;
 }
 main > .personnelAndChat > .chat > .chatList > .chatWrite > .chatWrite__input {
@@ -354,4 +395,7 @@ main .chat__title {
     flex: 1 1 50%;
     margin: 20px 0px 0px 0px;
   }
+}
+.joinAndLeave {
+  color: blue;
 }/*# sourceMappingURL=calander.css.map */

@@ -18,6 +18,7 @@ const nav = new Nav();
 const modal = new Modal();
 const personnelcontroller = new personnelController();
 const staticCC = new calanderController(today);
+const userId = document.querySelector("#user_id")?.value;
 const roomId = document.querySelector("#room_id")?.value;
 const userName = document.querySelector("#userName")?.value;
 
@@ -60,6 +61,12 @@ document.querySelector(".bi-caret-left")?.addEventListener("click", () => {
 document.querySelector(".bi-caret-right")?.addEventListener("click", () => {
   today = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate());
   SetCalander();
+});
+document.querySelector(".chatWrite")?.addEventListener("submit", SendMsg);
+document.querySelector(".chatWrite__input")?.addEventListener("keyup", (e) => {
+  if (e.keyCode == 13) {
+    SendMsg(e);
+  }
 });
 window.onload = () => {
   SetCalander();
@@ -139,14 +146,90 @@ function initCalander(): void {
   table?.appendChild(calander);
 }
 
-function SocketJoin(): void {
-  socket.emit("joinRoom", roomId, userName);
+function SendMsg(e: { preventDefault: () => void }) {
+  e.preventDefault();
+  let msg = document.querySelector(".chatWrite__input");
+  if (!msg?.value) {
+    return alert("메세지를 입력해주세요");
+  }
+  let imgSrc = document.querySelector(".user-info > img")?.src;
+  socket.emit("chat-msg", {
+    roomId: roomId,
+    userName: userName,
+    msg: msg?.value,
+    imgSrc: imgSrc,
+    userId: userId,
+  });
+  msg.value = "";
+  let chatscroll = document.querySelector(".chatList__msg");
+  if (chatscroll instanceof Element) {
+    chatscroll.scrollTop = chatscroll?.scrollHeight;
+  }
 }
 
-socket.on("joinRoom", (userName: any) => {
-  console.log("소켓 on 실행");
+function SocketJoin(): void {
+  socket.emit("joinRoom", { roomId: roomId, userName: userName });
+}
+function SocketLeave(): void {
+  socket.emit("leaveRoom", { roomId: roomId, userName: userName });
+}
+
+socket.on("joinRoom", (data: any) => {
   let root = document.querySelector(".chatList__msg");
   let joinmsg = document.createElement("div");
-  joinmsg.innerHTML = `${userName}님 입장`;
+  joinmsg.setAttribute("class", "joinAndLeave");
+  joinmsg.innerHTML = `${data.userName}님 입장`;
   root?.appendChild(joinmsg);
 });
+
+socket.on("leaveRoom", (data: any) => {
+  let root = document.querySelector(".chatList__msg");
+  let joinmsg = document.createElement("div");
+  joinmsg.setAttribute("class", "joinAndLeave");
+  joinmsg.innerHTML = `${data.userName}님 퇴장`;
+  root?.appendChild(joinmsg);
+});
+
+socket.on(
+  "chat-msg",
+  (data: { userName: string; userId: any; imgSrc: string; msg: string }) => {
+    let root = document.querySelector(".chatList__msg");
+    let msg = document.createElement("div");
+
+    if (data.userId === userId) {
+      msg.setAttribute("class", "mymsg");
+
+      let content = document.createElement("p");
+      content.setAttribute("class", "mymsg__content");
+      content.innerHTML = data.msg;
+
+      msg.appendChild(content);
+    } else {
+      msg.setAttribute("class", "msg");
+
+      let div2 = document.createElement("div");
+      div2.setAttribute("class", "msg__NameAndContent");
+
+      let img = document.createElement("img");
+      img.setAttribute("class", "msg__img");
+      img.setAttribute("src", data.imgSrc);
+
+      let name = document.createElement("p");
+      name.setAttribute("class", "msg__name");
+      name.innerHTML = data.userName;
+
+      let content = document.createElement("p");
+      content.setAttribute("class", "msg__content");
+      content.innerHTML = data.msg;
+
+      div2.appendChild(img);
+      div2.appendChild(name);
+
+      msg.appendChild(div2);
+      msg.appendChild(content);
+    }
+    root?.appendChild(msg);
+  }
+);
+
+export default SocketLeave;

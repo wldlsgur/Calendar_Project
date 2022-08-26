@@ -18,7 +18,6 @@ class personnelController {
   }
 
   setData(response: { data: any }): void {
-    console.log(response.data);
     let root = document.querySelector(".personnelList");
     for (let i in response.data) {
       let div1 = document.createElement("div");

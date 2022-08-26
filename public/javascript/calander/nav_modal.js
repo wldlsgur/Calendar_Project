@@ -8,6 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import Axios from "/javascript/common/axios.js";
+import Socket from "./main.js";
 const axiosModule = new Axios();
 class Nav {
     constructor() { }
@@ -23,9 +24,11 @@ class Nav {
         }
     }
     HrefHome() {
+        Socket();
         location.href = "/";
     }
     HrefPageRoom() {
+        Socket();
         location.href = "/page/room";
     }
 }
