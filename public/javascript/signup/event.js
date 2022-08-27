@@ -8,7 +8,7 @@ function ShowImage(event) {
 }
 
 function SignUp(event) {
-  event.preventDefa76ult();
+  event.preventDefalult();
   if ($("#sameId__sameIdCb").is(":checked") === false) {
     return alert("중복확인을 해주세요");
   }
