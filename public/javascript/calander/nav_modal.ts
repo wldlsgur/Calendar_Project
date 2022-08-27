@@ -17,11 +17,11 @@ class Nav {
   }
   HrefHome(): void {
     Socket();
-    location.href = "/";
+    location.href = "http://13.209.148.137:80";
   }
   HrefPageRoom(): void {
     Socket();
-    location.href = "/page/room";
+    location.href = "http://13.209.148.137:80/page/room";
   }
 }
 

@@ -36,7 +36,7 @@ function SignUp(event) {
             .then((response) => {
               if (response.data.res === true) {
                 alert("사진 회원가입 성공");
-                return (location.href = "/");
+                return (location.href = "http://13.209.148.137:80");
               }
             })
             .catch((err) => {
@@ -44,7 +44,7 @@ function SignUp(event) {
             });
         } else {
           alert("회원가입 성공");
-          return (location.href = "/");
+          return (location.href = "http://13.209.148.137:80");
         }
       }
     })

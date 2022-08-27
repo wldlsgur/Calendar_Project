@@ -39,7 +39,7 @@ class personnelController {
             input.setAttribute("type", "hidden");
             div2.setAttribute("class", "personnelUser");
             img.setAttribute("class", "personnelUser__img");
-            img.setAttribute("src", "/image/user/" + response.data[i].photo_path);
+            img.setAttribute("src", "http://13.209.148.137:80/image/user/" + response.data[i].photo_path);
             p1.setAttribute("class", "personnelUser__name");
             p1.innerHTML = response.data[i].name;
             p2.setAttribute("class", "personnel__moderator");

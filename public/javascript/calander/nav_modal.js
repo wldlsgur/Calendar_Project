@@ -25,11 +25,11 @@ class Nav {
     }
     HrefHome() {
         Socket();
-        location.href = "/";
+        location.href = "http://13.209.148.137:80";
     }
     HrefPageRoom() {
         Socket();
-        location.href = "/page/room";
+        location.href = "http://13.209.148.137:80/page/room";
     }
 }
 class Modal {

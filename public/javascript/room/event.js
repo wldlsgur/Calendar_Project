@@ -114,7 +114,8 @@ class modal_room {
           if (res.data.res === true) {
             for (let id of allRoomId) {
               if (id.value === roomInfo.room_id) {
-                return (location.href = "/page/calander");
+                return (location.href =
+                  "http://13.209.148.137:80/page/calander");
               }
             }
             axiosModule
@@ -124,7 +125,8 @@ class modal_room {
               })
               .then((res) => {
                 if (res.data.res === true) {
-                  return (location.href = "/page/calander");
+                  return (location.href =
+                    "http://13.209.148.137:80/page/calander");
                 }
               })
               .catch((err) => {
@@ -166,7 +168,7 @@ class modal_myroom {
       .then((res) => {
         if (res.data.res) {
           alert("방 참여 성공");
-          return (location.href = "/page/calander");
+          return (location.href = "http://13.209.148.137:80/page/calander");
         }
         alert("비밀번호를 잘못 입력하셧습니다");
       })
@@ -238,5 +240,5 @@ document.querySelector(".header__menu").addEventListener("click", function () {
 document
   .querySelector(".menulist__logout")
   .addEventListener("click", function () {
-    location.href = "/";
+    location.href = "http://13.209.148.137:80";
   });
