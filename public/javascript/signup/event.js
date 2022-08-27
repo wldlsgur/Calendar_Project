@@ -40,6 +40,7 @@ function SignUp(e) {
               }
             })
             .catch((err) => {
+              console.log(err);
               alert("사진 업로드 실패");
             });
         } else {
