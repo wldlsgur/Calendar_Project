@@ -7,8 +7,8 @@ function ShowImage(event) {
   reader.readAsDataURL(file);
 }
 
-function SignUp(event) {
-  event.preventDefalult();
+function SignUp(e) {
+  e.preventDefault();
   if ($("#sameId__sameIdCb").is(":checked") === false) {
     return alert("중복확인을 해주세요");
   }
