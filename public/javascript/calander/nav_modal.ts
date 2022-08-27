@@ -72,7 +72,8 @@ class Modal {
         } else {
           alert("작성 실패");
         }
-        return modal.HiddenComment();
+        modal.HiddenComment();
+        return location.reload();
       }
     }
   }
