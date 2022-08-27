@@ -8,7 +8,7 @@ function ShowImage(event) {
 }
 
 function SignUp(event) {
-  event.preventDefault();
+  event.preventDefa76ult();
   if ($("#sameId__sameIdCb").is(":checked") === false) {
     return alert("중복확인을 해주세요");
   }
@@ -21,7 +21,7 @@ function SignUp(event) {
     return alert("요구사항을 모두 입력해주세요");
   }
   axios
-    .post(`/user/insert`, info)
+    .post(`http://13.209.148.137:80/user/insert`, info)
     .then((response) => {
       if (response.data.res === true) {
         if ($("#image").val()) {
@@ -30,7 +30,7 @@ function SignUp(event) {
           const imagefile = document.querySelector("#image");
           formData.append("image", imagefile.files[0]);
           axios
-            .post(`/uploadimage/${info.id}`, formData, {
+            .post(`http://13.209.148.137:80/uploadimage/${info.id}`, formData, {
               headers: { "Content-Type": "multipart/form-data" },
             })
             .then((response) => {
@@ -62,7 +62,7 @@ function SameIdCheck() {
   }
 
   axios
-    .get(`/check/sameid/${inputId}`)
+    .get(`http://13.209.148.137:80/check/sameid/${inputId}`)
     .then((response) => {
       if (response.data.res === false) {
         $(this).prop("checked", false);

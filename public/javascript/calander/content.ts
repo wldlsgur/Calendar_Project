@@ -17,9 +17,13 @@ class calanderController {
       month = "0" + String(this.today.getMonth() + 1);
     }
 
-    let response = await axiosModule.params("/calander/content", "get", {
-      date: year + "-" + month,
-    });
+    let response = await axiosModule.params(
+      "http://13.209.148.137:80/calander/content",
+      "get",
+      {
+        date: year + "-" + month,
+      }
+    );
     if (!response.data[0]) {
       return;
     }
@@ -76,7 +80,11 @@ class calanderController {
     let contentId = {
       contentId: this.parentNode.parentNode.querySelector(".contentId").value,
     };
-    let response = await axiosModule.body("/calander", "delete", contentId);
+    let response = await axiosModule.body(
+      "http://13.209.148.137:80/calander",
+      "delete",
+      contentId
+    );
     if (response.data.res) {
       alert("삭제 성공");
       modal.HiddenCommentDetail();

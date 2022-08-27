@@ -16,7 +16,7 @@ class personnelController {
     }
     getDataOfServer() {
         return __awaiter(this, void 0, void 0, function* () {
-            let response = yield axiosModule.params("/calander/personnel", "get", {
+            let response = yield axiosModule.params("http://13.209.148.137:80/calander/personnel", "get", {
                 roomId: this.roomId,
             });
             if (response.data.length < 1) {

@@ -22,7 +22,7 @@ class CreateRoom {
       return alert("인원은 숫자로 입력해주세요");
     }
     axiosModule
-      .body("/room/make", "post", info)
+      .body("http://13.209.148.137:80/room/make", "post", info)
       .then((response) => {
         if (response.data.res === true) {
           creatRoom.Hidden();
@@ -45,7 +45,7 @@ class Room {
 
   all_room() {
     axiosModule
-      .params("/room/show/all", "get", null)
+      .params("http://13.209.148.137:80/room/show/all", "get", null)
       .then((response) => {
         for (let i = 0; i < response.data.length; i++) {
           let make_room = document.createElement("div");
@@ -65,7 +65,7 @@ class Room {
   }
   all_my_room() {
     axiosModule
-      .params("/room/show/my", "get", null)
+      .params("http://13.209.148.137:80/room/show/my", "get", null)
       .then((response) => {
         for (let i = 0; i < response.data.length; i++) {
           let make_room = document.createElement("div");
@@ -109,7 +109,7 @@ class modal_room {
       };
       //이미 참여상태인지도
       axiosModule
-        .body("/room/check", "post", roomInfo)
+        .body("http://13.209.148.137:80/room/check", "post", roomInfo)
         .then((res) => {
           if (res.data.res === true) {
             for (let id of allRoomId) {
@@ -118,7 +118,7 @@ class modal_room {
               }
             }
             axiosModule
-              .body("/room/join", "post", {
+              .body("http://13.209.148.137:80/room/join", "post", {
                 room_id: roomInfo.room_id,
                 user_id: document.querySelector("#user_id").value,
               })
@@ -162,7 +162,7 @@ class modal_myroom {
       pw: e.target.parentNode.parentNode.querySelector(".room-pw").value,
     };
     axiosModule
-      .body("/room/check", "post", roomInfo)
+      .body("http://13.209.148.137:80/room/check", "post", roomInfo)
       .then((res) => {
         if (res.data.res) {
           alert("방 참여 성공");
@@ -179,7 +179,9 @@ class modal_myroom {
     let room_key = target.parentNode.parentNode.querySelector(".room_id").value;
 
     axiosModule
-      .params("/room/myroom", "delete", { key: room_key })
+      .params("http://13.209.148.137:80/room/myroom", "delete", {
+        key: room_key,
+      })
       .then((res) => {
         alert("방 삭제 성공");
         modalMyroom.Hidden();

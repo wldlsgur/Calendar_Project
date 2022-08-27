@@ -62,7 +62,11 @@ class Modal {
       } else {
         submitInfo.date = date.value;
         submitInfo.content = content.value;
-        let response = await axiosModule.body("/calander", "post", submitInfo);
+        let response = await axiosModule.body(
+          "http://13.209.148.137:80/calander",
+          "post",
+          submitInfo
+        );
         if (response.data.res) {
           alert("작성 성공");
         } else {

@@ -8,9 +8,13 @@ class personnelController {
   }
 
   async getDataOfServer(): Promise<void> {
-    let response = await axiosModule.params("/calander/personnel", "get", {
-      roomId: this.roomId,
-    });
+    let response = await axiosModule.params(
+      "http://13.209.148.137:80/calander/personnel",
+      "get",
+      {
+        roomId: this.roomId,
+      }
+    );
     if (response.data.length < 1) {
       return;
     }
