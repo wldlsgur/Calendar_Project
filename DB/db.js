@@ -1,9 +1,9 @@
 const mysql = require("mysql2");
 var db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "0000",
-  database: "alone_project",
+  host: "13.209.148.137",
+  user: "wldlsgur",
+  password: "1003",
+  database: "calander",
   multipleStatements: true, // 다중쿼리용 설정
 });
 db.connect();
