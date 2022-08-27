@@ -90,7 +90,6 @@ function initCalander(): void {
   let calander = document.createElement("tbody");
   calander.setAttribute("class", "table-calander__tbody");
   let firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
-  let trCnt = 0; //행 몇 줄인지 카운트
 
   let dayTr = document.createElement("tr");
   for (let i in week) {
@@ -102,7 +101,6 @@ function initCalander(): void {
   calander.appendChild(dayTr); //월화수목금 입력
 
   let tag = document.createElement("tr");
-  trCnt++;
 
   let cnt = 0;
   for (let i = 0; i < firstDay.getDay(); i++) {
@@ -121,7 +119,6 @@ function initCalander(): void {
     if (cnt % 7 === 0) {
       calander?.appendChild(tag);
       tag = document.createElement("tr");
-      trCnt++;
     }
     let td = document.createElement("td");
     let div = document.createElement("div");
