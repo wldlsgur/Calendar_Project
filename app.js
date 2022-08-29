@@ -11,7 +11,6 @@ const FileStore = require("session-file-store")(session);
 const upload_function = require("./function/upload");
 
 //Router
-var indexRouter = require("./routes/index");
 var pageRouter = require("./routes/page");
 var userRouter = require("./routes/user");
 let uploadimage = require("./routes/uploadimage");
@@ -57,7 +56,6 @@ app.use(
   })
 );
 
-app.use("/", indexRouter);
 app.use("/page", pageRouter);
 app.use("/user", userRouter);
 app.use("/room", roomRouter);
@@ -89,20 +87,16 @@ app.io.on("connection", (socket) => {
     await socket.join(data.roomId);
     app.io.to(data.roomId).emit("joinRoom", { userName: data.userName });
   });
-
-  // // 요거 추가
   socket.on("leaveRoom", async (data) => {
     await socket.leave(data.roomId);
     app.io.to(data.roomId).emit("leaveRoom", { userName: data.userName });
   });
-
   socket.on("disconnect", () => {
     console.log("유저가 나갔다.");
   });
-
   socket.on("chat-msg", (data) => {
     console.log(data);
-    app.io.to(data.roomId).emit("chat-msg", data); // to(room[a])를 통해 그룹에게만 메세지를 날린다.
+    app.io.to(data.roomId).emit("chat-msg", data);
   });
 });
 

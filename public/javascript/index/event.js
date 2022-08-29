@@ -14,7 +14,7 @@ function Login(event) {
   }
 
   axios
-    .post("/check/login", info)
+    .post("/user/login", info)
     .then((response) => {
       switch (response.data.msg) {
         case "not found":

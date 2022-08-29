@@ -35,9 +35,9 @@ module.exports = {
       });
     });
   },
-  LoginCheck: (body) => {
+  LoginCheck: (req) => {
     return new Promise((resolve, reject) => {
-      let { user_id, user_pw } = body;
+      let { user_id, user_pw } = req.body;
       let query = `SELECT * FROM user WHERE id='${user_id}'`;
 
       db.query(query, function (err, result) {

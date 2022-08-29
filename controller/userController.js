@@ -14,7 +14,7 @@ const userController = {
     res.status(200).send(result);
   },
   doLoginCheck: async (req, res, next) => {
-    let result = await User.LoginCheck(req.body).catch((err) => {
+    let result = await User.LoginCheck(req).catch((err) => {
       res.status(400).send(err);
     });
     res.status(200).send(result);
