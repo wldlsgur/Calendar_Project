@@ -13,7 +13,6 @@ const upload_function = require("./function/upload");
 //Router
 var indexRouter = require("./routes/index");
 var pageRouter = require("./routes/page");
-var checkRouter = require("./routes/check");
 var userRouter = require("./routes/user");
 let uploadimage = require("./routes/uploadimage");
 let roomRouter = require("./routes/room");
@@ -61,7 +60,6 @@ app.use(
 app.use("/", indexRouter);
 app.use("/page", pageRouter);
 app.use("/user", userRouter);
-app.use("/check", checkRouter);
 app.use("/room", roomRouter);
 app.use("/calander", calanderRouter);
 app.post("/uploadimage/:id", upload.single("image"), uploadimage); //사진 한장

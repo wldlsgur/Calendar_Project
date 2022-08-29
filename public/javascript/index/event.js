@@ -14,7 +14,7 @@ function Login(event) {
   }
 
   axios
-    .post("http://13.209.148.137:80/check/login", info)
+    .post("/check/login", info)
     .then((response) => {
       switch (response.data.msg) {
         case "not found":
