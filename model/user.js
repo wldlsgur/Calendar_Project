@@ -12,9 +12,9 @@ module.exports = {
 
       db.query(query, function (err, result) {
         if (err) {
-          reject(err);
+          return reject(err);
         }
-        resolve(successRes);
+        return resolve(successRes);
       });
     });
   },
@@ -25,12 +25,12 @@ module.exports = {
 
       db.query(query, function (err, result) {
         if (err) {
-          reject(err);
+          return reject(err);
         }
         if (!result[0]) {
-          resolve(successRes);
+          return resolve(successRes);
         } else {
-          resolve(failedRes);
+          return resolve(failedRes);
         }
       });
     });
@@ -42,10 +42,10 @@ module.exports = {
 
       db.query(query, function (err, result) {
         if (err) {
-          reject(err);
+          return reject(err);
         }
         if (!result[0]) {
-          resolve({ res: false, msg: "not found" });
+          return resolve({ res: false, msg: "not found" });
         }
         bcrypt.compare(user_pw, result[0].pw, (err, same) => {
           if (same) {
@@ -53,9 +53,9 @@ module.exports = {
               req.session.user_id = result[0].user_id;
               req.session.login = true;
             }
-            resolve(successRes);
+            return resolve(successRes);
           } else {
-            resolve(failedRes);
+            return resolve(failedRes);
           }
         });
       });

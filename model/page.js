@@ -7,9 +7,9 @@ module.exports = {
     return new Promise((resolve, reject) => {
       req.session.destroy((err) => {
         if (err) {
-          reject(err);
+          return reject(err);
         }
-        resolve();
+        return resolve();
       });
     });
   },
@@ -20,12 +20,12 @@ module.exports = {
 
       db.query(query, (err, result) => {
         if (err) {
-          reject(err);
+          return reject(err);
         }
         if (req.session.room_id) {
           req.session.room_id = null;
         }
-        resolve(result);
+        return resolve(result);
       });
     });
   },

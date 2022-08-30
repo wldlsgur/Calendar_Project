@@ -6,6 +6,7 @@ var logger = require("morgan");
 const multer = require("multer");
 const session = require("express-session");
 const FileStore = require("session-file-store")(session);
+const helmet = require("helmet");
 
 //Function
 const upload_function = require("./function/upload");
@@ -18,6 +19,24 @@ let roomRouter = require("./routes/room");
 let calanderRouter = require("./routes/calander");
 var app = express();
 app.io = require("socket.io")();
+
+app.io.on("connection", (socket) => {
+  socket.on("joinRoom", async (data) => {
+    await socket.join(data.roomId);
+    app.io.to(data.roomId).emit("joinRoom", { userName: data.userName });
+  });
+  socket.on("leaveRoom", async (data) => {
+    await socket.leave(data.roomId);
+    app.io.to(data.roomId).emit("leaveRoom", { userName: data.userName });
+  });
+  socket.on("disconnect", () => {
+    console.log("유저가 나갔다.");
+  });
+  socket.on("chat-msg", (data) => {
+    console.log(data);
+    app.io.to(data.roomId).emit("chat-msg", data);
+  });
+});
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -36,11 +55,13 @@ const storage = multer.diskStorage({
 const upload = multer({
   storage: storage,
 });
+
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 app.engine("ejs", require("ejs").renderFile);
 
+app.use(helmet()); //보안
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -80,24 +101,6 @@ app.use(function (err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render("error");
-});
-
-app.io.on("connection", (socket) => {
-  socket.on("joinRoom", async (data) => {
-    await socket.join(data.roomId);
-    app.io.to(data.roomId).emit("joinRoom", { userName: data.userName });
-  });
-  socket.on("leaveRoom", async (data) => {
-    await socket.leave(data.roomId);
-    app.io.to(data.roomId).emit("leaveRoom", { userName: data.userName });
-  });
-  socket.on("disconnect", () => {
-    console.log("유저가 나갔다.");
-  });
-  socket.on("chat-msg", (data) => {
-    console.log(data);
-    app.io.to(data.roomId).emit("chat-msg", data);
-  });
 });
 
 module.exports = app;

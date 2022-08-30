@@ -1,4 +1,5 @@
 import Axios from "/javascript/common/axios.js";
+const server = "http://13.209.148.137:80";
 class CreateRoom {
   constructor() {}
   Show() {
@@ -45,7 +46,7 @@ class Room {
 
   all_room() {
     axiosModule
-      .params("http://13.209.148.137:80/room/show/all", "get", null)
+      .params("/room/show/all", "get", null)
       .then((response) => {
         for (let i = 0; i < response.data.length; i++) {
           let make_room = document.createElement("div");
