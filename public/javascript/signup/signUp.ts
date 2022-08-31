@@ -1,25 +1,24 @@
 // const server = "http://13.209.148.137:80";
 const server = "localhost";
-const selectImg = document.querySelector("#user_image");
+const img = document.querySelector("#image");
+const imgBox = <HTMLImageElement>document.querySelector("#user_image");
 
 class Image {
   constructor() {}
-  ShowImage(input: EventTarget | null) {
-    // 인풋 태그에 파일이 있는 경우
-    if (input.files && input.files[0]) {
-      // 이미지 파일인지 검사 (생략)
-      // FileReader 인스턴스 생성
-      const reader = new FileReader();
-      // 이미지가 로드가 된 경우
-      reader.onload = (e) => {
-        selectImg?.src = e.target.result;
-      };
-      // reader가 이미지 읽도록 하기
-      reader.readAsDataURL(input.files[0]);
-    }
+  ShowImage() {
+    let reader = new FileReader();
+    reader.onload = function (e) {
+      if (e.target) {
+        imgBox.src = String(e.target.result);
+      }
+    };
+    reader.readAsDataURL(img?.files[0]);
   }
 }
 
+class SignUP {
+  constructor() {}
+}
 // function SignUp(e) {
 //   e.preventDefault();
 //   if ($("#sameId__sameIdCb").is(":checked") === false) {
