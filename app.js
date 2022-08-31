@@ -6,7 +6,6 @@ var logger = require("morgan");
 const multer = require("multer");
 const session = require("express-session");
 const FileStore = require("session-file-store")(session);
-const helmet = require("helmet");
 
 //Function
 const upload_function = require("./function/upload");
@@ -61,7 +60,6 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 app.engine("ejs", require("ejs").renderFile);
 
-app.use(helmet()); //보안
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
