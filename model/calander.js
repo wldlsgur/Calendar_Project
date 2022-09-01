@@ -1,8 +1,6 @@
-const { rejects } = require("assert");
-const { resolve } = require("path");
 const db = require("../DB/db");
 const successRes = { res: true, msg: "success" };
-const failedRes = { res: true, msg: "failed" };
+const failedRes = { res: false, msg: "failed" };
 
 module.exports = {
   InsertCalanderInfo: (req) => {

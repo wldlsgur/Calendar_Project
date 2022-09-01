@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt");
 const db = require("../DB/db");
 const successRes = { res: true, msg: "success" };
-const failedRes = { res: true, msg: "failed" };
+const failedRes = { res: false, msg: "failed" };
 
 module.exports = {
   SignUp: (body) => {

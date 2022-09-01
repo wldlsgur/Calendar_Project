@@ -1,10 +1,14 @@
-import Image from "./signUp.js";
+import { Image, SignUP } from "./signUp.js";
 const image = new Image();
-// $("#image").change(ShowImage);
-// $("#sameId__sameIdCb").click(SameIdCheck);
-// $(".form-input__id").keyup(InitCheckBox);
-// $(".form-input__submit").click(SignUp);
+const signUp = new SignUP();
+
 document.querySelector("#image")?.addEventListener("change", image.ShowImage);
-// document.querySelector("#sameId__sameIdCb")?.addEventListener("click");
-// document.querySelector(".form-input__id")?.addEventListener("keyup");
-// document.querySelector(".form-input__submit")?.addEventListener("click");
+document
+  .querySelector("#sameId__sameIdCb")
+  ?.addEventListener("click", signUp.SameIdCheck);
+document
+  .querySelector(".form-input__id")
+  ?.addEventListener("keyup", signUp.InitCheckBox);
+document
+  .querySelector(".form-input__submit")
+  ?.addEventListener("click", signUp.doSignUp);

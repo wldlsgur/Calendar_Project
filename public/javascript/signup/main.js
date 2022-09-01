@@ -1,11 +1,11 @@
-var _a;
-import Image from "./signUp.js";
+var _a, _b, _c, _d;
+import { Image, SignUP } from "./signUp.js";
 const image = new Image();
-// $("#image").change(ShowImage);
-// $("#sameId__sameIdCb").click(SameIdCheck);
-// $(".form-input__id").keyup(InitCheckBox);
-// $(".form-input__submit").click(SignUp);
+const signUp = new SignUP();
 (_a = document.querySelector("#image")) === null || _a === void 0 ? void 0 : _a.addEventListener("change", image.ShowImage);
-// document.querySelector("#sameId__sameIdCb")?.addEventListener("click");
-// document.querySelector(".form-input__id")?.addEventListener("keyup");
-// document.querySelector(".form-input__submit")?.addEventListener("click");
+(_b = document
+    .querySelector("#sameId__sameIdCb")) === null || _b === void 0 ? void 0 : _b.addEventListener("click", signUp.SameIdCheck);
+(_c = document
+    .querySelector(".form-input__id")) === null || _c === void 0 ? void 0 : _c.addEventListener("keyup", signUp.InitCheckBox);
+(_d = document
+    .querySelector(".form-input__submit")) === null || _d === void 0 ? void 0 : _d.addEventListener("click", signUp.doSignUp);
