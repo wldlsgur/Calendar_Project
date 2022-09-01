@@ -1,5 +1,7 @@
+import Nav from "../Common/nav";
+
 // const server = "http://13.209.148.137:80";
-const server = "localhost";
+const nav = new Nav();
 const img = document.querySelector("#image");
 const imgBox = <HTMLImageElement>document.querySelector("#user_image");
 const sameIdCheckBox = <HTMLInputElement>(
@@ -57,12 +59,11 @@ class SignUP {
 
         if (imageInfoInsertResult.data.res) {
           alert("사진 등록 회원가입 성공");
-          return (location.href = "/page");
         }
       } else {
         alert("회원가입 성공");
-        return (location.href = "/page");
       }
+      return nav.MovePageSignup;
     }
   }
 

@@ -7,8 +7,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+import Nav from "../Common/nav";
 // const server = "http://13.209.148.137:80";
-const server = "localhost";
+const nav = new Nav();
 const img = document.querySelector("#image");
 const imgBox = document.querySelector("#user_image");
 const sameIdCheckBox = (document.querySelector("#sameId__sameIdCb"));
@@ -61,13 +62,12 @@ class SignUP {
                     });
                     if (imageInfoInsertResult.data.res) {
                         alert("사진 등록 회원가입 성공");
-                        return (location.href = "/page");
                     }
                 }
                 else {
                     alert("회원가입 성공");
-                    return (location.href = "/page");
                 }
+                return nav.MovePageSignup;
             }
         });
     }
