@@ -1,20 +1,15 @@
 import Modal from "../Common/modal";
-import RoomController from "./room";
+import Nav from "../Common/nav";
+import RoomController from "./room.js";
 
+const nav: Nav = new Nav();
 const modal: Modal = new Modal();
 const roomController: RoomController = new RoomController();
-const modalMyroom = new modal_myroom();
-const modalRoom = new modal_room();
-const creatRoom = new CreateRoom(document.querySelector(".create-room"));
-const room = new Room(
-  document.querySelector(".room-list"),
-  document.querySelector(".my-room-list")
-);
+const menuBarTag = document.querySelector(".menubar");
 
-// 이벤트 등록
 window.onload = () => {
-  room.all_room();
-  room.all_my_room();
+  roomController.GetAllMyRoomList();
+  roomController.GetAllRoomList();
 };
 document
   .querySelector(".header__add")
@@ -27,30 +22,28 @@ document
   ?.addEventListener("click", roomController.Post);
 document
   .querySelector(".modal-myroom .room-btn__exit")
-  .addEventListener("click", modalMyroom.Hidden);
+  ?.addEventListener("click", modal.MyRoomInfoHidden);
 document
   .querySelector(".modal-myroom .room-btn__delete")
-  .addEventListener("click", modalMyroom.Delete);
+  ?.addEventListener("click", roomController.Delete);
 document
   .querySelector(".modal-myroom .room-btn__join")
-  .addEventListener("click", modalMyroom.Join);
+  ?.addEventListener("click", roomController.MyRoomJoin);
 
 document
   .querySelector(".modal-room .room-btn__exit")
-  .addEventListener("click", modalRoom.Hidden);
+  ?.addEventListener("click", modal.RoomHidden);
 document
   .querySelector(".modal-room .room-btn__join")
-  .addEventListener("click", modalRoom.Join);
-document.querySelector(".header__menu").addEventListener("click", function () {
-  let menu = document.querySelector(".menubar");
-  if (menu.style.display === "block") {
-    menu.style.display = "none";
-  } else {
-    menu.style.display = "block";
+  ?.addEventListener("click", roomController.RoomJoin);
+document.querySelector(".header__menu")?.addEventListener("click", () => {
+  if (menuBarTag instanceof HTMLElement) {
+    if (menuBarTag.style.display === "block") {
+      return modal.MenuBarHidden();
+    }
+    modal.MenuBarShow();
   }
 });
 document
   .querySelector(".menulist__logout")
-  .addEventListener("click", function () {
-    location.href = "http://13.209.148.137:80";
-  });
+  ?.addEventListener("click", nav.MovePageLogin);

@@ -1,16 +1,14 @@
-var _a, _b, _c;
+var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
 import Modal from "../Common/modal";
-import RoomController from "./room";
+import Nav from "../Common/nav";
+import RoomController from "./room.js";
+const nav = new Nav();
 const modal = new Modal();
 const roomController = new RoomController();
-const modalMyroom = new modal_myroom();
-const modalRoom = new modal_room();
-const creatRoom = new CreateRoom(document.querySelector(".create-room"));
-const room = new Room(document.querySelector(".room-list"), document.querySelector(".my-room-list"));
-// 이벤트 등록
+const menuBarTag = document.querySelector(".menubar");
 window.onload = () => {
-    room.all_room();
-    room.all_my_room();
+    roomController.GetAllMyRoomList();
+    roomController.GetAllRoomList();
 };
 (_a = document
     .querySelector(".header__add")) === null || _a === void 0 ? void 0 : _a.addEventListener("click", modal.CreateRoomShow);
@@ -18,32 +16,23 @@ window.onload = () => {
     .querySelector(".create-form__exit")) === null || _b === void 0 ? void 0 : _b.addEventListener("click", modal.CreateRoomHidden);
 (_c = document
     .querySelector(".create-form__create")) === null || _c === void 0 ? void 0 : _c.addEventListener("click", roomController.Post);
-document
-    .querySelector(".modal-myroom .room-btn__exit")
-    .addEventListener("click", modalMyroom.Hidden);
-document
-    .querySelector(".modal-myroom .room-btn__delete")
-    .addEventListener("click", modalMyroom.Delete);
-document
-    .querySelector(".modal-myroom .room-btn__join")
-    .addEventListener("click", modalMyroom.Join);
-document
-    .querySelector(".modal-room .room-btn__exit")
-    .addEventListener("click", modalRoom.Hidden);
-document
-    .querySelector(".modal-room .room-btn__join")
-    .addEventListener("click", modalRoom.Join);
-document.querySelector(".header__menu").addEventListener("click", function () {
-    let menu = document.querySelector(".menubar");
-    if (menu.style.display === "block") {
-        menu.style.display = "none";
-    }
-    else {
-        menu.style.display = "block";
+(_d = document
+    .querySelector(".modal-myroom .room-btn__exit")) === null || _d === void 0 ? void 0 : _d.addEventListener("click", modal.MyRoomInfoHidden);
+(_e = document
+    .querySelector(".modal-myroom .room-btn__delete")) === null || _e === void 0 ? void 0 : _e.addEventListener("click", roomController.Delete);
+(_f = document
+    .querySelector(".modal-myroom .room-btn__join")) === null || _f === void 0 ? void 0 : _f.addEventListener("click", roomController.MyRoomJoin);
+(_g = document
+    .querySelector(".modal-room .room-btn__exit")) === null || _g === void 0 ? void 0 : _g.addEventListener("click", modal.RoomHidden);
+(_h = document
+    .querySelector(".modal-room .room-btn__join")) === null || _h === void 0 ? void 0 : _h.addEventListener("click", roomController.RoomJoin);
+(_j = document.querySelector(".header__menu")) === null || _j === void 0 ? void 0 : _j.addEventListener("click", () => {
+    if (menuBarTag instanceof HTMLElement) {
+        if (menuBarTag.style.display === "block") {
+            return modal.MenuBarHidden();
+        }
+        modal.MenuBarShow();
     }
 });
-document
-    .querySelector(".menulist__logout")
-    .addEventListener("click", function () {
-    location.href = "http://13.209.148.137:80";
-});
+(_k = document
+    .querySelector(".menulist__logout")) === null || _k === void 0 ? void 0 : _k.addEventListener("click", nav.MovePageLogin);

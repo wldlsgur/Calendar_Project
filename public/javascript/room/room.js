@@ -8,12 +8,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import Modal from "../Common/modal";
+import Nav from "../Common/nav";
 const server = "http://13.209.148.137:80";
 const modal = new Modal();
+const nav = new Nav();
 const id = document.querySelector("#user_id");
 const roomTitleTag = document.querySelector(".create-form__title");
 const roomPwTag = document.querySelector(".create-form__pw");
 const roomMaxPersonnelTag = document.querySelector(".create-form__max");
+const roomPersonnelTag = document.querySelector(".modal-room .personnel");
+const allMyRoomKeyTag = document.querySelectorAll(".my-room .room_key");
+const rootRoomTag = document.querySelector(".room-list");
+const rootMyRoomTag = document.querySelector(".my-room-list");
 class RoomController {
     constructor() { }
     Post(e) {
@@ -44,160 +50,122 @@ class RoomController {
             }
         });
     }
-}
-class Room {
-    constructor(rootRoom, rootMyRoom) {
-        this.room = rootRoom;
-        this.myRoom = rootMyRoom;
-    }
-    all_room() {
-        axiosModule
-            .params("/room/show/all", "get", null)
-            .then((response) => {
-            for (let i = 0; i < response.data.length; i++) {
-                let make_room = document.createElement("div");
-                make_room.setAttribute("class", "room");
-                make_room.innerHTML = `
-          <input type="hidden" value="${response.data[i].room_id}" class="room_key" /><p class="room__name">${response.data[i].title}</p><p class="room__now">${response.data[i].nowpeople}/${response.data[i].people}</p>
-          `;
-                make_room
-                    .querySelector(".room__name")
-                    .addEventListener("click", modalRoom.Show);
-                this.room.appendChild(make_room);
-            }
-        })
-            .catch((err) => {
-            console.log(err);
-        });
-    }
-    all_my_room() {
-        axiosModule
-            .params("http://13.209.148.137:80/room/show/my", "get", null)
-            .then((response) => {
-            for (let i = 0; i < response.data.length; i++) {
-                let make_room = document.createElement("div");
-                make_room.classList.add("my-room");
-                make_room.innerHTML = `
-          <input type="hidden" value="${response.data[i].room_id}" class="room_key" /><p class="my-room__name">${response.data[i].title}</p><p class="my-room__now">${response.data[i].nowpeople}/${response.data[i].people}</p>`;
-                make_room
-                    .querySelector(".my-room__name")
-                    .addEventListener("click", (e) => {
-                    modal.MyRoomSetInfo(e);
-                    modal.MyRoomInfoShow();
-                });
-                this.myRoom.appendChild(make_room);
-            }
-        })
-            .catch((err) => {
-            console.log(err);
-        });
-    }
-}
-class modal_room {
-    constructor() { }
-    Show(e) {
-        let modal = document.querySelector(".modal-room");
-        modal.querySelector(".room_id").value = e.target.previousSibling.value;
-        modal.querySelector(".title").innerHTML = e.target.innerHTML;
-        modal.querySelector(".room-pw").value = "";
-        modal.querySelector(".personnel").innerHTML =
-            e.target.nextSibling.innerHTML;
-        modal.style.display = "block";
-    }
-    Hidden() {
-        document.querySelector(".modal-room").style.display = "none";
-    }
-    Join(e) {
-        let personnel = document.querySelector(".modal-room .personnel").innerHTML;
-        let splitPersonnel = personnel.split("/");
-        let allRoomId = document.querySelectorAll(".my-room .room_key");
-        if (parseInt(splitPersonnel[0]) < parseInt(splitPersonnel[1])) {
-            let roomInfo = {
-                room_id: e.target.parentNode.parentNode.querySelector(".room_id").value,
-                pw: e.target.parentNode.parentNode.querySelector(".room-pw").value,
-            };
-            //이미 참여상태인지도
-            axiosModule
-                .body("http://13.209.148.137:80/room/check", "post", roomInfo)
-                .then((res) => {
-                if (res.data.res === true) {
-                    for (let id of allRoomId) {
-                        if (id.value === roomInfo.room_id) {
-                            return (location.href =
-                                "http://13.209.148.137:80/page/calander");
-                        }
-                    }
-                    axiosModule
-                        .body("http://13.209.148.137:80/room/join", "post", {
-                        room_id: roomInfo.room_id,
-                        user_id: document.querySelector("#user_id").value,
-                    })
-                        .then((res) => {
-                        if (res.data.res === true) {
-                            return (location.href =
-                                "http://13.209.148.137:80/page/calander");
-                        }
-                    })
-                        .catch((err) => {
-                        console.log(err);
-                    });
-                }
-                else {
-                    return alert("비밀번호가 틀립니다.");
-                }
+    Delete(e) {
+        var _a;
+        return __awaiter(this, void 0, void 0, function* () {
+            let target = e.target;
+            let room_key = target.parentNode.parentNode.querySelector(".room_id").value;
+            let result = yield axios
+                .delete("/room/myroom", {
+                params: {
+                    key: room_key,
+                },
             })
                 .catch((err) => {
                 console.log(err);
             });
-        }
-        else {
-            alert("정원초과");
-        }
-    }
-}
-class modal_myroom {
-    constructor() { }
-    Show(e) {
-        let modal = document.querySelector(".modal-myroom");
-        modal.querySelector(".room_id").value = e.target.previousSibling.value;
-        modal.querySelector(".title").innerHTML = e.target.innerHTML;
-        modal.querySelector(".room-pw").value = "";
-        modal.querySelector(".personnel").innerHTML =
-            e.target.nextSibling.innerHTML;
-        modal.style.display = "block";
-    }
-    Join(e) {
-        let roomInfo = {
-            room_id: e.target.parentNode.parentNode.querySelector(".room_id").value,
-            pw: e.target.parentNode.parentNode.querySelector(".room-pw").value,
-        };
-        axiosModule
-            .body("http://13.209.148.137:80/room/check", "post", roomInfo)
-            .then((res) => {
-            if (res.data.res) {
-                alert("방 참여 성공");
-                return (location.href = "http://13.209.148.137:80/page/calander");
+            if ((_a = result === null || result === void 0 ? void 0 : result.data) === null || _a === void 0 ? void 0 : _a.res) {
+                modal.MyRoomInfoHidden();
+                return location.reload();
             }
-            alert("비밀번호를 잘못 입력하셧습니다");
-        })
-            .catch((err) => {
-            console.log(err);
         });
     }
-    Delete(e) {
-        let target = e.target;
-        let room_key = target.parentNode.parentNode.querySelector(".room_id").value;
-        axiosModule
-            .params("http://13.209.148.137:80/room/myroom", "delete", {
-            key: room_key,
-        })
-            .then((res) => {
-            alert("방 삭제 성공");
-            modalMyroom.Hidden();
-            return location.reload();
-        })
-            .catch((err) => {
-            console.log(err);
+    MyRoomJoin(e) {
+        var _a;
+        return __awaiter(this, void 0, void 0, function* () {
+            let target = e.target;
+            let room_id = target.parentNode.parentNode.querySelector(".room_id").value;
+            let pw = target.parentNode.parentNode.querySelector(".room-pw").value;
+            let result = yield axios
+                .post("/room/check", { room_id: room_id, pw: pw })
+                .catch((err) => {
+                console.log(err);
+            });
+            if (!((_a = result === null || result === void 0 ? void 0 : result.data) === null || _a === void 0 ? void 0 : _a.res)) {
+                return alert("비밀번호를 잘못 입력하셧습니다");
+            }
+            return nav.MovePageCalander();
+        });
+    }
+    RoomJoin(e) {
+        var _a, _b;
+        return __awaiter(this, void 0, void 0, function* () {
+            let splitPersonnel = roomPersonnelTag === null || roomPersonnelTag === void 0 ? void 0 : roomPersonnelTag.innerHTML.split("/");
+            if (!splitPersonnel) {
+                return;
+            }
+            if (parseInt(splitPersonnel[0]) >= parseInt(splitPersonnel[1])) {
+                return alert("정원초과");
+            }
+            let room_id = e.target.parentNode.parentNode.querySelector(".room_id").value;
+            let pw = e.target.parentNode.parentNode.querySelector(".room-pw").value;
+            let roomCheckresult = yield axios
+                .post("room/check", { room_id: room_id, pw: pw })
+                .catch((err) => {
+                console.log(err);
+            });
+            if (!((_a = roomCheckresult === null || roomCheckresult === void 0 ? void 0 : roomCheckresult.data) === null || _a === void 0 ? void 0 : _a.res)) {
+                return alert("비밀번호가 틀립니다.");
+            }
+            for (let id of allMyRoomKeyTag) {
+                if (id instanceof HTMLInputElement && id.value === room_id) {
+                    return nav.MovePageCalander();
+                }
+            }
+            let roomJoinResult = yield axios
+                .post("/room/join", "post", {
+                room_id: room_id,
+                user_id: id === null || id === void 0 ? void 0 : id.value,
+            })
+                .catch((err) => {
+                console.log(err);
+            });
+            if ((_b = roomJoinResult === null || roomJoinResult === void 0 ? void 0 : roomJoinResult.data) === null || _b === void 0 ? void 0 : _b.res) {
+                return nav.MovePageCalander();
+            }
+        });
+    }
+    GetAllRoomList() {
+        var _a;
+        return __awaiter(this, void 0, void 0, function* () {
+            let result = yield axios.get("/room/show/all").catch((err) => {
+                console.log(err);
+            });
+            if (!(result === null || result === void 0 ? void 0 : result.data)) {
+                return console.log(result);
+            }
+            for (let i = 0; i < result.data.length; i++) {
+                let make_room = document.createElement("div");
+                make_room.setAttribute("class", "room");
+                make_room.innerHTML = `
+        <input type="hidden" value="${result.data[i].room_id}" class="room_key" /><p class="room__name">${result.data[i].title}</p><p class="room__now">${result.data[i].nowpeople}/${result.data[i].people}</p>
+        `;
+                (_a = make_room.querySelector(".room__name")) === null || _a === void 0 ? void 0 : _a.addEventListener("click", (e) => {
+                    modal.RoomSetInfo(e);
+                    modal.RoomShow();
+                });
+                rootRoomTag === null || rootRoomTag === void 0 ? void 0 : rootRoomTag.appendChild(make_room);
+            }
+        });
+    }
+    GetAllMyRoomList() {
+        var _a;
+        return __awaiter(this, void 0, void 0, function* () {
+            let result = yield axios.get("/room/show/my").catch((err) => {
+                console.log(err);
+            });
+            for (let i = 0; i < result.data.length; i++) {
+                let make_room = document.createElement("div");
+                make_room.classList.add("my-room");
+                make_room.innerHTML = `
+        <input type="hidden" value="${result.data[i].room_id}" class="room_key" /><p class="my-room__name">${result.data[i].title}</p><p class="my-room__now">${result.data[i].nowpeople}/${result.data[i].people}</p>`;
+                (_a = make_room
+                    .querySelector(".my-room__name")) === null || _a === void 0 ? void 0 : _a.addEventListener("click", (e) => {
+                    modal.MyRoomSetInfo(e);
+                    modal.MyRoomInfoShow();
+                });
+                rootMyRoomTag === null || rootMyRoomTag === void 0 ? void 0 : rootMyRoomTag.appendChild(make_room);
+            }
         });
     }
 }
