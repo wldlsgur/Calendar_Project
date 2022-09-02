@@ -31,58 +31,59 @@ class Image {
 class SignUP {
     constructor() { }
     doSignUp(e) {
+        var _a, _b;
         return __awaiter(this, void 0, void 0, function* () {
-            e.preventDefault();
             if (!(sameIdCheckBox === null || sameIdCheckBox === void 0 ? void 0 : sameIdCheckBox.checked)) {
                 return alert("중복확인을 해주세요");
             }
-            let info = {
-                id: inputId === null || inputId === void 0 ? void 0 : inputId.value,
-                pw: inputPw === null || inputPw === void 0 ? void 0 : inputPw.value,
-                name: inputName === null || inputName === void 0 ? void 0 : inputName.value,
-            };
-            if (!info.id || !info.pw || !info.name) {
+            if (!(inputId === null || inputId === void 0 ? void 0 : inputId.value) || (inputPw === null || inputPw === void 0 ? void 0 : inputPw.value) || !(inputName === null || inputName === void 0 ? void 0 : inputName.value)) {
                 return alert("요구사항을 모두 입력해주세요");
             }
             let userInfoInsertResult = yield axios
-                .post(`/user/insert`, info)
+                .post(`/user/insert`, {
+                id: inputId === null || inputId === void 0 ? void 0 : inputId.value,
+                pw: inputPw === null || inputPw === void 0 ? void 0 : inputPw.value,
+                name: inputName === null || inputName === void 0 ? void 0 : inputName.value,
+            })
                 .catch((err) => {
-                console.log(err);
+                return console.log(err);
             });
-            if (userInfoInsertResult.data.res) {
+            if ((_a = userInfoInsertResult === null || userInfoInsertResult === void 0 ? void 0 : userInfoInsertResult.data) === null || _a === void 0 ? void 0 : _a.res) {
                 if (img === null || img === void 0 ? void 0 : img.value) {
                     const formData = new FormData();
                     formData.append("image", img.files[0]);
                     let imageInfoInsertResult = yield axios
-                        .post(`/uploadimage/${info.id}`, formData, {
+                        .post(`/uploadimage/${inputId === null || inputId === void 0 ? void 0 : inputId.value}`, formData, {
                         headers: { "Content-Type": "multipart/form-data" },
                     })
                         .catch((err) => {
-                        console.log(err);
+                        return console.log(err);
                     });
-                    if (imageInfoInsertResult.data.res) {
+                    if ((_b = imageInfoInsertResult === null || imageInfoInsertResult === void 0 ? void 0 : imageInfoInsertResult.data) === null || _b === void 0 ? void 0 : _b.res) {
                         alert("사진 등록 회원가입 성공");
                     }
+                    else {
+                        alert("회원가입 성공");
+                    }
+                    e.preventDefault();
+                    return nav.MovePageSignup;
                 }
-                else {
-                    alert("회원가입 성공");
-                }
-                return nav.MovePageSignup;
             }
         });
     }
     SameIdCheck() {
+        var _a;
         return __awaiter(this, void 0, void 0, function* () {
-            let id = inputId.value;
-            if (!id) {
+            if (!(inputId === null || inputId === void 0 ? void 0 : inputId.value)) {
                 this.checked = false;
                 return alert("아이디를 입력해주세요");
             }
-            let result = yield axios.get(`/user/sameid/${id}`).catch((err) => {
-                console.log(err);
+            let result = yield axios
+                .get(`/user/sameid/${inputId === null || inputId === void 0 ? void 0 : inputId.value}`)
+                .catch((err) => {
+                return console.log(err);
             });
-            console.log(result);
-            if (!result.data.res) {
+            if (!((_a = result === null || result === void 0 ? void 0 : result.data) === null || _a === void 0 ? void 0 : _a.res)) {
                 this.checked = false;
                 return alert("중복된 아이디 입니다");
             }

@@ -27,58 +27,56 @@ class Image {
 class SignUP {
   constructor() {}
   async doSignUp(e: { preventDefault: () => void }) {
-    e.preventDefault();
     if (!sameIdCheckBox?.checked) {
       return alert("중복확인을 해주세요");
     }
-    let info = {
-      id: inputId?.value,
-      pw: inputPw?.value,
-      name: inputName?.value,
-    };
-    if (!info.id || !info.pw || !info.name) {
+    if (!inputId?.value || inputPw?.value || !inputName?.value) {
       return alert("요구사항을 모두 입력해주세요");
     }
     let userInfoInsertResult = await axios
-      .post(`/user/insert`, info)
-      .catch((err: any) => {
-        console.log(err);
+      .post(`/user/insert`, {
+        id: inputId?.value,
+        pw: inputPw?.value,
+        name: inputName?.value,
+      })
+      .catch((err: object) => {
+        return console.log(err);
       });
-    if (userInfoInsertResult.data.res) {
+    if (userInfoInsertResult?.data?.res) {
       if (img?.value) {
         const formData: FormData = new FormData();
-
         formData.append("image", img.files[0]);
+
         let imageInfoInsertResult = await axios
-          .post(`/uploadimage/${info.id}`, formData, {
+          .post(`/uploadimage/${inputId?.value}`, formData, {
             headers: { "Content-Type": "multipart/form-data" },
           })
-          .catch((err: any) => {
-            console.log(err);
+          .catch((err: object) => {
+            return console.log(err);
           });
 
-        if (imageInfoInsertResult.data.res) {
+        if (imageInfoInsertResult?.data?.res) {
           alert("사진 등록 회원가입 성공");
+        } else {
+          alert("회원가입 성공");
         }
-      } else {
-        alert("회원가입 성공");
+        e.preventDefault();
+        return nav.MovePageSignup;
       }
-      return nav.MovePageSignup;
     }
   }
 
   async SameIdCheck(this: any) {
-    let id = inputId.value;
-    if (!id) {
+    if (!inputId?.value) {
       this.checked = false;
       return alert("아이디를 입력해주세요");
     }
-
-    let result = await axios.get(`/user/sameid/${id}`).catch((err: any) => {
-      console.log(err);
-    });
-    console.log(result);
-    if (!result.data.res) {
+    let result = await axios
+      .get(`/user/sameid/${inputId?.value}`)
+      .catch((err: object) => {
+        return console.log(err);
+      });
+    if (!result?.data?.res) {
       this.checked = false;
       return alert("중복된 아이디 입니다");
     }

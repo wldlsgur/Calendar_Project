@@ -1,40 +1,47 @@
-import Axios from "/javascript/common/axios.js";
+import Modal from "../Common/modal";
+
 const server = "http://13.209.148.137:80";
-class CreateRoom {
+const modal: Modal = new Modal();
+
+const id: HTMLInputElement | null = document.querySelector("#user_id");
+const roomTitleTag: HTMLInputElement | null = document.querySelector(
+  ".create-form__title"
+);
+const roomPwTag: HTMLInputElement | null =
+  document.querySelector(".create-form__pw");
+const roomMaxPersonnelTag: HTMLInputElement | null =
+  document.querySelector(".create-form__max");
+
+class RoomController {
   constructor() {}
-  Show() {
-    document.querySelector(".create-room").style.display = "block";
-  }
-  Hidden() {
-    document.querySelector(".create-room").style.display = "none";
-  }
-  Create(event) {
-    event.preventDefault();
-    let info = {
-      user_id: $("#user_id").val(),
-      title: $(".create-form__title").val(),
-      pw: $(".create-form__pw").val(),
-      people: $(".create-form__max").val(),
-    };
-    if (!info.title || !info.pw || !info.people) {
+
+  async Post(e: { preventDefault: () => void }) {
+    if (
+      !roomTitleTag?.value ||
+      !roomPwTag?.value ||
+      !roomMaxPersonnelTag?.value
+    ) {
       return alert("모두 정보를 입력하세요");
     }
-    if (!parseInt(info.people)) {
+    if (!parseInt(roomMaxPersonnelTag?.value)) {
       return alert("인원은 숫자로 입력해주세요");
     }
-    axiosModule
-      .body("http://13.209.148.137:80/room/make", "post", info)
-      .then((response) => {
-        if (response.data.res === true) {
-          creatRoom.Hidden();
-          alert("방 생성 완료!");
-          return location.reload();
-        }
+    let result = await axios
+      .post("/room/make", {
+        user_id: id?.value,
+        title: roomTitleTag.value,
+        pw: roomPwTag.value,
+        people: roomMaxPersonnelTag.value,
       })
-      .catch((err) => {
-        console.log(err);
-        return alert("방 생성 실패!");
+      .catch((err: object) => {
+        return console.log(err);
       });
+
+    if (result?.data?.res) {
+      modal.CreateRoomHidden();
+      e.preventDefault();
+      return location.reload();
+    }
   }
 }
 
@@ -75,7 +82,10 @@ class Room {
           <input type="hidden" value="${response.data[i].room_id}" class="room_key" /><p class="my-room__name">${response.data[i].title}</p><p class="my-room__now">${response.data[i].nowpeople}/${response.data[i].people}</p>`;
           make_room
             .querySelector(".my-room__name")
-            .addEventListener("click", modalMyroom.Show);
+            .addEventListener("click", (e) => {
+              modal.MyRoomSetInfo(e);
+              modal.MyRoomInfoShow();
+            });
           this.myRoom.appendChild(make_room);
         }
       })
@@ -156,9 +166,6 @@ class modal_myroom {
       e.target.nextSibling.innerHTML;
     modal.style.display = "block";
   }
-  Hidden() {
-    document.querySelector(".modal-myroom").style.display = "none";
-  }
   Join(e) {
     let roomInfo = {
       room_id: e.target.parentNode.parentNode.querySelector(".room_id").value,
@@ -196,50 +203,4 @@ class modal_myroom {
   }
 }
 
-// 클래스 생성
-const modalMyroom = new modal_myroom();
-const modalRoom = new modal_room();
-const axiosModule = new Axios(); //ajax 모듈화 클래스
-const creatRoom = new CreateRoom(document.querySelector(".create-room"));
-const room = new Room(
-  document.querySelector(".room-list"),
-  document.querySelector(".my-room-list")
-);
-
-// 이벤트 등록
-$(document).ready(function () {
-  room.all_room();
-  room.all_my_room();
-});
-$(".header__add").click(creatRoom.Show);
-$(".create-form__exit").click(creatRoom.Hidden);
-$(".create-form__create").click(creatRoom.Create);
-document
-  .querySelector(".modal-myroom .room-btn__exit")
-  .addEventListener("click", modalMyroom.Hidden);
-document
-  .querySelector(".modal-myroom .room-btn__delete")
-  .addEventListener("click", modalMyroom.Delete);
-document
-  .querySelector(".modal-myroom .room-btn__join")
-  .addEventListener("click", modalMyroom.Join);
-
-document
-  .querySelector(".modal-room .room-btn__exit")
-  .addEventListener("click", modalRoom.Hidden);
-document
-  .querySelector(".modal-room .room-btn__join")
-  .addEventListener("click", modalRoom.Join);
-document.querySelector(".header__menu").addEventListener("click", function () {
-  let menu = document.querySelector(".menubar");
-  if (menu.style.display === "block") {
-    menu.style.display = "none";
-  } else {
-    menu.style.display = "block";
-  }
-});
-document
-  .querySelector(".menulist__logout")
-  .addEventListener("click", function () {
-    location.href = "http://13.209.148.137:80";
-  });
+export default RoomController;
