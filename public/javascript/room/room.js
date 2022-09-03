@@ -100,7 +100,7 @@ class RoomController {
             let room_id = e.target.parentNode.parentNode.querySelector(".room_id").value;
             let pw = e.target.parentNode.parentNode.querySelector(".room-pw").value;
             let roomCheckresult = yield axios
-                .post("room/check", { room_id: room_id, pw: pw })
+                .post("/room/check", { room_id: room_id, pw: pw })
                 .catch((err) => {
                 return console.log(err);
             });
@@ -113,7 +113,7 @@ class RoomController {
                 }
             }
             let roomJoinResult = yield axios
-                .post("/room/join", "post", {
+                .post("/room/join", {
                 room_id: room_id,
                 user_id: id === null || id === void 0 ? void 0 : id.value,
             })

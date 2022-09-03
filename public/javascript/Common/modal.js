@@ -35,9 +35,9 @@ class Modal {
     MyRoomSetInfo(e) {
         var _a, _b, _c, _d, _e;
         if (myRoomId instanceof HTMLInputElement &&
-            myRoomTitle instanceof HTMLInputElement &&
+            myRoomTitle instanceof HTMLElement &&
             myRoomPw instanceof HTMLInputElement &&
-            myRoomPersonnel instanceof HTMLInputElement) {
+            myRoomPersonnel instanceof HTMLElement) {
             myRoomId.value = (_b = (_a = e === null || e === void 0 ? void 0 : e.target) === null || _a === void 0 ? void 0 : _a.previousSibling) === null || _b === void 0 ? void 0 : _b.value;
             myRoomTitle.innerHTML = (_c = e === null || e === void 0 ? void 0 : e.target) === null || _c === void 0 ? void 0 : _c.innerHTML;
             myRoomPw.value = "";
@@ -56,9 +56,9 @@ class Modal {
     }
     RoomSetInfo(e) {
         if (roomId instanceof HTMLInputElement &&
-            roomTitle instanceof HTMLInputElement &&
+            roomTitle instanceof HTMLElement &&
             roomPw instanceof HTMLInputElement &&
-            roomPersonnel instanceof HTMLInputElement) {
+            roomPersonnel instanceof HTMLElement) {
             roomId.value = e.target.previousSibling.value;
             roomTitle.innerHTML = e.target.innerHTML;
             roomPw.value = "";

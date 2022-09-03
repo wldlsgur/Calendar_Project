@@ -1,13 +1,20 @@
 import Modal from "../Common/modal.js";
 import Nav from "../Common/nav.js";
+import ImageController from "../Common/image.js";
 import RoomController from "./room.js";
 
+const imageController: ImageController = new ImageController();
 const nav: Nav = new Nav();
 const modal: Modal = new Modal();
 const roomController: RoomController = new RoomController();
 const menuBarTag = document.querySelector(".menubar");
-
+const userImage: HTMLInputElement | null = document.querySelector("#userImage");
+const userIamgeTag: HTMLImageElement | null =
+  document.querySelector(".user-info__image");
 window.onload = () => {
+  if (userImage?.value && userIamgeTag instanceof HTMLImageElement) {
+    imageController.ShowUserImage(userIamgeTag, userImage?.value);
+  }
   roomController.GetAllMyRoomList();
   roomController.GetAllRoomList();
 };

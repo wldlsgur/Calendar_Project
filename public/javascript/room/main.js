@@ -1,12 +1,19 @@
 var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
 import Modal from "../Common/modal.js";
 import Nav from "../Common/nav.js";
+import ImageController from "../Common/image.js";
 import RoomController from "./room.js";
+const imageController = new ImageController();
 const nav = new Nav();
 const modal = new Modal();
 const roomController = new RoomController();
 const menuBarTag = document.querySelector(".menubar");
+const userImage = document.querySelector("#userImage");
+const userIamgeTag = document.querySelector(".user-info__image");
 window.onload = () => {
+    if ((userImage === null || userImage === void 0 ? void 0 : userImage.value) && userIamgeTag instanceof HTMLImageElement) {
+        imageController.ShowUserImage(userIamgeTag, userImage === null || userImage === void 0 ? void 0 : userImage.value);
+    }
     roomController.GetAllMyRoomList();
     roomController.GetAllRoomList();
 };

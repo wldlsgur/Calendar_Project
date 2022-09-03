@@ -2,14 +2,10 @@ const createRoom = document.querySelector(".create-room");
 const menuBarTag = document.querySelector(".menubar");
 
 const myRoom = document.querySelector(".modal-myroom");
-const myRoomId: HTMLInputElement | null | undefined =
-  myRoom?.querySelector(".room_id");
-const myRoomTitle: HTMLInputElement | null | undefined =
-  myRoom?.querySelector(".title");
-const myRoomPw: HTMLInputElement | null | undefined =
-  myRoom?.querySelector(".room-pw");
-const myRoomPersonnel: HTMLInputElement | null | undefined =
-  myRoom?.querySelector(".personnel");
+const myRoomId = myRoom?.querySelector(".room_id");
+const myRoomTitle = myRoom?.querySelector(".title");
+const myRoomPw = myRoom?.querySelector(".room-pw");
+const myRoomPersonnel = myRoom?.querySelector(".personnel");
 
 const room = document.querySelector(".modal-room");
 const roomId: HTMLInputElement | null | undefined =
@@ -46,9 +42,9 @@ class Modal {
   MyRoomSetInfo(e: any) {
     if (
       myRoomId instanceof HTMLInputElement &&
-      myRoomTitle instanceof HTMLInputElement &&
+      myRoomTitle instanceof HTMLElement &&
       myRoomPw instanceof HTMLInputElement &&
-      myRoomPersonnel instanceof HTMLInputElement
+      myRoomPersonnel instanceof HTMLElement
     ) {
       myRoomId.value = e?.target?.previousSibling?.value;
       myRoomTitle.innerHTML = e?.target?.innerHTML;
@@ -70,9 +66,9 @@ class Modal {
   RoomSetInfo(e: any) {
     if (
       roomId instanceof HTMLInputElement &&
-      roomTitle instanceof HTMLInputElement &&
+      roomTitle instanceof HTMLElement &&
       roomPw instanceof HTMLInputElement &&
-      roomPersonnel instanceof HTMLInputElement
+      roomPersonnel instanceof HTMLElement
     ) {
       roomId.value = e.target.previousSibling.value;
       roomTitle.innerHTML = e.target.innerHTML;

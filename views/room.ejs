@@ -15,16 +15,12 @@
     <input type="hidden" value="<%= user_id %>" placeholder="AI" id="user_id" />
     <input type="hidden" value="<%= id %>" placeholder="아이디" />
     <input type="hidden" value="<%= name %>" placeholder="이름" />
-    <input type="hidden" value="<%= photo_path %>" placeholder="사진링크" />
+    <input type="hidden" value="<%= photo_path %>" id="userImage" />
     <header class="header">
       <button class="header__menu"><i class="bi bi-list"></i></button>
       <button class="header__add"><i class="bi bi-file-plus"></i></button>
       <div class="user-info">
-        <img
-          src="/image/user/<%= photo_path %>"
-          alt=""
-          class="user-info__image"
-        />
+        <img src="/images/basicImage.jpg" alt="" class="user-info__image" />
         <p class="user-info__name"><%= name %>님.</p>
       </div>
     </header>
@@ -68,7 +64,6 @@
         <input type="password" placeholder="비밀번호" class="room-pw" />
         <div class="room-btn">
           <button class="room-btn__join">입장</button>
-          <button class="room-btn__delete">삭제</button>
           <button class="room-btn__exit">취소</button>
         </div>
       </div>
