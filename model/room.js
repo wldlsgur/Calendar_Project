@@ -85,6 +85,7 @@ module.exports = {
           await new Promise((resolve, reject) => {
             db.query(query2, (err, result2) => {
               if (err) {
+                console.log(err);
                 return reject(err);
               }
               resolve(result2);
@@ -94,6 +95,7 @@ module.exports = {
               result[i].nowpeople = String(result2[0].nowpeople);
             })
             .catch((err) => {
+              console.log(err);
               return reject(err);
             });
         }

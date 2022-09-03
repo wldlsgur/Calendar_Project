@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import Nav from "../Common/nav";
+import Nav from "../Common/nav.js";
 // const server = "http://13.209.148.137:80";
 const nav = new Nav();
 const img = document.querySelector("#image");

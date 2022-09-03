@@ -7,8 +7,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import Modal from "../Common/modal";
-import Nav from "../Common/nav";
+import Modal from "../Common/modal.js";
+import Nav from "../Common/nav.js";
 const server = "http://13.209.148.137:80";
 const modal = new Modal();
 const nav = new Nav();
@@ -79,7 +79,7 @@ class RoomController {
             let result = yield axios
                 .post("/room/check", { room_id: room_id, pw: pw })
                 .catch((err) => {
-                console.log(err);
+                return console.log(err);
             });
             if (!((_a = result === null || result === void 0 ? void 0 : result.data) === null || _a === void 0 ? void 0 : _a.res)) {
                 return alert("비밀번호를 잘못 입력하셧습니다");
@@ -102,7 +102,7 @@ class RoomController {
             let roomCheckresult = yield axios
                 .post("room/check", { room_id: room_id, pw: pw })
                 .catch((err) => {
-                console.log(err);
+                return console.log(err);
             });
             if (!((_a = roomCheckresult === null || roomCheckresult === void 0 ? void 0 : roomCheckresult.data) === null || _a === void 0 ? void 0 : _a.res)) {
                 return alert("비밀번호가 틀립니다.");
@@ -118,7 +118,7 @@ class RoomController {
                 user_id: id === null || id === void 0 ? void 0 : id.value,
             })
                 .catch((err) => {
-                console.log(err);
+                return console.log(err);
             });
             if ((_b = roomJoinResult === null || roomJoinResult === void 0 ? void 0 : roomJoinResult.data) === null || _b === void 0 ? void 0 : _b.res) {
                 return nav.MovePageCalander();
@@ -152,8 +152,11 @@ class RoomController {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             let result = yield axios.get("/room/show/my").catch((err) => {
-                console.log(err);
+                return console.log(err);
             });
+            if (!(result === null || result === void 0 ? void 0 : result.data)) {
+                return console.log(result);
+            }
             for (let i = 0; i < result.data.length; i++) {
                 let make_room = document.createElement("div");
                 make_room.classList.add("my-room");

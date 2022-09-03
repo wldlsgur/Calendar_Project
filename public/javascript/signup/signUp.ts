@@ -1,4 +1,4 @@
-import Nav from "../Common/nav";
+import Nav from "../Common/nav.js";
 
 // const server = "http://13.209.148.137:80";
 const nav = new Nav();

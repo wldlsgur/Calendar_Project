@@ -1,5 +1,5 @@
-import Modal from "../Common/modal";
-import Nav from "../Common/nav";
+import Modal from "../Common/modal.js";
+import Nav from "../Common/nav.js";
 
 const server = "http://13.209.148.137:80";
 const modal: Modal = new Modal();
@@ -74,7 +74,7 @@ class RoomController {
     let result = await axios
       .post("/room/check", { room_id: room_id, pw: pw })
       .catch((err: object) => {
-        console.log(err);
+        return console.log(err);
       });
     if (!result?.data?.res) {
       return alert("비밀번호를 잘못 입력하셧습니다");
@@ -98,7 +98,7 @@ class RoomController {
     let roomCheckresult = await axios
       .post("room/check", { room_id: room_id, pw: pw })
       .catch((err: object) => {
-        console.log(err);
+        return console.log(err);
       });
 
     if (!roomCheckresult?.data?.res) {
@@ -115,7 +115,7 @@ class RoomController {
         user_id: id?.value,
       })
       .catch((err: object) => {
-        console.log(err);
+        return console.log(err);
       });
     if (roomJoinResult?.data?.res) {
       return nav.MovePageCalander();
@@ -145,8 +145,11 @@ class RoomController {
 
   async GetAllMyRoomList() {
     let result = await axios.get("/room/show/my").catch((err: object) => {
-      console.log(err);
+      return console.log(err);
     });
+    if (!result?.data) {
+      return console.log(result);
+    }
     for (let i = 0; i < result.data.length; i++) {
       let make_room = document.createElement("div");
       make_room.classList.add("my-room");

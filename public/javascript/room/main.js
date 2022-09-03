@@ -1,6 +1,6 @@
 var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
-import Modal from "../Common/modal";
-import Nav from "../Common/nav";
+import Modal from "../Common/modal.js";
+import Nav from "../Common/nav.js";
 import RoomController from "./room.js";
 const nav = new Nav();
 const modal = new Modal();

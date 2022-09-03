@@ -1,5 +1,5 @@
-import Modal from "../Common/modal";
-import Nav from "../Common/nav";
+import Modal from "../Common/modal.js";
+import Nav from "../Common/nav.js";
 import RoomController from "./room.js";
 
 const nav: Nav = new Nav();

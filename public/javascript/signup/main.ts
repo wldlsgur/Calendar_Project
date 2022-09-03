@@ -1,4 +1,5 @@
 import { Image, SignUP } from "./signUp.js";
+
 const image = new Image();
 const signUp = new SignUP();
 
