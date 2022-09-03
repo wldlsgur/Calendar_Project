@@ -161,7 +161,7 @@ class RoomController {
                 let make_room = document.createElement("div");
                 make_room.classList.add("my-room");
                 make_room.innerHTML = `
-        <input type="hidden" value="${result.data[i].room_id}" class="room_key" /><p class="my-room__name">${result.data[i].title}</p><p class="my-room__now">${result.data[i].nowpeople}/${result.data[i].people}</p>`;
+        <input type="hidden" value="${result.data[i].room_id}" class="room_key" /><input type="hidden" value="${result.data[i].chief}" class="room_chief" /><p class="my-room__name">${result.data[i].title}</p><p class="my-room__now">${result.data[i].nowpeople}/${result.data[i].people}</p>`;
                 (_a = make_room
                     .querySelector(".my-room__name")) === null || _a === void 0 ? void 0 : _a.addEventListener("click", (e) => {
                     modal.MyRoomSetInfo(e);

@@ -1,7 +1,13 @@
-import { Nav, Modal } from "/javascript/calander/nav_modal.js";
-import calanderController from "./content.js";
+import Nav from "../Common/nav.js";
+import Modal from "../Common/modal.js";
+import CommentController from "./comment.js";
+import CalanderController from "./calander.js";
 import personnelController from "./personnel.js";
 
+const menuBarTag = document.querySelector(".menubar");
+const nav: Nav = new Nav();
+const commentController: CommentController = new CommentController();
+const modal: Modal = new Modal();
 const week = new Array(
   "일요일",
   "월요일",
@@ -14,40 +20,47 @@ const week = new Array(
 let today: Date = new Date();
 
 const socket = io();
-const nav = new Nav();
-const modal = new Modal();
 const personnelcontroller = new personnelController();
 const staticCC = new calanderController(today);
 const userId = document.querySelector("#user_id")?.value;
 const roomId = document.querySelector("#room_id")?.value;
 const userName = document.querySelector("#userName")?.value;
 
-document
-  .querySelector(".header__menu")
-  ?.addEventListener("click", nav.ShowHidden);
+window.onload = () => {
+  SetCalander();
+  personnelcontroller.getDataOfServer();
+  SocketJoin();
+};
+document.querySelector(".header__menu")?.addEventListener("click", () => {
+  if (menuBarTag instanceof HTMLElement) {
+    if (menuBarTag.style.display === "block") {
+      return modal.MenuBarHidden();
+    }
+    modal.MenuBarShow();
+  }
+});
 document
   .querySelector(".menulist__logout")
-  ?.addEventListener("click", nav.HrefHome);
+  ?.addEventListener("click", nav.MovePageLogin);
 document
   .querySelector(".menulist__room")
-  ?.addEventListener("click", nav.HrefPageRoom);
-// navEvent
+  ?.addEventListener("click", nav.MovePageRoom);
 
 document
   .querySelector(".header__add")
-  ?.addEventListener("click", modal.ShowComment);
+  ?.addEventListener("click", modal.InputCommentShow);
 document
   .querySelector(".commentForm__btn--exit")
-  ?.addEventListener("click", modal.HiddenComment);
+  ?.addEventListener("click", modal.InputCommentHidden);
 document
   .querySelector(".commentForm__btn--submit")
-  ?.addEventListener("click", modal.SubmitCommnet);
+  ?.addEventListener("click", commentController.Post);
 document
   .querySelector(".modalCommentInfo .commentForm__btn--exit")
-  ?.addEventListener("click", modal.HiddenCommentDetail);
+  ?.addEventListener("click", modal.CommentInfoDelBtnHidden);
 document
   .querySelector(".modalCommentInfo .commentForm__btn--submit")
-  ?.addEventListener("click", staticCC.DeleteContent);
+  ?.addEventListener("click", commentController.Delete);
 // modalEvent
 function SetCalander() {
   initCalander();
@@ -68,11 +81,7 @@ document.querySelector(".chatWrite__input")?.addEventListener("keyup", (e) => {
     SendMsg(e);
   }
 });
-window.onload = () => {
-  SetCalander();
-  personnelcontroller.getDataOfServer();
-  SocketJoin();
-};
+
 // calanderEvent
 
 function initCalander(): void {
@@ -228,5 +237,3 @@ socket.on(
     root?.appendChild(msg);
   }
 );
-
-export default SocketLeave;

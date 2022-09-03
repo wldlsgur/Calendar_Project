@@ -1,34 +1,47 @@
 var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q;
-import { Nav, Modal } from "/javascript/calander/nav_modal.js";
-import calanderController from "./content.js";
+import Nav from "../Common/nav.js";
+import Modal from "../Common/modal.js";
+import CommentController from "./comment.js";
 import personnelController from "./personnel.js";
+const menuBarTag = document.querySelector(".menubar");
+const nav = new Nav();
+const commentController = new CommentController();
+const modal = new Modal();
 const week = new Array("일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일");
 let today = new Date();
 const socket = io();
-const nav = new Nav();
-const modal = new Modal();
 const personnelcontroller = new personnelController();
 const staticCC = new calanderController(today);
 const userId = (_a = document.querySelector("#user_id")) === null || _a === void 0 ? void 0 : _a.value;
 const roomId = (_b = document.querySelector("#room_id")) === null || _b === void 0 ? void 0 : _b.value;
 const userName = (_c = document.querySelector("#userName")) === null || _c === void 0 ? void 0 : _c.value;
-(_d = document
-    .querySelector(".header__menu")) === null || _d === void 0 ? void 0 : _d.addEventListener("click", nav.ShowHidden);
+window.onload = () => {
+    SetCalander();
+    personnelcontroller.getDataOfServer();
+    SocketJoin();
+};
+(_d = document.querySelector(".header__menu")) === null || _d === void 0 ? void 0 : _d.addEventListener("click", () => {
+    if (menuBarTag instanceof HTMLElement) {
+        if (menuBarTag.style.display === "block") {
+            return modal.MenuBarHidden();
+        }
+        modal.MenuBarShow();
+    }
+});
 (_e = document
-    .querySelector(".menulist__logout")) === null || _e === void 0 ? void 0 : _e.addEventListener("click", nav.HrefHome);
+    .querySelector(".menulist__logout")) === null || _e === void 0 ? void 0 : _e.addEventListener("click", nav.MovePageLogin);
 (_f = document
-    .querySelector(".menulist__room")) === null || _f === void 0 ? void 0 : _f.addEventListener("click", nav.HrefPageRoom);
-// navEvent
+    .querySelector(".menulist__room")) === null || _f === void 0 ? void 0 : _f.addEventListener("click", nav.MovePageRoom);
 (_g = document
-    .querySelector(".header__add")) === null || _g === void 0 ? void 0 : _g.addEventListener("click", modal.ShowComment);
+    .querySelector(".header__add")) === null || _g === void 0 ? void 0 : _g.addEventListener("click", modal.InputCommentShow);
 (_h = document
-    .querySelector(".commentForm__btn--exit")) === null || _h === void 0 ? void 0 : _h.addEventListener("click", modal.HiddenComment);
+    .querySelector(".commentForm__btn--exit")) === null || _h === void 0 ? void 0 : _h.addEventListener("click", modal.InputCommentHidden);
 (_j = document
-    .querySelector(".commentForm__btn--submit")) === null || _j === void 0 ? void 0 : _j.addEventListener("click", modal.SubmitCommnet);
+    .querySelector(".commentForm__btn--submit")) === null || _j === void 0 ? void 0 : _j.addEventListener("click", commentController.Post);
 (_k = document
-    .querySelector(".modalCommentInfo .commentForm__btn--exit")) === null || _k === void 0 ? void 0 : _k.addEventListener("click", modal.HiddenCommentDetail);
+    .querySelector(".modalCommentInfo .commentForm__btn--exit")) === null || _k === void 0 ? void 0 : _k.addEventListener("click", modal.CommentInfoDelBtnHidden);
 (_l = document
-    .querySelector(".modalCommentInfo .commentForm__btn--submit")) === null || _l === void 0 ? void 0 : _l.addEventListener("click", staticCC.DeleteContent);
+    .querySelector(".modalCommentInfo .commentForm__btn--submit")) === null || _l === void 0 ? void 0 : _l.addEventListener("click", commentController.Delete);
 // modalEvent
 function SetCalander() {
     initCalander();
@@ -49,11 +62,6 @@ function SetCalander() {
         SendMsg(e);
     }
 });
-window.onload = () => {
-    SetCalander();
-    personnelcontroller.getDataOfServer();
-    SocketJoin();
-};
 // calanderEvent
 function initCalander() {
     var _a;
@@ -184,4 +192,3 @@ socket.on("chat-msg", (data) => {
     }
     root === null || root === void 0 ? void 0 : root.appendChild(msg);
 });
-export default SocketLeave;

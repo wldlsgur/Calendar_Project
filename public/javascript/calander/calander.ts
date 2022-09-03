@@ -1,10 +1,8 @@
-import Axios from "/javascript/common/axios.js";
 import { Modal } from "/javascript/calander/nav_modal.js";
 
-const axiosModule = new Axios();
 const modal = new Modal();
 
-class calanderController {
+class CalanderController {
   today: Date;
   constructor(today: Date) {
     this.today = today;
@@ -75,24 +73,6 @@ class calanderController {
       }
     }
   }
-
-  async DeleteContent(event: { preventDefault: () => void }): Promise<void> {
-    let contentId = {
-      contentId: this.parentNode.parentNode.querySelector(".contentId").value,
-    };
-    let response = await axiosModule.body(
-      "http://13.209.148.137:80/calander",
-      "delete",
-      contentId
-    );
-    if (response.data.res) {
-      alert("삭제 성공");
-      modal.HiddenCommentDetail();
-      location.reload();
-      return;
-    }
-    return alert("삭제 실패");
-  }
 }
 class ContentInfo {
   img: string;
@@ -156,4 +136,4 @@ function viewContent(this: any) {
     content.SetModalData();
   }
 }
-export default calanderController;
+export default CalanderController;

@@ -2,14 +2,19 @@ const createRoom = document.querySelector(".create-room");
 const menuBarTag = document.querySelector(".menubar");
 const myRoom = document.querySelector(".modal-myroom");
 const myRoomId = myRoom === null || myRoom === void 0 ? void 0 : myRoom.querySelector(".room_id");
+const myRoomCheif = myRoom === null || myRoom === void 0 ? void 0 : myRoom.querySelector(".room_cheif");
 const myRoomTitle = myRoom === null || myRoom === void 0 ? void 0 : myRoom.querySelector(".title");
 const myRoomPw = myRoom === null || myRoom === void 0 ? void 0 : myRoom.querySelector(".room-pw");
 const myRoomPersonnel = myRoom === null || myRoom === void 0 ? void 0 : myRoom.querySelector(".personnel");
+const myRoomDeleteBtnTag = document.querySelector(".room-btn__delete");
 const room = document.querySelector(".modal-room");
 const roomId = room === null || room === void 0 ? void 0 : room.querySelector(".room_id");
 const roomTitle = room === null || room === void 0 ? void 0 : room.querySelector(".title");
 const roomPw = room === null || room === void 0 ? void 0 : room.querySelector(".room-pw");
 const roomPersonnel = room === null || room === void 0 ? void 0 : room.querySelector(".personnel");
+const InputComment = document.querySelector(".modalComment");
+const commentInfo = document.querySelector(".modalCommentInfo");
+const commentInfoDelBtn = document.querySelector(".modalCommentInfo .commentForm__btn--submit");
 class Modal {
     constructor() { }
     CreateRoomShow() {
@@ -22,9 +27,24 @@ class Modal {
             createRoom.style.display = "none";
         }
     }
+    MyRoomInfoDelBtnShow() {
+        if (myRoomDeleteBtnTag instanceof HTMLElement) {
+            myRoomDeleteBtnTag.style.display = "block";
+        }
+    }
+    MyRoomInfoDelBtnHidden() {
+        if (myRoomDeleteBtnTag instanceof HTMLElement) {
+            myRoomDeleteBtnTag.style.display = "none";
+        }
+    }
     MyRoomInfoShow() {
         if (myRoom instanceof HTMLElement) {
             myRoom.style.display = "block";
+            if (myRoomCheif instanceof HTMLInputElement &&
+                myRoomCheif.value === "1") {
+                return this.MyRoomInfoDelBtnShow();
+            }
+            this.MyRoomInfoDelBtnHidden();
         }
     }
     MyRoomInfoHidden() {
@@ -33,15 +53,17 @@ class Modal {
         }
     }
     MyRoomSetInfo(e) {
-        var _a, _b, _c, _d, _e;
+        var _a, _b, _c, _d, _e, _f, _g, _h;
         if (myRoomId instanceof HTMLInputElement &&
+            myRoomCheif instanceof HTMLInputElement &&
             myRoomTitle instanceof HTMLElement &&
             myRoomPw instanceof HTMLInputElement &&
             myRoomPersonnel instanceof HTMLElement) {
-            myRoomId.value = (_b = (_a = e === null || e === void 0 ? void 0 : e.target) === null || _a === void 0 ? void 0 : _a.previousSibling) === null || _b === void 0 ? void 0 : _b.value;
-            myRoomTitle.innerHTML = (_c = e === null || e === void 0 ? void 0 : e.target) === null || _c === void 0 ? void 0 : _c.innerHTML;
+            myRoomId.value = (_c = (_b = (_a = e === null || e === void 0 ? void 0 : e.target) === null || _a === void 0 ? void 0 : _a.previousSibling) === null || _b === void 0 ? void 0 : _b.previousSibling) === null || _c === void 0 ? void 0 : _c.value;
+            myRoomCheif.value = (_e = (_d = e === null || e === void 0 ? void 0 : e.target) === null || _d === void 0 ? void 0 : _d.previousSibling) === null || _e === void 0 ? void 0 : _e.value;
+            myRoomTitle.innerHTML = (_f = e === null || e === void 0 ? void 0 : e.target) === null || _f === void 0 ? void 0 : _f.innerHTML;
             myRoomPw.value = "";
-            myRoomPersonnel.innerHTML = (_e = (_d = e === null || e === void 0 ? void 0 : e.target) === null || _d === void 0 ? void 0 : _d.nextSibling) === null || _e === void 0 ? void 0 : _e.innerHTML;
+            myRoomPersonnel.innerHTML = (_h = (_g = e === null || e === void 0 ? void 0 : e.target) === null || _g === void 0 ? void 0 : _g.nextSibling) === null || _h === void 0 ? void 0 : _h.innerHTML;
         }
     }
     RoomHidden() {
@@ -73,6 +95,36 @@ class Modal {
     MenuBarHidden() {
         if (menuBarTag instanceof HTMLElement) {
             menuBarTag.style.display = "none";
+        }
+    }
+    InputCommentShow() {
+        if (InputComment instanceof HTMLElement) {
+            InputComment.style.display = "block";
+        }
+    }
+    InputCommentHidden() {
+        if (InputComment instanceof HTMLElement) {
+            InputComment.style.display = "none";
+        }
+    }
+    CommnetInfoShow() {
+        if (commentInfo instanceof HTMLElement) {
+            commentInfo.style.display = "block";
+        }
+    }
+    CommentInfoHidden() {
+        if (commentInfo instanceof HTMLElement) {
+            commentInfo.style.display = "none";
+        }
+    }
+    CommentInfoDelBtnShow() {
+        if (commentInfoDelBtn instanceof HTMLElement) {
+            commentInfoDelBtn.style.display = "blcck";
+        }
+    }
+    CommentInfoDelBtnHidden() {
+        if (commentInfoDelBtn instanceof HTMLElement) {
+            commentInfoDelBtn.style.display = "none";
         }
     }
 }

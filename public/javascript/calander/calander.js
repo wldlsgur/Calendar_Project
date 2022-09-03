@@ -7,11 +7,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import Axios from "/javascript/common/axios.js";
 import { Modal } from "/javascript/calander/nav_modal.js";
-const axiosModule = new Axios();
 const modal = new Modal();
-class calanderController {
+class CalanderController {
     constructor(today) {
         this.today = today;
     }
@@ -71,21 +69,6 @@ class calanderController {
             }
         });
     }
-    DeleteContent(event) {
-        return __awaiter(this, void 0, void 0, function* () {
-            let contentId = {
-                contentId: this.parentNode.parentNode.querySelector(".contentId").value,
-            };
-            let response = yield axiosModule.body("http://13.209.148.137:80/calander", "delete", contentId);
-            if (response.data.res) {
-                alert("삭제 성공");
-                modal.HiddenCommentDetail();
-                location.reload();
-                return;
-            }
-            return alert("삭제 실패");
-        });
-    }
 }
 class ContentInfo {
     constructor(img, name, content_id, user_id, text, date) {
@@ -133,4 +116,4 @@ function viewContent() {
         content.SetModalData();
     }
 }
-export default calanderController;
+export default CalanderController;

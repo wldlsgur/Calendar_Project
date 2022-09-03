@@ -1,6 +1,3 @@
-import Axios from "/javascript/common/axios.js";
-const axiosModule = new Axios();
-
 class personnelController {
   roomId: any;
   constructor() {

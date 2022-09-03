@@ -210,6 +210,9 @@ body {
     > .room-btn {
       display: flex;
       justify-content: space-around;
+      > .room-btn__delete {
+        display: none;
+      }
       > button {
         background-color: #222225;
         color: white;
@@ -267,5 +270,13 @@ body {
 @media screen and (max-width: 768px) {
   .content {
     flex-direction: column;
+  }
+  .create-room,
+  .modal-myroom,
+  .modal-room {
+    width: 350px;
+    height: 450px;
+    margin-left: -175px;
+    margin-top: -225px;
   }
 }

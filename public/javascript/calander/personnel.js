@@ -7,8 +7,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import Axios from "/javascript/common/axios.js";
-const axiosModule = new Axios();
 class personnelController {
     constructor() {
         var _a;
