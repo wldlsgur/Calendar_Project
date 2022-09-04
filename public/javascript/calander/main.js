@@ -2,7 +2,7 @@ var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q;
 import Nav from "../Common/nav.js";
 import Modal from "../Common/modal.js";
 import CommentController from "./comment.js";
-import personnelController from "./personnel.js";
+import PersonnelController from "./personnel.js";
 const menuBarTag = document.querySelector(".menubar");
 const nav = new Nav();
 const commentController = new CommentController();
@@ -10,14 +10,17 @@ const modal = new Modal();
 const week = new Array("일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일");
 let today = new Date();
 const socket = io();
-const personnelcontroller = new personnelController();
+const personnelcontroller = new PersonnelController();
 const staticCC = new calanderController(today);
 const userId = (_a = document.querySelector("#user_id")) === null || _a === void 0 ? void 0 : _a.value;
 const roomId = (_b = document.querySelector("#room_id")) === null || _b === void 0 ? void 0 : _b.value;
 const userName = (_c = document.querySelector("#userName")) === null || _c === void 0 ? void 0 : _c.value;
 window.onload = () => {
     SetCalander();
-    personnelcontroller.getDataOfServer();
+    let result = personnelcontroller.Get();
+    if (result) {
+        personnelcontroller.SetPersonnelCalander(result);
+    }
     SocketJoin();
 };
 (_d = document.querySelector(".header__menu")) === null || _d === void 0 ? void 0 : _d.addEventListener("click", () => {

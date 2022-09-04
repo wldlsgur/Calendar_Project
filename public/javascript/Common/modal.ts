@@ -1,5 +1,13 @@
 const createRoom = document.querySelector(".create-room");
 const menuBarTag = document.querySelector(".menubar");
+const userId = document.querySelector("#user_id");
+const headerTag = document.querySelector(".header__title");
+
+const commentId = document.querySelector(".contentId");
+const commentUserImg = document.querySelector(".userInfo__img");
+const commentDate = document.querySelector(".commentInfo__date");
+const commentParagraph = document.querySelector(".commentInfo__content");
+const commnetUserName = document.querySelector(".userInfo__name");
 
 const myRoom = document.querySelector(".modal-myroom");
 const myRoomId = myRoom?.querySelector(".room_id");
@@ -131,6 +139,35 @@ class Modal {
   CommentInfoHidden() {
     if (commentInfo instanceof HTMLElement) {
       commentInfo.style.display = "none";
+    }
+  }
+  CommentSetInfo(e: Event) {
+    if (e.target instanceof HTMLElement) {
+      let imgTag = e.target.querySelector(".contentInfo__img");
+      let nameTag = e.target.querySelector(".contentInfo__name");
+      let contentIdTag = e.target.querySelector(".contentInfo__contentId");
+      let textTag = e.target.querySelector(".contentInfo__content");
+      let dayTag = e.target.parentNode?.querySelector(".day");
+      let date;
+      if (dayTag instanceof HTMLElement) {
+        date = headerTag?.innerHTML + dayTag.innerHTML + "일";
+      }
+      if (
+        contentIdTag instanceof HTMLInputElement &&
+        imgTag instanceof HTMLImageElement &&
+        textTag instanceof HTMLInputElement &&
+        nameTag instanceof HTMLDivElement &&
+        commentDate instanceof HTMLElement &&
+        commentParagraph instanceof HTMLElement &&
+        commnetUserName instanceof HTMLElement &&
+        date
+      ) {
+        commentId?.setAttribute("value", contentIdTag.value);
+        commentUserImg?.setAttribute("src", imgTag?.src);
+        commentDate.innerHTML = date;
+        commentParagraph.innerHTML = textTag?.value;
+        commnetUserName.innerHTML = nameTag?.innerHTML;
+      }
     }
   }
   CommentInfoDelBtnShow() {

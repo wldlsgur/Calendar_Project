@@ -2,7 +2,7 @@ import Nav from "../Common/nav.js";
 import Modal from "../Common/modal.js";
 import CommentController from "./comment.js";
 import CalanderController from "./calander.js";
-import personnelController from "./personnel.js";
+import PersonnelController from "./personnel.js";
 
 const menuBarTag = document.querySelector(".menubar");
 const nav: Nav = new Nav();
@@ -20,7 +20,7 @@ const week = new Array(
 let today: Date = new Date();
 
 const socket = io();
-const personnelcontroller = new personnelController();
+const personnelcontroller = new PersonnelController();
 const staticCC = new calanderController(today);
 const userId = document.querySelector("#user_id")?.value;
 const roomId = document.querySelector("#room_id")?.value;
@@ -28,7 +28,10 @@ const userName = document.querySelector("#userName")?.value;
 
 window.onload = () => {
   SetCalander();
-  personnelcontroller.getDataOfServer();
+  let result = personnelcontroller.Get();
+  if (result) {
+    personnelcontroller.SetPersonnelCalander(result);
+  }
   SocketJoin();
 };
 document.querySelector(".header__menu")?.addEventListener("click", () => {
@@ -61,11 +64,12 @@ document
 document
   .querySelector(".modalCommentInfo .commentForm__btn--submit")
   ?.addEventListener("click", commentController.Delete);
+
 // modalEvent
 function SetCalander() {
   initCalander();
-  let calandercontroller = new calanderController(today);
-  calandercontroller.getContent();
+  let result = commentController.Get(today);
+  commentController.SetCommentCalander(result);
 }
 document.querySelector(".bi-caret-left")?.addEventListener("click", () => {
   today = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());

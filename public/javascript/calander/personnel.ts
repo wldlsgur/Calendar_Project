@@ -1,26 +1,24 @@
-class personnelController {
-  roomId: any;
-  constructor() {
-    this.roomId = document.querySelector("#room_id")?.value;
-  }
+const server = "http://13.209.148.137:80/";
+const roomIdTag: HTMLInputElement | null = document.querySelector("#room_id");
+class PersonnelController {
+  constructor() {}
 
-  async getDataOfServer(): Promise<void> {
-    let response = await axiosModule.params(
-      "http://13.209.148.137:80/calander/personnel",
-      "get",
-      {
-        roomId: this.roomId,
-      }
-    );
-    if (response.data.length < 1) {
-      return;
+  async Get() {
+    let result = await axios
+      .get("calander/personnel", { params: { roomId: roomIdTag?.value } })
+      .catch((err: object) => {
+        console.log(err);
+      });
+    if (!result.data[0]) {
+      return null;
     }
-    this.setData(response);
+    console.log(typeof result);
+    return result.data;
   }
 
-  setData(response: { data: any }): void {
+  SetPersonnelCalander(result: Promise<any>) {
     let root = document.querySelector(".personnelList");
-    for (let i in response.data) {
+    for (let i in result) {
       let div1 = document.createElement("div");
       let input = document.createElement("input");
       let div2 = document.createElement("div");
@@ -36,16 +34,13 @@ class personnelController {
       div2.setAttribute("class", "personnelUser");
 
       img.setAttribute("class", "personnelUser__img");
-      img.setAttribute(
-        "src",
-        "http://13.209.148.137:80/image/user/" + response.data[i].photo_path
-      );
+      img.setAttribute("src", "/image/user/" + result[i].photo_path);
 
       p1.setAttribute("class", "personnelUser__name");
-      p1.innerHTML = response.data[i].name;
+      p1.innerHTML = result[i].name;
 
       p2.setAttribute("class", "personnel__moderator");
-      if (response.data[i].chief) {
+      if (result[i].chief) {
         p2.innerHTML = "방장";
       } else {
         p2.innerHTML = "인원";
@@ -63,4 +58,4 @@ class personnelController {
   }
 }
 
-export default personnelController;
+export default PersonnelController;
