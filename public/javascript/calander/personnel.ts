@@ -3,20 +3,22 @@ const roomIdTag: HTMLInputElement | null = document.querySelector("#room_id");
 class PersonnelController {
   constructor() {}
 
-  async Get() {
-    let result = await axios
-      .get("calander/personnel", { params: { roomId: roomIdTag?.value } })
-      .catch((err: object) => {
-        console.log(err);
-      });
-    if (!result.data[0]) {
-      return null;
-    }
-    console.log(typeof result);
-    return result.data;
+  async Get(): Promise<object> {
+    return new Promise(async (resovle, reject) => {
+      let result = await axios
+        .get("/calander/personnel", { params: { roomId: roomIdTag?.value } })
+        .catch((err: object) => {
+          console.log(err);
+          return reject(err);
+        });
+      if (!result.data[0]) {
+        return null;
+      }
+      return resovle(result.data);
+    });
   }
 
-  SetPersonnelCalander(result: Promise<any>) {
+  SetPersonnelCalander(result: object) {
     let root = document.querySelector(".personnelList");
     for (let i in result) {
       let div1 = document.createElement("div");

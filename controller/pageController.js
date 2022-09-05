@@ -33,6 +33,7 @@ const pageController = {
       console.log(err);
       res.status(400).send(err);
     });
+
     res.render("calander.ejs", {
       user_id: result[0].user_id,
       id: result[0].id,

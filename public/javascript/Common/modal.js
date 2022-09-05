@@ -1,5 +1,12 @@
 const createRoom = document.querySelector(".create-room");
 const menuBarTag = document.querySelector(".menubar");
+const userId = document.querySelector("#user_id");
+const headerTag = document.querySelector(".header__title");
+const commentId = document.querySelector(".contentId");
+const commentUserImg = document.querySelector(".userInfo__img");
+const commentDate = document.querySelector(".commentInfo__date");
+const commentParagraph = document.querySelector(".commentInfo__content");
+const commnetUserName = document.querySelector(".userInfo__name");
 const myRoom = document.querySelector(".modal-myroom");
 const myRoomId = myRoom === null || myRoom === void 0 ? void 0 : myRoom.querySelector(".room_id");
 const myRoomCheif = myRoom === null || myRoom === void 0 ? void 0 : myRoom.querySelector(".room_cheif");
@@ -117,9 +124,28 @@ class Modal {
             commentInfo.style.display = "none";
         }
     }
+    CommentSetInfo(e) {
+        var _a;
+        let imgTag = e.target.parentNode.querySelector(".contentInfo__img");
+        let nameTag = e.target.parentNode.querySelector(".contentInfo__name");
+        let contentIdTag = e.target.parentNode.querySelector(".contentInfo__contentId");
+        let textTag = e.target.parentNode.querySelector(".contentInfo__content");
+        let dayTag = (_a = e.target.parentNode.parentNode) === null || _a === void 0 ? void 0 : _a.querySelector(".day");
+        let date;
+        if (dayTag instanceof HTMLElement) {
+            date = (headerTag === null || headerTag === void 0 ? void 0 : headerTag.innerHTML) + dayTag.innerHTML + "일";
+        }
+        if (date) {
+            commentId === null || commentId === void 0 ? void 0 : commentId.setAttribute("value", contentIdTag.value);
+            commentUserImg === null || commentUserImg === void 0 ? void 0 : commentUserImg.setAttribute("src", imgTag === null || imgTag === void 0 ? void 0 : imgTag.src);
+            commentDate === null || commentDate === void 0 ? void 0 : commentDate.innerHTML = date;
+            commentParagraph === null || commentParagraph === void 0 ? void 0 : commentParagraph.innerHTML = textTag === null || textTag === void 0 ? void 0 : textTag.value;
+            commnetUserName === null || commnetUserName === void 0 ? void 0 : commnetUserName.innerHTML = nameTag === null || nameTag === void 0 ? void 0 : nameTag.innerHTML;
+        }
+    }
     CommentInfoDelBtnShow() {
         if (commentInfoDelBtn instanceof HTMLElement) {
-            commentInfoDelBtn.style.display = "blcck";
+            commentInfoDelBtn.style.display = "block";
         }
     }
     CommentInfoDelBtnHidden() {

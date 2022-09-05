@@ -22,9 +22,6 @@ module.exports = {
         if (err) {
           return reject(err);
         }
-        if (req.session.room_id) {
-          req.session.room_id = null;
-        }
         return resolve(result);
       });
     });
