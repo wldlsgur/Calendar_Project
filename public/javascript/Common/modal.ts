@@ -157,12 +157,17 @@ class Modal {
     if (dayTag instanceof HTMLElement) {
       date = headerTag?.innerHTML + dayTag.innerHTML + "일";
     }
-    if (date) {
+    if (
+      commentDate instanceof Element &&
+      date &&
+      commentParagraph instanceof Element &&
+      commnetUserName instanceof Element
+    ) {
       commentId?.setAttribute("value", contentIdTag.value);
       commentUserImg?.setAttribute("src", imgTag?.src);
-      commentDate?.innerHTML = date;
-      commentParagraph?.innerHTML = textTag?.value;
-      commnetUserName?.innerHTML = nameTag?.innerHTML;
+      commentDate.innerHTML = date;
+      commentParagraph.innerHTML = textTag?.value;
+      commnetUserName.innerHTML = nameTag?.innerHTML;
     }
   }
   CommentInfoDelBtnShow() {

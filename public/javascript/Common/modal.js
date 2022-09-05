@@ -135,12 +135,15 @@ class Modal {
         if (dayTag instanceof HTMLElement) {
             date = (headerTag === null || headerTag === void 0 ? void 0 : headerTag.innerHTML) + dayTag.innerHTML + "일";
         }
-        if (date) {
+        if (commentDate instanceof Element &&
+            date &&
+            commentParagraph instanceof Element &&
+            commnetUserName instanceof Element) {
             commentId === null || commentId === void 0 ? void 0 : commentId.setAttribute("value", contentIdTag.value);
             commentUserImg === null || commentUserImg === void 0 ? void 0 : commentUserImg.setAttribute("src", imgTag === null || imgTag === void 0 ? void 0 : imgTag.src);
-            commentDate === null || commentDate === void 0 ? void 0 : commentDate.innerHTML = date;
-            commentParagraph === null || commentParagraph === void 0 ? void 0 : commentParagraph.innerHTML = textTag === null || textTag === void 0 ? void 0 : textTag.value;
-            commnetUserName === null || commnetUserName === void 0 ? void 0 : commnetUserName.innerHTML = nameTag === null || nameTag === void 0 ? void 0 : nameTag.innerHTML;
+            commentDate.innerHTML = date;
+            commentParagraph.innerHTML = textTag === null || textTag === void 0 ? void 0 : textTag.value;
+            commnetUserName.innerHTML = nameTag === null || nameTag === void 0 ? void 0 : nameTag.innerHTML;
         }
     }
     CommentInfoDelBtnShow() {
