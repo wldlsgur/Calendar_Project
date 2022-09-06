@@ -61,7 +61,7 @@ class SignUP {
         } else {
           alert("회원가입 성공");
         }
-        return nav.MovePageSignup();
+        return nav.MovePageLogin();
       }
     }
   }
