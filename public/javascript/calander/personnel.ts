@@ -1,4 +1,4 @@
-const server = "http://13.209.148.137:80/";
+const server = "http://13.209.148.137:80";
 const roomIdTag: HTMLInputElement | null = document.querySelector("#room_id");
 class PersonnelController {
   constructor() {}
@@ -6,7 +6,9 @@ class PersonnelController {
   async Get(): Promise<object> {
     return new Promise(async (resovle, reject) => {
       let result = await axios
-        .get("/calander/personnel", { params: { roomId: roomIdTag?.value } })
+        .get(`${server}/calander/personnel`, {
+          params: { roomId: roomIdTag?.value },
+        })
         .catch((err: object) => {
           console.log(err);
           return reject(err);
@@ -36,7 +38,7 @@ class PersonnelController {
       div2.setAttribute("class", "personnelUser");
 
       img.setAttribute("class", "personnelUser__img");
-      img.setAttribute("src", "/image/user/" + result[i].photo_path);
+      img.setAttribute("src", `${server}/image/user/` + result[i].photo_path);
 
       p1.setAttribute("class", "personnelUser__name");
       p1.innerHTML = result[i].name;

@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const server = "http://13.209.148.137:80/";
+const server = "http://13.209.148.137:80";
 const roomIdTag = document.querySelector("#room_id");
 class PersonnelController {
     constructor() { }
@@ -15,7 +15,9 @@ class PersonnelController {
         return __awaiter(this, void 0, void 0, function* () {
             return new Promise((resovle, reject) => __awaiter(this, void 0, void 0, function* () {
                 let result = yield axios
-                    .get("/calander/personnel", { params: { roomId: roomIdTag === null || roomIdTag === void 0 ? void 0 : roomIdTag.value } })
+                    .get(`${server}/calander/personnel`, {
+                    params: { roomId: roomIdTag === null || roomIdTag === void 0 ? void 0 : roomIdTag.value },
+                })
                     .catch((err) => {
                     console.log(err);
                     return reject(err);
@@ -41,7 +43,7 @@ class PersonnelController {
             input.setAttribute("type", "hidden");
             div2.setAttribute("class", "personnelUser");
             img.setAttribute("class", "personnelUser__img");
-            img.setAttribute("src", "/image/user/" + result[i].photo_path);
+            img.setAttribute("src", `${server}/image/user/` + result[i].photo_path);
             p1.setAttribute("class", "personnelUser__name");
             p1.innerHTML = result[i].name;
             p2.setAttribute("class", "personnel__moderator");

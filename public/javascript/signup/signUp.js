@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import Nav from "../Common/nav.js";
-// const server = "http://13.209.148.137:80";
+const server = "http://13.209.148.137:80";
 const nav = new Nav();
 const img = document.querySelector("#image");
 const imgBox = document.querySelector("#user_image");
@@ -33,14 +33,15 @@ class SignUP {
     doSignUp(e) {
         var _a, _b;
         return __awaiter(this, void 0, void 0, function* () {
+            e.preventDefault();
             if (!(sameIdCheckBox === null || sameIdCheckBox === void 0 ? void 0 : sameIdCheckBox.checked)) {
                 return alert("중복확인을 해주세요");
             }
-            if (!(inputId === null || inputId === void 0 ? void 0 : inputId.value) || (inputPw === null || inputPw === void 0 ? void 0 : inputPw.value) || !(inputName === null || inputName === void 0 ? void 0 : inputName.value)) {
+            if (!(inputId === null || inputId === void 0 ? void 0 : inputId.value) || !(inputPw === null || inputPw === void 0 ? void 0 : inputPw.value) || !(inputName === null || inputName === void 0 ? void 0 : inputName.value)) {
                 return alert("요구사항을 모두 입력해주세요");
             }
             let userInfoInsertResult = yield axios
-                .post(`/user/insert`, {
+                .post(`${server}/user`, {
                 id: inputId === null || inputId === void 0 ? void 0 : inputId.value,
                 pw: inputPw === null || inputPw === void 0 ? void 0 : inputPw.value,
                 name: inputName === null || inputName === void 0 ? void 0 : inputName.value,
@@ -53,7 +54,7 @@ class SignUP {
                     const formData = new FormData();
                     formData.append("image", img.files[0]);
                     let imageInfoInsertResult = yield axios
-                        .post(`/uploadimage/${inputId === null || inputId === void 0 ? void 0 : inputId.value}`, formData, {
+                        .post(`${server}/uploadimage/${inputId === null || inputId === void 0 ? void 0 : inputId.value}`, formData, {
                         headers: { "Content-Type": "multipart/form-data" },
                     })
                         .catch((err) => {
@@ -65,8 +66,7 @@ class SignUP {
                     else {
                         alert("회원가입 성공");
                     }
-                    e.preventDefault();
-                    return nav.MovePageSignup;
+                    return nav.MovePageSignup();
                 }
             }
         });
@@ -79,7 +79,7 @@ class SignUP {
                 return alert("아이디를 입력해주세요");
             }
             let result = yield axios
-                .get(`/user/sameid/${inputId === null || inputId === void 0 ? void 0 : inputId.value}`)
+                .get(`${server}/user/sameid/${inputId === null || inputId === void 0 ? void 0 : inputId.value}`)
                 .catch((err) => {
                 return console.log(err);
             });

@@ -8,6 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import Modal from "../Common/modal.js";
+const server = "http://13.209.148.137:80";
 const modal = new Modal();
 const userIdAI = document.querySelector("#user_id");
 const date = document.querySelector(".commentForm__date");
@@ -20,7 +21,7 @@ class CommentController {
                 return alert("요구사항을 모두 입력해주세요");
             }
             let response = yield axios
-                .post("/calander", {
+                .post(`${server}/calander`, {
                 date: date.value,
                 content: content.value,
             })
@@ -38,7 +39,7 @@ class CommentController {
         var _a, _b, _c, _d, _e;
         return __awaiter(this, void 0, void 0, function* () {
             let response = yield axios
-                .delete("calander", {
+                .delete(`${server}/calander`, {
                 contentId: (_d = (_c = (_b = (_a = e === null || e === void 0 ? void 0 : e.target) === null || _a === void 0 ? void 0 : _a.parentNode) === null || _b === void 0 ? void 0 : _b.parentNode) === null || _c === void 0 ? void 0 : _c.querySelector(".contentId")) === null || _d === void 0 ? void 0 : _d.value,
             })
                 .catch((err) => {
@@ -60,7 +61,7 @@ class CommentController {
                     month = "0" + String(today.getMonth() + 1);
                 }
                 let result = yield axios
-                    .get("/calander/content", {
+                    .get(`${server}/calander/content`, {
                     params: {
                         date: year + "-" + month,
                     },
@@ -106,7 +107,7 @@ class CommentController {
                         modal.CommnetInfoShow();
                     });
                     img.setAttribute("class", "contentInfo__img");
-                    img.setAttribute("src", "/image/user/" + result[i].photo_path);
+                    img.setAttribute("src", `${server}/image/user/` + result[i].photo_path);
                     name.setAttribute("class", "contentInfo__name");
                     name.innerHTML = result[i].name;
                     contentId.setAttribute("class", "contentInfo__contentId");

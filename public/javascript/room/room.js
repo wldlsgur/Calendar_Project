@@ -34,7 +34,7 @@ class RoomController {
                 return alert("인원은 숫자로 입력해주세요");
             }
             let result = yield axios
-                .post("/room/make", {
+                .post(`${server}/room/make`, {
                 user_id: id === null || id === void 0 ? void 0 : id.value,
                 title: roomTitleTag.value,
                 pw: roomPwTag.value,
@@ -56,7 +56,7 @@ class RoomController {
             let target = e.target;
             let room_key = target.parentNode.parentNode.querySelector(".room_id").value;
             let result = yield axios
-                .delete("/room/myroom", {
+                .delete(`${server}/room/myroom`, {
                 params: {
                     key: room_key,
                 },
@@ -77,7 +77,7 @@ class RoomController {
             let room_id = target.parentNode.parentNode.querySelector(".room_id").value;
             let pw = target.parentNode.parentNode.querySelector(".room-pw").value;
             let result = yield axios
-                .post("/room/check", { room_id: room_id, pw: pw })
+                .post(`/room/check`, { room_id: room_id, pw: pw })
                 .catch((err) => {
                 return console.log(err);
             });
@@ -100,7 +100,7 @@ class RoomController {
             let room_id = e.target.parentNode.parentNode.querySelector(".room_id").value;
             let pw = e.target.parentNode.parentNode.querySelector(".room-pw").value;
             let roomCheckresult = yield axios
-                .post("/room/check", { room_id: room_id, pw: pw })
+                .post(`${server}/room/check`, { room_id: room_id, pw: pw })
                 .catch((err) => {
                 return console.log(err);
             });
@@ -113,7 +113,7 @@ class RoomController {
                 }
             }
             let roomJoinResult = yield axios
-                .post("/room/join", {
+                .post(`${server}/room/join`, {
                 room_id: room_id,
                 user_id: id === null || id === void 0 ? void 0 : id.value,
             })
@@ -128,7 +128,9 @@ class RoomController {
     GetAllRoomList() {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
-            let result = yield axios.get("/room/show/all").catch((err) => {
+            let result = yield axios
+                .get(`${server}/room/show/all`)
+                .catch((err) => {
                 console.log(err);
             });
             if (!(result === null || result === void 0 ? void 0 : result.data)) {
@@ -151,12 +153,15 @@ class RoomController {
     GetAllMyRoomList() {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
-            let result = yield axios.get("/room/show/my").catch((err) => {
+            let result = yield axios
+                .get(`${server}/room/show/my`)
+                .catch((err) => {
                 return console.log(err);
             });
             if (!(result === null || result === void 0 ? void 0 : result.data)) {
                 return console.log(result);
             }
+            console.log(result.data);
             for (let i = 0; i < result.data.length; i++) {
                 let make_room = document.createElement("div");
                 make_room.classList.add("my-room");

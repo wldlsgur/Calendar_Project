@@ -5,8 +5,10 @@ import CommentController from "./comment.js";
 import CalanderController from "./calander.js";
 import PersonnelController from "./personnel.js";
 import MsgController from "./msg.js";
+import ImageController from "../Common/image.js";
 const socket = io();
 let today = new Date();
+const imageController = new ImageController();
 const nav = new Nav();
 const modal = new Modal();
 const commentController = new CommentController();
@@ -14,10 +16,12 @@ const msgController = new MsgController(socket);
 const personnelcontroller = new PersonnelController();
 const calanderController = new CalanderController();
 const menuBarTag = document.querySelector(".menubar");
-const userId = document.querySelector("#user_id");
-const roomId = document.querySelector("#room_id");
-const userName = document.querySelector("#userName");
+const userImage = document.querySelector("#userImage");
+const userIamgeTag = document.querySelector(".user-info__image");
 window.onload = () => {
+    if ((userImage === null || userImage === void 0 ? void 0 : userImage.value) && userIamgeTag instanceof HTMLImageElement) {
+        imageController.ShowUserImage(userIamgeTag, userImage === null || userImage === void 0 ? void 0 : userImage.value);
+    }
     CalanderViewSet();
     personnelcontroller.Get().then((result) => {
         if (result) {
@@ -26,6 +30,7 @@ window.onload = () => {
         msgController.SocketJoin();
     });
 };
+window.addEventListener("beforeunload", msgController.SocketLeave);
 (_a = document.querySelector(".header__menu")) === null || _a === void 0 ? void 0 : _a.addEventListener("click", () => {
     if (menuBarTag instanceof HTMLElement) {
         if (menuBarTag.style.display === "block") {
@@ -34,10 +39,14 @@ window.onload = () => {
         modal.MenuBarShow();
     }
 });
-(_b = document
-    .querySelector(".menulist__logout")) === null || _b === void 0 ? void 0 : _b.addEventListener("click", nav.MovePageLogin);
-(_c = document
-    .querySelector(".menulist__room")) === null || _c === void 0 ? void 0 : _c.addEventListener("click", nav.MovePageRoom);
+(_b = document.querySelector(".menulist__logout")) === null || _b === void 0 ? void 0 : _b.addEventListener("click", () => {
+    msgController.SocketLeave();
+    nav.MovePageLogin();
+});
+(_c = document.querySelector(".menulist__room")) === null || _c === void 0 ? void 0 : _c.addEventListener("click", () => {
+    msgController.SocketLeave();
+    nav.MovePageRoom();
+});
 (_d = document
     .querySelector(".header__add")) === null || _d === void 0 ? void 0 : _d.addEventListener("click", modal.InputCommentShow);
 (_e = document
@@ -64,6 +73,9 @@ window.onload = () => {
         msgController.PostMsgSocket(e);
     }
 });
+socket.on("joinRoom", msgController.ShowJoinUser);
+socket.on("leaveRoom", msgController.ShowLeaveUser);
+socket.on("chat-msg", msgController.ShowMsg);
 function CalanderViewSet() {
     calanderController.SetCalanderDate(today);
     commentController.Get(today).then((result) => {
@@ -72,48 +84,3 @@ function CalanderViewSet() {
         }
     });
 }
-socket.on("joinRoom", (data) => {
-    let root = document.querySelector(".chatList__msg");
-    let joinmsg = document.createElement("div");
-    joinmsg.setAttribute("class", "joinAndLeave");
-    joinmsg.innerHTML = `${data.userName}님 입장`;
-    root === null || root === void 0 ? void 0 : root.appendChild(joinmsg);
-});
-socket.on("leaveRoom", (data) => {
-    let root = document.querySelector(".chatList__msg");
-    let joinmsg = document.createElement("div");
-    joinmsg.setAttribute("class", "joinAndLeave");
-    joinmsg.innerHTML = `${data.userName}님 퇴장`;
-    root === null || root === void 0 ? void 0 : root.appendChild(joinmsg);
-});
-socket.on("chat-msg", (data) => {
-    console.log("Hi");
-    let root = document.querySelector(".chatList__msg");
-    let msg = document.createElement("div");
-    if (data.userId === userId) {
-        msg.setAttribute("class", "mymsg");
-        let content = document.createElement("p");
-        content.setAttribute("class", "mymsg__content");
-        content.innerHTML = data.msg;
-        msg.appendChild(content);
-    }
-    else {
-        msg.setAttribute("class", "msg");
-        let div2 = document.createElement("div");
-        div2.setAttribute("class", "msg__NameAndContent");
-        let img = document.createElement("img");
-        img.setAttribute("class", "msg__img");
-        img.setAttribute("src", data.imgSrc);
-        let name = document.createElement("p");
-        name.setAttribute("class", "msg__name");
-        name.innerHTML = data.userName;
-        let content = document.createElement("p");
-        content.setAttribute("class", "msg__content");
-        content.innerHTML = data.msg;
-        div2.appendChild(img);
-        div2.appendChild(name);
-        msg.appendChild(div2);
-        msg.appendChild(content);
-    }
-    root === null || root === void 0 ? void 0 : root.appendChild(msg);
-});

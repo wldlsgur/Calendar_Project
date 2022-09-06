@@ -111,6 +111,7 @@ main {
     margin-left: 20px;
     display: flex;
     flex-direction: column;
+    overflow: auto;
     > .personnel {
       flex: 1 1 30%;
       overflow-y: auto;
@@ -169,8 +170,6 @@ main {
         display: flex;
         flex-direction: column;
         > .chatList__msg {
-          height: 100%;
-          overflow: auto;
           flex: 1 1 85%;
           display: flex;
           flex-direction: column;
@@ -371,13 +370,21 @@ main {
 @media screen and (max-width: 900px) {
   main {
     flex-direction: column;
+    flex-wrap: nowrap;
   }
   section.calander {
-    flex: 1 1 50%;
+    flex: 1 1 100%;
   }
   section.personnelAndChat {
-    flex: 1 1 50%;
+    flex: 1 1 100%;
     margin: 20px 0px 0px 0px;
+  }
+  .modalCommentInfo,
+  .modalComment {
+    width: 350px;
+    height: 450px;
+    margin-left: -175px;
+    margin-top: -225px;
   }
 }
 

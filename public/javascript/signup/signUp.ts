@@ -1,6 +1,6 @@
 import Nav from "../Common/nav.js";
 
-// const server = "http://13.209.148.137:80";
+const server = "http://13.209.148.137:80";
 const nav = new Nav();
 const img = document.querySelector("#image");
 const imgBox = <HTMLImageElement>document.querySelector("#user_image");
@@ -27,14 +27,15 @@ class Image {
 class SignUP {
   constructor() {}
   async doSignUp(e: { preventDefault: () => void }) {
+    e.preventDefault();
     if (!sameIdCheckBox?.checked) {
       return alert("중복확인을 해주세요");
     }
-    if (!inputId?.value || inputPw?.value || !inputName?.value) {
+    if (!inputId?.value || !inputPw?.value || !inputName?.value) {
       return alert("요구사항을 모두 입력해주세요");
     }
     let userInfoInsertResult = await axios
-      .post(`/user/insert`, {
+      .post(`${server}/user`, {
         id: inputId?.value,
         pw: inputPw?.value,
         name: inputName?.value,
@@ -48,7 +49,7 @@ class SignUP {
         formData.append("image", img.files[0]);
 
         let imageInfoInsertResult = await axios
-          .post(`/uploadimage/${inputId?.value}`, formData, {
+          .post(`${server}/uploadimage/${inputId?.value}`, formData, {
             headers: { "Content-Type": "multipart/form-data" },
           })
           .catch((err: object) => {
@@ -60,8 +61,7 @@ class SignUP {
         } else {
           alert("회원가입 성공");
         }
-        e.preventDefault();
-        return nav.MovePageSignup;
+        return nav.MovePageSignup();
       }
     }
   }
@@ -72,7 +72,7 @@ class SignUP {
       return alert("아이디를 입력해주세요");
     }
     let result = await axios
-      .get(`/user/sameid/${inputId?.value}`)
+      .get(`${server}/user/sameid/${inputId?.value}`)
       .catch((err: object) => {
         return console.log(err);
       });

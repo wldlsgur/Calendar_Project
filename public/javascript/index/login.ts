@@ -1,6 +1,6 @@
 import Nav from "../Common/nav.js";
 
-// const server = "http://13.209.148.137:80";
+const server = "http://13.209.148.137:80";
 const nav: Nav = new Nav();
 const idInput = <HTMLInputElement>document.querySelector(".login-form__id");
 const pwInput = <HTMLInputElement>document.querySelector(".login-form__pw");
@@ -14,7 +14,7 @@ class Login {
       return alert("정보를 모두 입력해주세요");
     }
     let result = await axios
-      .post(`/user/login`, {
+      .post(`${server}/user/login`, {
         user_id: idInput?.value,
         user_pw: pwInput?.value,
       })

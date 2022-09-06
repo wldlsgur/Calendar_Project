@@ -19,24 +19,6 @@ let calanderRouter = require("./routes/calander");
 var app = express();
 app.io = require("socket.io")();
 
-app.io.on("connection", (socket) => {
-  socket.on("joinRoom", async (data) => {
-    await socket.join(data.roomId);
-    app.io.to(data.roomId).emit("joinRoom", { userName: data.userName });
-  });
-  socket.on("leaveRoom", async (data) => {
-    await socket.leave(data.roomId);
-    app.io.to(data.roomId).emit("leaveRoom", { userName: data.userName });
-  });
-  socket.on("disconnect", () => {
-    console.log("유저가 나갔다.");
-  });
-  socket.on("chat-msg", (data) => {
-    console.log(data);
-    app.io.to(data.roomId).emit("chat-msg", data);
-  });
-});
-
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "upload/user"); // 파일 업로드 경로
@@ -99,6 +81,23 @@ app.use(function (err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render("error");
+});
+app.io.on("connection", (socket) => {
+  socket.on("joinRoom", async (data) => {
+    console.log(data);
+    await socket.join(data.roomId);
+    app.io.to(data.roomId).emit("joinRoom", { userName: data.userName });
+  });
+  socket.on("leaveRoom", async (data) => {
+    await socket.leave(data.roomId);
+    app.io.to(data.roomId).emit("leaveRoom", { userName: data.userName });
+  });
+  socket.on("disconnect", async (data) => {
+    console.log("유저가 나갔다.");
+  });
+  socket.on("chat-msg", (data) => {
+    app.io.to(data.roomId).emit("chat-msg", data);
+  });
 });
 
 module.exports = app;

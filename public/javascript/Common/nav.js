@@ -1,17 +1,17 @@
-// const server = "http://13.209.148.137:80";
+const server = "http://13.209.148.137:80";
 class Nav {
     constructor() { }
     MovePageSignup() {
-        location.href = `/page/signup`;
+        location.href = `${server}/page/signup`;
     }
     MovePageLogin() {
-        location.href = `/page`;
+        location.href = `${server}/page`;
     }
     MovePageRoom() {
-        location.href = `/page/room`;
+        location.href = `${server}/page/room`;
     }
     MovePageCalander() {
-        location.href = `/page/calander`;
+        location.href = `${server}/page/calander`;
     }
 }
 export default Nav;

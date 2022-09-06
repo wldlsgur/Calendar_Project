@@ -4,10 +4,12 @@ import CommentController from "./comment.js";
 import CalanderController from "./calander.js";
 import PersonnelController from "./personnel.js";
 import MsgController from "./msg.js";
+import ImageController from "../Common/image.js";
 
 const socket = io();
 let today: Date = new Date();
 
+const imageController: ImageController = new ImageController();
 const nav: Nav = new Nav();
 const modal: Modal = new Modal();
 const commentController: CommentController = new CommentController();
@@ -15,11 +17,14 @@ const msgController: MsgController = new MsgController(socket);
 const personnelcontroller: PersonnelController = new PersonnelController();
 const calanderController: CalanderController = new CalanderController();
 const menuBarTag = document.querySelector(".menubar");
-const userId: HTMLInputElement | null = document.querySelector("#user_id");
-const roomId: HTMLInputElement | null = document.querySelector("#room_id");
-const userName: HTMLInputElement | null = document.querySelector("#userName");
+const userImage: HTMLInputElement | null = document.querySelector("#userImage");
+const userIamgeTag: HTMLImageElement | null =
+  document.querySelector(".user-info__image");
 
 window.onload = () => {
+  if (userImage?.value && userIamgeTag instanceof HTMLImageElement) {
+    imageController.ShowUserImage(userIamgeTag, userImage?.value);
+  }
   CalanderViewSet();
   personnelcontroller.Get().then((result: object) => {
     if (result) {
@@ -28,6 +33,7 @@ window.onload = () => {
     msgController.SocketJoin();
   });
 };
+window.addEventListener("beforeunload", msgController.SocketLeave);
 document.querySelector(".header__menu")?.addEventListener("click", () => {
   if (menuBarTag instanceof HTMLElement) {
     if (menuBarTag.style.display === "block") {
@@ -36,12 +42,14 @@ document.querySelector(".header__menu")?.addEventListener("click", () => {
     modal.MenuBarShow();
   }
 });
-document
-  .querySelector(".menulist__logout")
-  ?.addEventListener("click", nav.MovePageLogin);
-document
-  .querySelector(".menulist__room")
-  ?.addEventListener("click", nav.MovePageRoom);
+document.querySelector(".menulist__logout")?.addEventListener("click", () => {
+  msgController.SocketLeave();
+  nav.MovePageLogin();
+});
+document.querySelector(".menulist__room")?.addEventListener("click", () => {
+  msgController.SocketLeave();
+  nav.MovePageRoom();
+});
 
 document
   .querySelector(".header__add")
@@ -76,7 +84,9 @@ document
       msgController.PostMsgSocket(e);
     }
   });
-
+socket.on("joinRoom", msgController.ShowJoinUser);
+socket.on("leaveRoom", msgController.ShowLeaveUser);
+socket.on("chat-msg", msgController.ShowMsg);
 function CalanderViewSet() {
   calanderController.SetCalanderDate(today);
   commentController.Get(today).then((result) => {
@@ -85,62 +95,3 @@ function CalanderViewSet() {
     }
   });
 }
-
-socket.on("joinRoom", (data: any) => {
-  let root = document.querySelector(".chatList__msg");
-  let joinmsg = document.createElement("div");
-  joinmsg.setAttribute("class", "joinAndLeave");
-  joinmsg.innerHTML = `${data.userName}님 입장`;
-  root?.appendChild(joinmsg);
-});
-
-socket.on("leaveRoom", (data: any) => {
-  let root = document.querySelector(".chatList__msg");
-  let joinmsg = document.createElement("div");
-  joinmsg.setAttribute("class", "joinAndLeave");
-  joinmsg.innerHTML = `${data.userName}님 퇴장`;
-  root?.appendChild(joinmsg);
-});
-
-socket.on(
-  "chat-msg",
-  (data: { userName: string; userId: any; imgSrc: string; msg: string }) => {
-    console.log("Hi");
-    let root = document.querySelector(".chatList__msg");
-    let msg = document.createElement("div");
-
-    if (data.userId === userId) {
-      msg.setAttribute("class", "mymsg");
-
-      let content = document.createElement("p");
-      content.setAttribute("class", "mymsg__content");
-      content.innerHTML = data.msg;
-
-      msg.appendChild(content);
-    } else {
-      msg.setAttribute("class", "msg");
-
-      let div2 = document.createElement("div");
-      div2.setAttribute("class", "msg__NameAndContent");
-
-      let img = document.createElement("img");
-      img.setAttribute("class", "msg__img");
-      img.setAttribute("src", data.imgSrc);
-
-      let name = document.createElement("p");
-      name.setAttribute("class", "msg__name");
-      name.innerHTML = data.userName;
-
-      let content = document.createElement("p");
-      content.setAttribute("class", "msg__content");
-      content.innerHTML = data.msg;
-
-      div2.appendChild(img);
-      div2.appendChild(name);
-
-      msg.appendChild(div2);
-      msg.appendChild(content);
-    }
-    root?.appendChild(msg);
-  }
-);

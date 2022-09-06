@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import Nav from "../Common/nav.js";
-// const server = "http://13.209.148.137:80";
+const server = "http://13.209.148.137:80";
 const nav = new Nav();
 const idInput = document.querySelector(".login-form__id");
 const pwInput = document.querySelector(".login-form__pw");
@@ -22,7 +22,7 @@ class Login {
                 return alert("정보를 모두 입력해주세요");
             }
             let result = yield axios
-                .post(`/user/login`, {
+                .post(`${server}/user/login`, {
                 user_id: idInput === null || idInput === void 0 ? void 0 : idInput.value,
                 user_pw: pwInput === null || pwInput === void 0 ? void 0 : pwInput.value,
             })

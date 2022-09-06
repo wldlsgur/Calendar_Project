@@ -31,7 +31,7 @@ class RoomController {
       return alert("인원은 숫자로 입력해주세요");
     }
     let result = await axios
-      .post("/room/make", {
+      .post(`${server}/room/make`, {
         user_id: id?.value,
         title: roomTitleTag.value,
         pw: roomPwTag.value,
@@ -52,7 +52,7 @@ class RoomController {
     let room_key = target.parentNode.parentNode.querySelector(".room_id").value;
 
     let result = await axios
-      .delete("/room/myroom", {
+      .delete(`${server}/room/myroom`, {
         params: {
           key: room_key,
         },
@@ -72,7 +72,7 @@ class RoomController {
     let pw = target.parentNode.parentNode.querySelector(".room-pw").value;
 
     let result = await axios
-      .post("/room/check", { room_id: room_id, pw: pw })
+      .post(`/room/check`, { room_id: room_id, pw: pw })
       .catch((err: object) => {
         return console.log(err);
       });
@@ -96,7 +96,7 @@ class RoomController {
     let pw = e.target.parentNode.parentNode.querySelector(".room-pw").value;
 
     let roomCheckresult = await axios
-      .post("/room/check", { room_id: room_id, pw: pw })
+      .post(`${server}/room/check`, { room_id: room_id, pw: pw })
       .catch((err: object) => {
         return console.log(err);
       });
@@ -110,7 +110,7 @@ class RoomController {
       }
     }
     let roomJoinResult = await axios
-      .post("/room/join", {
+      .post(`${server}/room/join`, {
         room_id: room_id,
         user_id: id?.value,
       })
@@ -123,9 +123,11 @@ class RoomController {
   }
 
   async GetAllRoomList() {
-    let result = await axios.get("/room/show/all").catch((err: object) => {
-      console.log(err);
-    });
+    let result = await axios
+      .get(`${server}/room/show/all`)
+      .catch((err: object) => {
+        console.log(err);
+      });
     if (!result?.data) {
       return console.log(result);
     }
@@ -144,12 +146,15 @@ class RoomController {
   }
 
   async GetAllMyRoomList() {
-    let result = await axios.get("/room/show/my").catch((err: object) => {
-      return console.log(err);
-    });
+    let result = await axios
+      .get(`${server}/room/show/my`)
+      .catch((err: object) => {
+        return console.log(err);
+      });
     if (!result?.data) {
       return console.log(result);
     }
+    console.log(result.data);
     for (let i = 0; i < result.data.length; i++) {
       let make_room = document.createElement("div");
       make_room.classList.add("my-room");

@@ -1,5 +1,6 @@
 import Modal from "../Common/modal.js";
 
+const server = "http://13.209.148.137:80";
 const modal: Modal = new Modal();
 const userIdAI = document.querySelector("#user_id");
 const date: HTMLInputElement | null =
@@ -14,7 +15,7 @@ class CommentController {
       return alert("요구사항을 모두 입력해주세요");
     }
     let response = await axios
-      .post("/calander", {
+      .post(`${server}/calander`, {
         date: date.value,
         content: content.value,
       })
@@ -30,7 +31,7 @@ class CommentController {
 
   async Delete(e: any): Promise<void> {
     let response = await axios
-      .delete("calander", {
+      .delete(`${server}/calander`, {
         contentId:
           e?.target?.parentNode?.parentNode?.querySelector(".contentId")?.value,
       })
@@ -53,7 +54,7 @@ class CommentController {
       }
 
       let result = await axios
-        .get("/calander/content", {
+        .get(`${server}/calander/content`, {
           params: {
             date: year + "-" + month,
           },
@@ -104,7 +105,10 @@ class CommentController {
           });
 
           img.setAttribute("class", "contentInfo__img");
-          img.setAttribute("src", "/image/user/" + result[i].photo_path);
+          img.setAttribute(
+            "src",
+            `${server}/image/user/` + result[i].photo_path
+          );
 
           name.setAttribute("class", "contentInfo__name");
           name.innerHTML = result[i].name;
