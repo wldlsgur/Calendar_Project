@@ -1,6 +1,7 @@
 import Modal from "../Common/modal.js";
-import server from "../Common/server";
-
+import ServerController from "../Common/address.js";
+const serverController: ServerController = new ServerController();
+const server = serverController.GetServerAddress();
 const modal: Modal = new Modal();
 const userIdAI = document.querySelector("#user_id");
 const date: HTMLInputElement | null =
@@ -63,7 +64,7 @@ class CommentController {
           console.log(err);
           return reject(err);
         });
-      console.l0g("get : ", result.data);
+      console.log("get : ", result.data);
       resolve(result.data);
     });
   }

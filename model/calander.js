@@ -37,7 +37,7 @@ module.exports = {
       const room_id = req.session.room_id;
       let query = `select c.content_id, c.user_id, c.date, c.content, u.name, u.photo_path
   from content as c
-  inner join user as u on c.user_id = u.id
+  inner join user as u on c.user_id = u.user_id
   where c.room_id = ${room_id} AND c.date like '%${date}%'
   `;
 

@@ -1,7 +1,9 @@
 import Nav from "../Common/nav.js";
-import server from "../Common/server";
+import ServerController from "../Common/address.js";
 
 const nav: Nav = new Nav();
+const serverController: ServerController = new ServerController();
+const server = serverController.GetServerAddress();
 const idInput = <HTMLInputElement>document.querySelector(".login-form__id");
 const pwInput = <HTMLInputElement>document.querySelector(".login-form__pw");
 

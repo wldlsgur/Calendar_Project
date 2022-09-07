@@ -8,7 +8,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import Nav from "../Common/nav.js";
-import server from "../Common/server";
+import ServerController from "../Common/address.js";
+const serverController = new ServerController();
+const server = serverController.GetServerAddress();
 const nav = new Nav();
 const img = document.querySelector("#image");
 const imgBox = document.querySelector("#user_image");
@@ -50,7 +52,7 @@ class SignUP {
                 return console.log(err);
             });
             if ((_a = userInfoInsertResult === null || userInfoInsertResult === void 0 ? void 0 : userInfoInsertResult.data) === null || _a === void 0 ? void 0 : _a.res) {
-                if (img === null || img === void 0 ? void 0 : img.value) {
+                if ((img === null || img === void 0 ? void 0 : img.value) && ) {
                     const formData = new FormData();
                     formData.append("image", img.files[0]);
                     let imageInfoInsertResult = yield axios

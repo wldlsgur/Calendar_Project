@@ -1,6 +1,7 @@
 import { Socket } from "socket.io";
-import server from "../Common/server";
-
+import ServerController from "../Common/address.js";
+const serverController: ServerController = new ServerController();
+const server = serverController.GetServerAddress();
 const userId: HTMLInputElement | null = document.querySelector("#user_id");
 const roomId: HTMLInputElement | null = document.querySelector("#room_id");
 const userName: HTMLInputElement | null = document.querySelector("#userName");

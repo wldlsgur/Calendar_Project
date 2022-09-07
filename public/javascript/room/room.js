@@ -9,7 +9,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import Modal from "../Common/modal.js";
 import Nav from "../Common/nav.js";
-import server from "../Common/server";
+import ServerController from "../Common/address.js";
+const serverController = new ServerController();
+const server = serverController.GetServerAddress();
 const modal = new Modal();
 const nav = new Nav();
 const id = document.querySelector("#user_id");

@@ -1,4 +1,6 @@
-import server from "../Common/server";
+import ServerController from "../Common/address.js";
+const serverController = new ServerController();
+const server = serverController.GetServerAddress();
 const userId = document.querySelector("#user_id");
 const roomId = document.querySelector("#room_id");
 const userName = document.querySelector("#userName");

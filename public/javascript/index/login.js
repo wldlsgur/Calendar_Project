@@ -8,8 +8,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import Nav from "../Common/nav.js";
-import server from "../Common/server";
+import ServerController from "../Common/address.js";
 const nav = new Nav();
+const serverController = new ServerController();
+const server = serverController.GetServerAddress();
 const idInput = document.querySelector(".login-form__id");
 const pwInput = document.querySelector(".login-form__pw");
 class Login {

@@ -1,5 +1,6 @@
-import server from "../Common/server";
-
+import ServerController from "../Common/address.js";
+const serverController: ServerController = new ServerController();
+const server = serverController.GetServerAddress();
 const roomIdTag: HTMLInputElement | null = document.querySelector("#room_id");
 class PersonnelController {
   constructor() {}

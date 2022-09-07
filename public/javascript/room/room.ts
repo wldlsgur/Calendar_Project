@@ -1,7 +1,9 @@
 import Modal from "../Common/modal.js";
 import Nav from "../Common/nav.js";
-import server from "../Common/server";
+import ServerController from "../Common/address.js";
 
+const serverController: ServerController = new ServerController();
+const server = serverController.GetServerAddress();
 const modal: Modal = new Modal();
 const nav: Nav = new Nav();
 const id: HTMLInputElement | null = document.querySelector("#user_id");

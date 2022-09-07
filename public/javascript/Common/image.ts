@@ -1,4 +1,6 @@
-import server from "./server";
+import ServerController from "./address.js";
+const serverController: ServerController = new ServerController();
+const server = serverController.GetServerAddress();
 class ImageController {
   constructor() {}
   ShowUserImage(target: HTMLImageElement, src: string) {

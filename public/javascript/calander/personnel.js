@@ -7,7 +7,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import server from "../Common/server";
+import ServerController from "../Common/address.js";
+const serverController = new ServerController();
+const server = serverController.GetServerAddress();
 const roomIdTag = document.querySelector("#room_id");
 class PersonnelController {
     constructor() { }

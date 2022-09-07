@@ -1,6 +1,8 @@
 import Nav from "../Common/nav.js";
-import server from "../Common/server";
+import ServerController from "../Common/address.js";
 
+const serverController: ServerController = new ServerController();
+const server = serverController.GetServerAddress();
 const nav = new Nav();
 const img = document.querySelector("#image");
 const imgBox = <HTMLImageElement>document.querySelector("#user_image");
@@ -44,7 +46,7 @@ class SignUP {
         return console.log(err);
       });
     if (userInfoInsertResult?.data?.res) {
-      if (img?.value) {
+      if (img?.value && ) {
         const formData: FormData = new FormData();
         formData.append("image", img.files[0]);
 
