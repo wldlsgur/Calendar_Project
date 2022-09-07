@@ -1,7 +1,7 @@
 import Modal from "../Common/modal.js";
 import Nav from "../Common/nav.js";
+import server from "../Common/server";
 
-const server = "http://13.209.148.137:80";
 const modal: Modal = new Modal();
 const nav: Nav = new Nav();
 const id: HTMLInputElement | null = document.querySelector("#user_id");

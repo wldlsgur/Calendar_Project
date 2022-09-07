@@ -1,6 +1,6 @@
 import Nav from "../Common/nav.js";
+import server from "../Common/server";
 
-const server = "http://13.209.148.137:80";
 const nav = new Nav();
 const img = document.querySelector("#image");
 const imgBox = <HTMLImageElement>document.querySelector("#user_image");

@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import Nav from "../Common/nav.js";
-const server = "http://13.209.148.137:80";
+import server from "../Common/server";
 const nav = new Nav();
 const idInput = document.querySelector(".login-form__id");
 const pwInput = document.querySelector(".login-form__pw");

@@ -1,6 +1,6 @@
 import { Socket } from "socket.io";
+import server from "../Common/server";
 
-const server = "http://13.209.148.137:80";
 const userId: HTMLInputElement | null = document.querySelector("#user_id");
 const roomId: HTMLInputElement | null = document.querySelector("#room_id");
 const userName: HTMLInputElement | null = document.querySelector("#userName");

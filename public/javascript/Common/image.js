@@ -1,4 +1,4 @@
-const server = "http://13.209.148.137:80";
+import server from "./server";
 class ImageController {
     constructor() { }
     ShowUserImage(target, src) {

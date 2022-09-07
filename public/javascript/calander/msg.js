@@ -1,4 +1,4 @@
-const server = "http://13.209.148.137:80";
+import server from "../Common/server";
 const userId = document.querySelector("#user_id");
 const roomId = document.querySelector("#room_id");
 const userName = document.querySelector("#userName");

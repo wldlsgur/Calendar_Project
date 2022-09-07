@@ -87,9 +87,11 @@ document
 socket.on("joinRoom", msgController.ShowJoinUser);
 socket.on("leaveRoom", msgController.ShowLeaveUser);
 socket.on("chat-msg", msgController.ShowMsg);
+
 function CalanderViewSet() {
   calanderController.SetCalanderDate(today);
   commentController.Get(today).then((result) => {
+    console.log("get return reulst : ", result);
     if (result) {
       commentController.SetCommentCalander(result);
     }

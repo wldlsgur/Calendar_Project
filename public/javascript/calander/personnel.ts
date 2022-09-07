@@ -1,4 +1,5 @@
-const server = "http://13.209.148.137:80";
+import server from "../Common/server";
+
 const roomIdTag: HTMLInputElement | null = document.querySelector("#room_id");
 class PersonnelController {
   constructor() {}

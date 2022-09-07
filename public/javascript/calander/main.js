@@ -79,6 +79,7 @@ socket.on("chat-msg", msgController.ShowMsg);
 function CalanderViewSet() {
     calanderController.SetCalanderDate(today);
     commentController.Get(today).then((result) => {
+        console.log("get return reulst : ", result);
         if (result) {
             commentController.SetCommentCalander(result);
         }

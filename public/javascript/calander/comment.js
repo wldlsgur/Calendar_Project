@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import Modal from "../Common/modal.js";
-const server = "http://13.209.148.137:80";
+import server from "../Common/server";
 const modal = new Modal();
 const userIdAI = document.querySelector("#user_id");
 const date = document.querySelector(".commentForm__date");
@@ -70,6 +70,7 @@ class CommentController {
                     console.log(err);
                     return reject(err);
                 });
+                console.l0g("get : ", result.data);
                 resolve(result.data);
             }));
         });

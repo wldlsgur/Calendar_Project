@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import Modal from "../Common/modal.js";
 import Nav from "../Common/nav.js";
-const server = "http://13.209.148.137:80";
+import server from "../Common/server";
 const modal = new Modal();
 const nav = new Nav();
 const id = document.querySelector("#user_id");

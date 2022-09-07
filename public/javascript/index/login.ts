@@ -1,6 +1,6 @@
 import Nav from "../Common/nav.js";
+import server from "../Common/server";
 
-const server = "http://13.209.148.137:80";
 const nav: Nav = new Nav();
 const idInput = <HTMLInputElement>document.querySelector(".login-form__id");
 const pwInput = <HTMLInputElement>document.querySelector(".login-form__pw");
