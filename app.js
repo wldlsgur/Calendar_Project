@@ -56,9 +56,7 @@ app.use(
     store: new FileStore(),
   })
 );
-app.get("/test", (req, res) => {
-  res.status(200).render("test.ejs");
-});
+
 app.use("/page", pageRouter);
 app.use("/user", userRouter);
 app.use("/room", roomRouter);
