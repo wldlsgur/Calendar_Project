@@ -52,7 +52,7 @@ class SignUP {
                 return console.log(err);
             });
             if ((_a = userInfoInsertResult === null || userInfoInsertResult === void 0 ? void 0 : userInfoInsertResult.data) === null || _a === void 0 ? void 0 : _a.res) {
-                if ((img === null || img === void 0 ? void 0 : img.value) && ) {
+                if (img === null || img === void 0 ? void 0 : img.value) {
                     const formData = new FormData();
                     formData.append("image", img.files[0]);
                     let imageInfoInsertResult = yield axios

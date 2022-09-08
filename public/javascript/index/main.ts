@@ -1,5 +1,6 @@
 import Login from "./login.js";
 import Nav from "../Common/nav.js";
+import css from "../../stylesheets/index/index.css";
 
 const nav = new Nav();
 const login = new Login();

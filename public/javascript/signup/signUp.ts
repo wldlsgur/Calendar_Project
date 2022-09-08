@@ -46,7 +46,7 @@ class SignUP {
         return console.log(err);
       });
     if (userInfoInsertResult?.data?.res) {
-      if (img?.value && ) {
+      if (img?.value) {
         const formData: FormData = new FormData();
         formData.append("image", img.files[0]);
 
