@@ -103,7 +103,6 @@ class MsgController {
     if (chatScroll instanceof HTMLElement) {
       chatScroll.scrollTop = chatScroll?.scrollHeight;
     }
-    return;
   }
 }
 

@@ -86,7 +86,6 @@ class MsgController {
         if (chatScroll instanceof HTMLElement) {
             chatScroll.scrollTop = chatScroll === null || chatScroll === void 0 ? void 0 : chatScroll.scrollHeight;
         }
-        return;
     }
 }
 export default MsgController;

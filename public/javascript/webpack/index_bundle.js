@@ -126,7 +126,7 @@ eval("\r\n\r\n/* istanbul ignore next  */\r\nfunction styleTagTransform(css, sty
   \*********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n// const server = \"http://13.209.148.137:80\";\r\nclass ServerController {\r\n    constructor() { }\r\n    GetServerAddress() {\r\n        return \"\";\r\n    }\r\n}\r\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ServerController);\r\n\n\n//# sourceURL=webpack://practice-project/./public/javascript/Common/address.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nconst server = \"http://13.209.148.137:80\";\r\nclass ServerController {\r\n    constructor() { }\r\n    GetServerAddress() {\r\n        return server;\r\n    }\r\n}\r\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ServerController);\r\n\n\n//# sourceURL=webpack://practice-project/./public/javascript/Common/address.js?");
 
 /***/ }),
 
