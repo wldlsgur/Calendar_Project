@@ -71,6 +71,7 @@ class MsgController {
         }
     }
     PostMsgSocket(e) {
+        e.preventDefault();
         if (!(inputMsgTag === null || inputMsgTag === void 0 ? void 0 : inputMsgTag.value)) {
             return alert("메세지를 입력해주세요");
         }
@@ -85,7 +86,7 @@ class MsgController {
         if (chatScroll instanceof HTMLElement) {
             chatScroll.scrollTop = chatScroll === null || chatScroll === void 0 ? void 0 : chatScroll.scrollHeight;
         }
-        return e.preventDefault();
+        return;
     }
 }
 export default MsgController;

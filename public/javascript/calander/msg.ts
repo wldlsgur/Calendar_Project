@@ -88,6 +88,7 @@ class MsgController {
     }
   }
   PostMsgSocket(e: { preventDefault: () => void }) {
+    e.preventDefault();
     if (!inputMsgTag?.value) {
       return alert("메세지를 입력해주세요");
     }
@@ -102,7 +103,7 @@ class MsgController {
     if (chatScroll instanceof HTMLElement) {
       chatScroll.scrollTop = chatScroll?.scrollHeight;
     }
-    return e.preventDefault();
+    return;
   }
 }
 
