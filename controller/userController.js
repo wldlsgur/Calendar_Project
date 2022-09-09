@@ -1,23 +1,32 @@
 const User = require("../model/user");
 
 const userController = {
-  doSignUp: async (req, res, next) => {
-    let result = await User.SignUp(req.body).catch((err) => {
-      res.status(400).send(err);
-    });
-    res.status(200).send(result);
+  doSignUp: (req, res, next) => {
+    User.SignUp(req.body)
+      .then((result) => {
+        res.status(200).send(result);
+      })
+      .catch((err) => {
+        res.status(400).send(err);
+      });
   },
-  doSameIdCheck: async (req, res, next) => {
-    let result = await User.SameIdCheck(req.params.id).catch((err) => {
-      res.status(400).send(err);
-    });
-    res.status(200).send(result);
+  doSameIdCheck: (req, res, next) => {
+    User.SameIdCheck(req.params.id)
+      .then((result) => {
+        res.status(200).send(result);
+      })
+      .catch((err) => {
+        res.status(400).send(err);
+      });
   },
-  doLoginCheck: async (req, res, next) => {
-    let result = await User.LoginCheck(req).catch((err) => {
-      res.status(400).send(err);
-    });
-    res.status(200).send(result);
+  doLoginCheck: (req, res, next) => {
+    User.LoginCheck(req)
+      .then((result) => {
+        res.status(200).send(result);
+      })
+      .catch((err) => {
+        res.status(400).send(err);
+      });
   },
 };
 

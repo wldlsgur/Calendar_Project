@@ -11,61 +11,66 @@ const content: HTMLInputElement | null = document.querySelector(
 );
 
 class CommentController {
-  async Post(): Promise<void> {
+  Post(): void {
     if (!date?.value || !content?.value) {
       return alert("요구사항을 모두 입력해주세요");
     }
-    let response = await axios
+    axios
       .post(`${server}/calander`, {
         date: date.value,
         content: content.value,
       })
-      .catch((err: object) => {
-        console.log(err);
-      });
-    if (!response?.data?.res) {
-      alert("작성 실패");
-    }
-    modal.CreateRoomHidden();
-    return location.reload();
-  }
-
-  async Delete(e: any): Promise<void> {
-    let response = await axios
-      .delete(`${server}/calander`, {
-        contentId:
-          e?.target?.parentNode?.parentNode?.querySelector(".contentId")?.value,
+      .then((response: { data: { res: any } }) => {
+        if (!response?.data?.res) {
+          alert("작성 실패");
+        }
+        modal.CreateRoomHidden();
+        return location.reload();
       })
       .catch((err: object) => {
         console.log(err);
       });
-    if (response?.data?.res) {
-      alert("삭제 실패");
-    }
-    modal.CommentInfoHidden();
-    return location.reload();
   }
 
-  async Get(today: Date) {
-    return new Promise(async (resolve, reject) => {
+  Delete(e: any): void {
+    axios
+      .delete(`${server}/calander`, {
+        contentId:
+          e?.target?.parentNode?.parentNode?.querySelector(".contentId")?.value,
+      })
+      .then((response: { data: { res: any } }) => {
+        if (response?.data?.res) {
+          alert("삭제 실패");
+        }
+        modal.CommentInfoHidden();
+        return location.reload();
+      })
+      .catch((err: object) => {
+        console.log(err);
+      });
+  }
+
+  Get(today: Date) {
+    return new Promise((resolve, reject) => {
       let year: string = String(today.getFullYear()); // 년도
       let month: string = String(today.getMonth() + 1); // 월
       if (month.length < 2) {
         month = "0" + String(today.getMonth() + 1);
       }
 
-      let result = await axios
+      axios
         .get(`${server}/calander/content`, {
           params: {
             date: year + "-" + month,
           },
         })
+        .then((result: { data: any }) => {
+          resolve(result.data);
+        })
         .catch((err: object) => {
           console.log(err);
           return reject(err);
         });
-      console.log("get : ", result.data);
-      resolve(result.data);
     });
   }
 

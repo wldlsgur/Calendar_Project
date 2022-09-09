@@ -1,5 +1,6 @@
 import { Image, SignUP } from "./signUp.js";
-
+import css from "../../stylesheets/signup/signup.css";
+const temp = css;
 const image = new Image();
 const signUp = new SignUP();
 

@@ -2,6 +2,8 @@ import Modal from "../Common/modal.js";
 import Nav from "../Common/nav.js";
 import ImageController from "../Common/image.js";
 import RoomController from "./room.js";
+import css from "../../stylesheets/room/room.css";
+const temp = css;
 
 const imageController: ImageController = new ImageController();
 const nav: Nav = new Nav();

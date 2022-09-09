@@ -5,6 +5,8 @@ import CalanderController from "./calander.js";
 import PersonnelController from "./personnel.js";
 import MsgController from "./msg.js";
 import ImageController from "../Common/image.js";
+import css from "../../stylesheets/calander/calander.css";
+const temp = css;
 
 const socket = io();
 let today: Date = new Date();
@@ -91,7 +93,6 @@ socket.on("chat-msg", msgController.ShowMsg);
 function CalanderViewSet() {
   calanderController.SetCalanderDate(today);
   commentController.Get(today).then((result) => {
-    console.log("get return reulst : ", result);
     if (result) {
       commentController.SetCommentCalander(result);
     }

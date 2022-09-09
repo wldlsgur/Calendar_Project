@@ -17,7 +17,6 @@ class MsgController {
     this.socket = socket;
   }
   SocketJoin(): void {
-    console.log(roomId?.value, userName?.value);
     this.socket.emit("joinRoom", {
       roomId: roomId?.value,
       userName: userName?.value,

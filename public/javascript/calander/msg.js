@@ -12,7 +12,6 @@ class MsgController {
         this.socket = socket;
     }
     SocketJoin() {
-        console.log(roomId === null || roomId === void 0 ? void 0 : roomId.value, userName === null || userName === void 0 ? void 0 : userName.value);
         this.socket.emit("joinRoom", {
             roomId: roomId === null || roomId === void 0 ? void 0 : roomId.value,
             userName: userName === null || userName === void 0 ? void 0 : userName.value,

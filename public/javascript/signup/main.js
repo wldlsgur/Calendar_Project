@@ -1,5 +1,7 @@
 var _a, _b, _c, _d;
 import { Image, SignUP } from "./signUp.js";
+import css from "../../stylesheets/signup/signup.css";
+const temp = css;
 const image = new Image();
 const signUp = new SignUP();
 (_a = document.querySelector("#image")) === null || _a === void 0 ? void 0 : _a.addEventListener("change", image.ShowImage);

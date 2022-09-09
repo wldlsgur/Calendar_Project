@@ -4,9 +4,9 @@ module.exports = {
   mode: "development",
   entry: {
     index: "./public/javascript/index/main.js",
-    // signup: "/javascript/signup/main.js",
-    // room: "/javascript/room/main.js",
-    // calander: "/javascript/calander/main.js",
+    signup: "./public/javascript/signup/main.js",
+    room: "./public/javascript/room/main.js",
+    calander: "./public/javascript/calander/main.js",
   },
   output: {
     path: path.resolve(__dirname, "public/javascript/webpack"),
@@ -24,11 +24,11 @@ module.exports = {
       },
     ],
   },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: "./views/index.ejs", //참고할 html파일
-      filename: "index.ejs", //만들어질 html파일
-      chunks: ["index"], //원하는 필요로 하는 js만 import하게 설정
-    }),
-  ],
+  // plugins: [
+  //   new HtmlWebpackPlugin({
+  //     template: "./views/index.ejs", //참고할 html파일
+  //     filename: "index.ejs", //만들어질 html파일
+  //     chunks: ["index"], //원하는 필요로 하는 js만 import하게 설정
+  //   }),
+  // ],
 };

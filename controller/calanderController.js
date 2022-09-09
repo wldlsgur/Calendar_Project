@@ -1,32 +1,48 @@
 const calander = require("../model/calander");
 
 module.exports = {
-  doInsertCalanderInfo: async (req, res, next) => {
-    let result = await calander.InsertCalanderInfo(req).catch((err) => {
-      console.log(err);
-      res.status(400).send(err);
-    });
-    res.status(200).send(result);
+  doInsertCalanderInfo: (req, res, next) => {
+    calander
+      .InsertCalanderInfo(req)
+      .then((result) => {
+        res.status(200).send(result);
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(400).send(err);
+      });
   },
-  doDeleteCalanderInfo: async (req, res, next) => {
-    let result = await calander.DeleteCalanderInfo(req).catch((err) => {
-      console.log(err);
-      res.status(400).send(err);
-    });
-    res.status(200).send(result);
+  doDeleteCalanderInfo: (req, res, next) => {
+    calander
+      .DeleteCalanderInfo(req)
+      .then((result) => {
+        res.status(200).send(result);
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(400).send(err);
+      });
   },
-  doGetCalanderContent: async (req, res, next) => {
-    let result = await calander.GetCalanderContent(req).catch((err) => {
-      console.log(err);
-      res.status(400).send(err);
-    });
-    res.status(200).send(result);
+  doGetCalanderContent: (req, res, next) => {
+    calander
+      .GetCalanderContent(req)
+      .then((result) => {
+        res.status(200).send(result);
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(400).send(err);
+      });
   },
-  doGetCalanderPersonnel: async (req, res, next) => {
-    let result = await calander.GetCalanderPersonnel(req).catch((err) => {
-      console.log(err);
-      res.status(400).send(err);
-    });
-    res.status(200).send(result);
+  doGetCalanderPersonnel: (req, res, next) => {
+    calander
+      .GetCalanderPersonnel(req)
+      .then((result) => {
+        res.status(200).send(result);
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(400).send(err);
+      });
   },
 };

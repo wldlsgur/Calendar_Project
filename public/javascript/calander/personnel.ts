@@ -5,24 +5,26 @@ const roomIdTag: HTMLInputElement | null = document.querySelector("#room_id");
 class PersonnelController {
   constructor() {}
 
-  async Get(): Promise<object> {
+  Get(): Promise<object> {
     return new Promise(async (resovle, reject) => {
-      let result = await axios
+      axios
         .get(`${server}/calander/personnel`, {
           params: { roomId: roomIdTag?.value },
+        })
+        .then((result: { data: any }) => {
+          if (!result.data[0]) {
+            return null;
+          }
+          return resovle(result.data);
         })
         .catch((err: object) => {
           console.log(err);
           return reject(err);
         });
-      if (!result.data[0]) {
-        return null;
-      }
-      return resovle(result.data);
     });
   }
 
-  SetPersonnelCalander(result: object) {
+  SetPersonnelCalander(result: any) {
     let root = document.querySelector(".personnelList");
     for (let i in result) {
       let div1 = document.createElement("div");

@@ -1,46 +1,64 @@
 const Room = require("../model/room");
 
 module.exports = {
-  doInsertRoomInfo: async (req, res, next) => {
-    let result = await Room.InsertRoomInfo(req).catch((err) => {
-      console.log(err);
-      return res.status(400).send(err);
-    });
-    res.status(200).send(result);
+  doInsertRoomInfo: (req, res, next) => {
+    Room.InsertRoomInfo(req)
+      .then((result) => {
+        res.status(200).send(result);
+      })
+      .catch((err) => {
+        console.log(err);
+        return res.status(400).send(err);
+      });
   },
-  doJoinRoom: async (req, res, next) => {
-    let result = await Room.JoinRoom(req).catch((err) => {
-      console.log(err);
-      return res.status(400).send(err);
-    });
-    res.status(200).send(result);
+  doJoinRoom: (req, res, next) => {
+    Room.JoinRoom(req)
+      .then((result) => {
+        res.status(200).send(result);
+      })
+      .catch((err) => {
+        console.log(err);
+        return res.status(400).send(err);
+      });
   },
-  doShowAllRoomInfo: async (req, res, next) => {
-    let result = await Room.ShowAllRoomInfo().catch((err) => {
-      console.log(err);
-      return res.status(400).send(err);
-    });
-    res.status(200).send(result);
+  doShowAllRoomInfo: (req, res, next) => {
+    Room.ShowAllRoomInfo()
+      .then((result) => {
+        res.status(200).send(result);
+      })
+      .catch((err) => {
+        console.log(err);
+        return res.status(400).send(err);
+      });
   },
-  doShowAllMyRoomInfo: async (req, res, next) => {
-    let result = await Room.ShowAllMyRoomInfo(req).catch((err) => {
-      console.log(err);
-      return res.status(400).send(err);
-    });
-    res.status(200).send(result);
+  doShowAllMyRoomInfo: (req, res, next) => {
+    Room.ShowAllMyRoomInfo(req)
+      .then((result) => {
+        res.status(200).send(result);
+      })
+      .catch((err) => {
+        console.log(err);
+        return res.status(400).send(err);
+      });
   },
-  doDeleteMyroom: async (req, res, next) => {
-    let result = await Room.DeleteMyRoom(req).catch((err) => {
-      console.log(err);
-      return res.status(400).send(err);
-    });
-    res.status(200).send(result);
+  doDeleteMyroom: (req, res, next) => {
+    Room.DeleteMyRoom(req)
+      .then((result) => {
+        res.status(200).send(result);
+      })
+      .catch((err) => {
+        console.log(err);
+        return res.status(400).send(err);
+      });
   },
-  doCheckRoomInfo: async (req, res, next) => {
-    let result = await Room.CheckRoomInfo(req).catch((err) => {
-      console.log(err);
-      return res.status(400).send(err);
-    });
-    res.status(200).send(result);
+  doCheckRoomInfo: (req, res, next) => {
+    Room.CheckRoomInfo(req)
+      .then((result) => {
+        res.status(200).send(result);
+      })
+      .catch((err) => {
+        console.log(err);
+        return res.status(400).send(err);
+      });
   },
 };

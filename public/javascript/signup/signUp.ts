@@ -28,7 +28,7 @@ class Image {
 
 class SignUP {
   constructor() {}
-  async doSignUp(e: { preventDefault: () => void }) {
+  doSignUp(e: { preventDefault: () => void }) {
     e.preventDefault();
     if (!sameIdCheckBox?.checked) {
       return alert("중복확인을 해주세요");
@@ -36,55 +36,60 @@ class SignUP {
     if (!inputId?.value || !inputPw?.value || !inputName?.value) {
       return alert("요구사항을 모두 입력해주세요");
     }
-    let userInfoInsertResult = await axios
+    axios
       .post(`${server}/user`, {
         id: inputId?.value,
         pw: inputPw?.value,
         name: inputName?.value,
       })
+      .then((userInfoInsertResult: { data: { res: any } }) => {
+        if (userInfoInsertResult?.data?.res) {
+          if (img?.value) {
+            const formData: FormData = new FormData();
+            formData.append("image", img.files[0]);
+
+            axios
+              .post(`${server}/uploadimage/${inputId?.value}`, formData, {
+                headers: { "Content-Type": "multipart/form-data" },
+              })
+              .then((imageInfoInsertResult: { data: { res: any } }) => {
+                if (imageInfoInsertResult?.data?.res) {
+                  alert("사진 등록 회원가입 성공");
+                } else {
+                  alert("회원가입 성공");
+                }
+                return nav.MovePageLogin();
+              })
+              .catch((err: object) => {
+                return console.log(err);
+              });
+          }
+        }
+      })
       .catch((err: object) => {
         return console.log(err);
       });
-    if (userInfoInsertResult?.data?.res) {
-      if (img?.value) {
-        const formData: FormData = new FormData();
-        formData.append("image", img.files[0]);
-
-        let imageInfoInsertResult = await axios
-          .post(`${server}/uploadimage/${inputId?.value}`, formData, {
-            headers: { "Content-Type": "multipart/form-data" },
-          })
-          .catch((err: object) => {
-            return console.log(err);
-          });
-
-        if (imageInfoInsertResult?.data?.res) {
-          alert("사진 등록 회원가입 성공");
-        } else {
-          alert("회원가입 성공");
-        }
-        return nav.MovePageLogin();
-      }
-    }
   }
 
-  async SameIdCheck(this: any) {
+  SameIdCheck(this: any) {
     if (!inputId?.value) {
       this.checked = false;
       return alert("아이디를 입력해주세요");
     }
-    let result = await axios
+    axios
       .get(`${server}/user/sameid/${inputId?.value}`)
+      .then((result: { data: { res: any } }) => {
+        if (!result?.data?.res) {
+          this.checked = false;
+          return alert("중복된 아이디 입니다");
+        }
+        this.disabled = true;
+        this.checked = true;
+        return alert("사용 가능한 아이디 입니다");
+      })
       .catch((err: object) => {
         return console.log(err);
       });
-    if (!result?.data?.res) {
-      this.checked = false;
-      return alert("중복된 아이디 입니다");
-    }
-    this.disabled = true;
-    this.checked = true;
-    return alert("사용 가능한 아이디 입니다");
   }
 
   InitCheckBox() {

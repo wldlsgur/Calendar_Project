@@ -14,22 +14,22 @@ const roomIdTag = document.querySelector("#room_id");
 class PersonnelController {
     constructor() { }
     Get() {
-        return __awaiter(this, void 0, void 0, function* () {
-            return new Promise((resovle, reject) => __awaiter(this, void 0, void 0, function* () {
-                let result = yield axios
-                    .get(`${server}/calander/personnel`, {
-                    params: { roomId: roomIdTag === null || roomIdTag === void 0 ? void 0 : roomIdTag.value },
-                })
-                    .catch((err) => {
-                    console.log(err);
-                    return reject(err);
-                });
+        return new Promise((resovle, reject) => __awaiter(this, void 0, void 0, function* () {
+            axios
+                .get(`${server}/calander/personnel`, {
+                params: { roomId: roomIdTag === null || roomIdTag === void 0 ? void 0 : roomIdTag.value },
+            })
+                .then((result) => {
                 if (!result.data[0]) {
                     return null;
                 }
                 return resovle(result.data);
-            }));
-        });
+            })
+                .catch((err) => {
+                console.log(err);
+                return reject(err);
+            });
+        }));
     }
     SetPersonnelCalander(result) {
         let root = document.querySelector(".personnelList");
