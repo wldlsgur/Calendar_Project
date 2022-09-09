@@ -76,9 +76,9 @@ document.querySelector(".bi-caret-right")?.addEventListener("click", () => {
   today = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate());
   CalanderViewSet();
 });
-document
-  .querySelector(".chatWrite")
-  ?.addEventListener("submit", msgController.PostMsgSocket);
+document.querySelector(".chatWrite")?.addEventListener("submit", (e) => {
+  msgController.PostMsgSocket(e);
+});
 document
   .querySelector(".chatWrite__input")
   ?.addEventListener("keyup", (e: any) => {

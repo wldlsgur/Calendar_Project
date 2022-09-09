@@ -67,8 +67,9 @@ window.addEventListener("beforeunload", msgController.SocketLeave);
     today = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate());
     CalanderViewSet();
 });
-(_l = document
-    .querySelector(".chatWrite")) === null || _l === void 0 ? void 0 : _l.addEventListener("submit", msgController.PostMsgSocket);
+(_l = document.querySelector(".chatWrite")) === null || _l === void 0 ? void 0 : _l.addEventListener("submit", (e) => {
+    msgController.PostMsgSocket(e);
+});
 (_m = document
     .querySelector(".chatWrite__input")) === null || _m === void 0 ? void 0 : _m.addEventListener("keyup", (e) => {
     if (e.keyCode === 13) {
